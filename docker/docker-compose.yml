@@ -1,0 +1,53 @@
+version: '3.9'
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: app
+    restart: unless-stopped
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn src.app:app --host 0.0.0.0 --port 8000'
+    env_file:
+      - ../.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - sites
+    networks:
+      - app-network
+    volumes:
+      - ./logs:/opt/logs/
+
+  db:
+    image: postgres:15
+    container_name: app-db
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=task-manager
+    volumes:
+      - app-db-data:/var/lib/postgresql/data/pgdata
+    networks:
+      - app-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    networks:
+      - app-network
+    depends_on:
+      - db
+    env_file:
+      - .env
+    
+networks:
+  app-network:
+    driver: bridge
+    name: app-network
+volumes:
+  db-data:
+  logs:
