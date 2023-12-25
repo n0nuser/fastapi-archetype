@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import pytest
 from fastapi import status
 from requests import Response
@@ -10,7 +8,8 @@ from src.api.schemas.office_response import OfficeResponse
 from src.api.schemas.office_response_data_inner import OfficeResponseDataInner
 from src.api.schemas.pagination import Pagination
 from src.tests.conftest import MyHTTPXClient
-from src.tests.utils import REQUEST_HEADERS, assert_201, assert_204, assert_400, assert_404
+from src.tests.utils import (REQUEST_HEADERS, assert_201, assert_204,
+                             assert_400, assert_404)
 
 
 def assert_200_office(response: Response):
@@ -54,16 +53,15 @@ def test_get_offices_office_id(client: MyHTTPXClient):
 
     Office information.
     """
-
     kwargs = {
         "method": "GET",
-        "url": "/offices/{officeId}".format(officeId=56),
+        "url": f"/offices/{56}",
         "headers": REQUEST_HEADERS,
     }
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}".format(officeId=1)
+    kwargs["url"] = f"/offices/{1}"
     response = client.request(**kwargs)
     assert_200_office_id(response)
 
@@ -90,7 +88,7 @@ def test_post_offices(client: MyHTTPXClient):
                 "postalCode": "37002",
                 "province": "Salamanca",
                 "country": "ES",
-            }
+            },
         },
     }
 
@@ -121,7 +119,7 @@ def test_put_offices_office_id(client: MyHTTPXClient):
     """
     kwargs = {
         "method": "PUT",
-        "url": "/offices/{officeId}".format(officeId=56),
+        "url": f"/offices/{56}",
         "headers": REQUEST_HEADERS,
         "json": {
             "data": {
@@ -135,7 +133,7 @@ def test_put_offices_office_id(client: MyHTTPXClient):
                 "postalCode": "37002",
                 "province": "Salamanca",
                 "country": "ES",
-            }
+            },
         },
     }
     response = client.request(**kwargs)
@@ -156,7 +154,7 @@ def test_put_offices_office_id(client: MyHTTPXClient):
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}".format(officeId=1)
+    kwargs["url"] = f"/offices/{1}"
     response = client.request(**kwargs)
     assert_204(response)
 
@@ -167,15 +165,14 @@ def test_delete_offices_office_id(client: MyHTTPXClient):
 
     Delete specific office.
     """
-
     kwargs = {
         "method": "DELETE",
-        "url": "/offices/{officeId}".format(officeId=56),
+        "url": f"/offices/{56}",
         "headers": REQUEST_HEADERS,
     }
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}".format(officeId=1)
+    kwargs["url"] = f"/offices/{1}"
     response = client.request(**kwargs)
     assert_204(response)

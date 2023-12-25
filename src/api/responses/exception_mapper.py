@@ -1,4 +1,4 @@
-import src.api.responses.exceptions as exceptions
+from src.api.responses import exceptions
 
 EXCEPTION_MAPPER = {
     400: exceptions.BadRequest,

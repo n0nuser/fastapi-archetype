@@ -1,6 +1,7 @@
-from typing import Tuple, Union
+from typing import Union
 
 from fastapi import Query
+from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
@@ -10,30 +11,50 @@ from src.db.models import Base, BaseDeletedOn
 from src.db.session import Session
 
 
-def get_filters(db_model, filters):
-    filter_clauses = []
-    for filter_by, filter_data in filters.items():
-        filter_op, filter_value = filter_data
-        filter_field = getattr(db_model, filter_by)
+class Filter(BaseModel):
+    """Filter to be applied to a query."""
 
-        if filter_op == "eq":
-            filter_clauses.append(filter_field == filter_value)
-        elif filter_op == "neq":
-            filter_clauses.append(filter_field != filter_value)
-        elif filter_op == "contains":
-            filter_clauses.append(filter_field.contains(filter_value))
-        elif filter_op == "not_contains":
-            filter_clauses.append(~filter_field.contains(filter_value))
-        elif filter_op == "gt":
-            filter_clauses.append(filter_field > filter_value)
-        elif filter_op == "gte":
-            filter_clauses.append(filter_field >= filter_value)
-        elif filter_op == "lt":
-            filter_clauses.append(filter_field < filter_value)
-        elif filter_op == "lte":
-            filter_clauses.append(filter_field <= filter_value)
+    field: str
+    operator: str
+    value: str | int
+
+
+def get_filters(db_model, items: list[Filter]) -> list[SQLQuery]:
+    """Get the filters to be applied to a query.
+
+    Args:
+        db_model (_type_): SQLAlchemy Model to be queried.
+        items (list[Filter]): List of filters to be applied.
+
+    Raises:
+        ValueError: If the operator is not supported.
+
+    Returns:
+        list[SQLQuery]: List of filters to be applied.
+    """
+    filter_clauses = []
+    for filter_obj in items:
+        filter_field = getattr(db_model, filter_obj.field)
+
+        if filter_obj.operator == "eq":
+            filter_clauses.append(filter_field == filter_obj.value)
+        elif filter_obj.operator == "neq":
+            filter_clauses.append(filter_field != filter_obj.value)
+        elif filter_obj.operator == "contains":
+            filter_clauses.append(filter_field.contains(filter_obj.value))
+        elif filter_obj.operator == "not_contains":
+            filter_clauses.append(~filter_field.contains(filter_obj.value))
+        elif filter_obj.operator == "gt":
+            filter_clauses.append(filter_field > filter_obj.value)
+        elif filter_obj.operator == "gte":
+            filter_clauses.append(filter_field >= filter_obj.value)
+        elif filter_obj.operator == "lt":
+            filter_clauses.append(filter_field < filter_obj.value)
+        elif filter_obj.operator == "lte":
+            filter_clauses.append(filter_field <= filter_obj.value)
         else:
-            raise ValueError(f"Unsupported filter operator: {filter_op}")
+            error_message = f"Operator {filter_obj.operator} not supported."
+            raise ValueError(error_message)
     return filter_clauses
 
 
@@ -41,10 +62,10 @@ def get_list(
     db_model: Base,
     limit: int,
     offset: int,
-    filters: dict[str, Tuple[str, object]] = None,  # type: ignore
-    default_query: Query = None,  # type: ignore
-    join_fields: list[str] = None,  # type: ignore
-) -> Union[list[Base], None]:
+    filters: list[Filter] | None = None,
+    default_query: SQLQuery | None = None,
+    join_fields: list[str] | None = None,
+) -> list[Base] | None:
     """Get a list of elements that can be filtered.
     Result requires mapping the objects to the desired response.
 
@@ -64,7 +85,7 @@ def get_list(
         if join_fields:
             for join_field in join_fields:
                 default_query: SQLQuery = default_query.options(
-                    joinedload(getattr(db_model, join_field))
+                    joinedload(getattr(db_model, join_field)),
                 )
 
         if filters:
@@ -80,7 +101,7 @@ def get_list(
 
 def count(
     db_model: Base,
-    filters: dict[str, Tuple[str, object]] = None,  # type: ignore
+    filters: dict[str, tuple[str, object]] = None,  # type: ignore
 ) -> int:
     """Get the number of elements that can be filtered.
 
@@ -162,7 +183,6 @@ def delete_by_id(db_model: Base, api_model_id: int, soft_delete: bool = False) -
     Returns:
         Union[Base, None]: The deleted object or None if couldn't find the object.
     """
-
     with Session() as session:
         try:
             element: BaseDeletedOn = session.get(db_model, api_model_id)

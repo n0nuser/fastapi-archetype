@@ -1,0 +1,3695 @@
+[
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "annotations",
+        "importPath": "__future__",
+        "description": "__future__",
+        "isExtraImport": true,
+        "detail": "__future__",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "site",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "site",
+        "description": "site",
+        "detail": "site",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "timedelta",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "APIRouter",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Body",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Header",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Request",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "JSONResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "create_database",
+        "importPath": "sqlalchemy_utils",
+        "description": "sqlalchemy_utils",
+        "isExtraImport": true,
+        "detail": "sqlalchemy_utils",
+        "documentation": {}
+    },
+    {
+        "label": "create_database",
+        "importPath": "sqlalchemy_utils",
+        "description": "sqlalchemy_utils",
+        "isExtraImport": true,
+        "detail": "sqlalchemy_utils",
+        "documentation": {}
+    },
+    {
+        "label": "database_exists",
+        "importPath": "sqlalchemy_utils",
+        "description": "sqlalchemy_utils",
+        "isExtraImport": true,
+        "detail": "sqlalchemy_utils",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessage",
+        "importPath": "src.api.schemas.error_message",
+        "description": "src.api.schemas.error_message",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessage",
+        "importPath": "src.api.schemas.error_message",
+        "description": "src.api.schemas.error_message",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessage",
+        "importPath": "src.api.schemas.error_message",
+        "description": "src.api.schemas.error_message",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessage",
+        "importPath": "src.api.schemas.error_message",
+        "description": "src.api.schemas.error_message",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message",
+        "documentation": {}
+    },
+    {
+        "label": "Absence",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Address",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Booking",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Office",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Section",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "StatusDay",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Workstation",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Address",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Office",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "BaseDeletedOn",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models",
+        "description": "src.db.models",
+        "isExtraImport": true,
+        "detail": "src.db.models",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "get_db_session",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "isExtraImport": true,
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "InternalServerError",
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "isExtraImport": true,
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "isExtraImport": true,
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "InternalServerError",
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "isExtraImport": true,
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "isExtraImport": true,
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeData",
+        "importPath": "src.api.schemas.office_data",
+        "description": "src.api.schemas.office_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_data",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeData",
+        "importPath": "src.api.schemas.office_data",
+        "description": "src.api.schemas.office_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_data",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeDataData",
+        "importPath": "src.api.schemas.office_data_data",
+        "description": "src.api.schemas.office_data_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeDataData",
+        "importPath": "src.api.schemas.office_data_data",
+        "description": "src.api.schemas.office_data_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeResponse",
+        "importPath": "src.api.schemas.office_response",
+        "description": "src.api.schemas.office_response",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_response",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeResponse",
+        "importPath": "src.api.schemas.office_response",
+        "description": "src.api.schemas.office_response",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_response",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeResponseDataInner",
+        "importPath": "src.api.schemas.office_response_data_inner",
+        "description": "src.api.schemas.office_response_data_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "OfficeResponseDataInner",
+        "importPath": "src.api.schemas.office_response_data_inner",
+        "description": "src.api.schemas.office_response_data_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.office_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "PostOfficesRequest",
+        "importPath": "src.api.schemas.post_offices_request",
+        "description": "src.api.schemas.post_offices_request",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.post_offices_request",
+        "documentation": {}
+    },
+    {
+        "label": "check_entity_exists",
+        "importPath": "src.api.utils",
+        "description": "src.api.utils",
+        "isExtraImport": true,
+        "detail": "src.api.utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_pagination",
+        "importPath": "src.api.utils",
+        "description": "src.api.utils",
+        "isExtraImport": true,
+        "detail": "src.api.utils",
+        "documentation": {}
+    },
+    {
+        "label": "count",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "create",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "delete_by_id",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_list",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "update",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_by_id",
+        "importPath": "src.db.crud",
+        "description": "src.db.crud",
+        "isExtraImport": true,
+        "detail": "src.db.crud",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessageData",
+        "importPath": "src.api.schemas.error_message_messages_inner",
+        "description": "src.api.schemas.error_message_messages_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message_messages_inner",
+        "documentation": {}
+    },
+    {
+        "label": "contextlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "detail": "contextlib",
+        "documentation": {}
+    },
+    {
+        "label": "contextmanager",
+        "importPath": "contextlib",
+        "description": "contextlib",
+        "isExtraImport": true,
+        "detail": "contextlib",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "traceback",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "traceback",
+        "description": "traceback",
+        "detail": "traceback",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Generic",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TypeVar",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Any",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "TYPE_CHECKING",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Optional",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "RequestValidationError",
+        "importPath": "fastapi.exceptions",
+        "description": "fastapi.exceptions",
+        "isExtraImport": true,
+        "detail": "fastapi.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "IntegrityError",
+        "importPath": "sqlalchemy.exc",
+        "description": "sqlalchemy.exc",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.exc",
+        "documentation": {}
+    },
+    {
+        "label": "NoResultFound",
+        "importPath": "sqlalchemy.exc",
+        "description": "sqlalchemy.exc",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.exc",
+        "documentation": {}
+    },
+    {
+        "label": "OperationalError",
+        "importPath": "sqlalchemy.exc",
+        "description": "sqlalchemy.exc",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.exc",
+        "documentation": {}
+    },
+    {
+        "label": "ProgrammingError",
+        "importPath": "sqlalchemy.exc",
+        "description": "sqlalchemy.exc",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.exc",
+        "documentation": {}
+    },
+    {
+        "label": "OperationalError",
+        "importPath": "sqlalchemy.exc",
+        "description": "sqlalchemy.exc",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.exc",
+        "documentation": {}
+    },
+    {
+        "label": "exceptions",
+        "importPath": "src.api.responses",
+        "description": "src.api.responses",
+        "isExtraImport": true,
+        "detail": "src.api.responses",
+        "documentation": {}
+    },
+    {
+        "label": "exceptions",
+        "importPath": "src.api.responses",
+        "description": "src.api.responses",
+        "isExtraImport": true,
+        "detail": "src.api.responses",
+        "documentation": {}
+    },
+    {
+        "label": "ERROR_RESPONSES",
+        "importPath": "src.api.responses.error_responses",
+        "description": "src.api.responses.error_responses",
+        "isExtraImport": true,
+        "detail": "src.api.responses.error_responses",
+        "documentation": {}
+    },
+    {
+        "label": "ERROR_RESPONSES",
+        "importPath": "src.api.responses.error_responses",
+        "description": "src.api.responses.error_responses",
+        "isExtraImport": true,
+        "detail": "src.api.responses.error_responses",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "isExtraImport": true,
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "isExtraImport": true,
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Field",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "constr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "AnyHttpUrl",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "EmailStr",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "PostgresDsn",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "validator",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessageData",
+        "importPath": "src.api.schemas.error_message_data",
+        "description": "src.api.schemas.error_message_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.error_message_data",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleDataData",
+        "importPath": "src.api.schemas.example_data_data",
+        "description": "src.api.schemas.example_data_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.example_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "\\",
+        "importPath": "src.api.schemas.example_response_data_inner",
+        "description": "src.api.schemas.example_response_data_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.example_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinks",
+        "importPath": "src.api.schemas.pagination_links",
+        "description": "src.api.schemas.pagination_links",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinks",
+        "importPath": "src.api.schemas.pagination_links",
+        "description": "src.api.schemas.pagination_links",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksFirst",
+        "importPath": "src.api.schemas.pagination_links_first",
+        "description": "src.api.schemas.pagination_links_first",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_first",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksFirst",
+        "importPath": "src.api.schemas.pagination_links_first",
+        "description": "src.api.schemas.pagination_links_first",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_first",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksLast",
+        "importPath": "src.api.schemas.pagination_links_last",
+        "description": "src.api.schemas.pagination_links_last",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_last",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksLast",
+        "importPath": "src.api.schemas.pagination_links_last",
+        "description": "src.api.schemas.pagination_links_last",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_last",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksNext",
+        "importPath": "src.api.schemas.pagination_links_next",
+        "description": "src.api.schemas.pagination_links_next",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_next",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksNext",
+        "importPath": "src.api.schemas.pagination_links_next",
+        "description": "src.api.schemas.pagination_links_next",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_next",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksPrev",
+        "importPath": "src.api.schemas.pagination_links_prev",
+        "description": "src.api.schemas.pagination_links_prev",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_prev",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksPrev",
+        "importPath": "src.api.schemas.pagination_links_prev",
+        "description": "src.api.schemas.pagination_links_prev",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.pagination_links_prev",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "uuid4",
+        "importPath": "uuid",
+        "description": "uuid",
+        "isExtraImport": true,
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "BaseSettings",
+        "importPath": "pydantic_settings",
+        "description": "pydantic_settings",
+        "isExtraImport": true,
+        "detail": "pydantic_settings",
+        "documentation": {}
+    },
+    {
+        "label": "logging",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "logging",
+        "description": "logging",
+        "detail": "logging",
+        "documentation": {}
+    },
+    {
+        "label": "shutil",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "shutil",
+        "description": "shutil",
+        "detail": "shutil",
+        "documentation": {}
+    },
+    {
+        "label": "tempfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tempfile",
+        "description": "tempfile",
+        "detail": "tempfile",
+        "documentation": {}
+    },
+    {
+        "label": "RotatingFileHandler",
+        "importPath": "logging.handlers",
+        "description": "logging.handlers",
+        "isExtraImport": true,
+        "detail": "logging.handlers",
+        "documentation": {}
+    },
+    {
+        "label": "Path",
+        "importPath": "pathlib",
+        "description": "pathlib",
+        "isExtraImport": true,
+        "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "jsonable_encoder",
+        "importPath": "fastapi.encoders",
+        "description": "fastapi.encoders",
+        "isExtraImport": true,
+        "detail": "fastapi.encoders",
+        "documentation": {}
+    },
+    {
+        "label": "func",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "select",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "func",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "select",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "DateTime",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "joinedload",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Query",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "joinedload",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "DeclarativeBase",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "declared_attr",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Mapped",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "mapped_column",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Session",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "isExtraImport": true,
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "isExtraImport": true,
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "isExtraImport": true,
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "isExtraImport": true,
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshTokenCreate",
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshTokenUpdate",
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "src.core.config",
+        "description": "src.core.config",
+        "isExtraImport": true,
+        "detail": "src.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "src.core.config",
+        "description": "src.core.config",
+        "isExtraImport": true,
+        "detail": "src.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "src.core.config",
+        "description": "src.core.config",
+        "isExtraImport": true,
+        "detail": "src.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "src.core.config",
+        "description": "src.core.config",
+        "isExtraImport": true,
+        "detail": "src.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDBase",
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "isExtraImport": true,
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "get_password_hash",
+        "importPath": "app.core.security",
+        "description": "app.core.security",
+        "isExtraImport": true,
+        "detail": "app.core.security",
+        "documentation": {}
+    },
+    {
+        "label": "verify_password",
+        "importPath": "app.core.security",
+        "description": "app.core.security",
+        "isExtraImport": true,
+        "detail": "app.core.security",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDBase",
+        "importPath": "app.crud.base",
+        "description": "app.crud.base",
+        "isExtraImport": true,
+        "detail": "app.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "app.models.user",
+        "description": "app.models.user",
+        "isExtraImport": true,
+        "detail": "app.models.user",
+        "documentation": {}
+    },
+    {
+        "label": "NewTOTP",
+        "importPath": "app.schemas.totp",
+        "description": "app.schemas.totp",
+        "isExtraImport": true,
+        "detail": "app.schemas.totp",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreate",
+        "importPath": "app.schemas.user",
+        "description": "app.schemas.user",
+        "isExtraImport": true,
+        "detail": "app.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserInDB",
+        "importPath": "app.schemas.user",
+        "description": "app.schemas.user",
+        "isExtraImport": true,
+        "detail": "app.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserUpdate",
+        "importPath": "app.schemas.user",
+        "description": "app.schemas.user",
+        "isExtraImport": true,
+        "detail": "app.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "sqlalchemy.dialects.postgresql",
+        "description": "sqlalchemy.dialects.postgresql",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.dialects.postgresql",
+        "documentation": {}
+    },
+    {
+        "label": "UUID",
+        "importPath": "sqlalchemy.dialects.postgresql",
+        "description": "sqlalchemy.dialects.postgresql",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.dialects.postgresql",
+        "documentation": {}
+    },
+    {
+        "label": "func",
+        "importPath": "sqlalchemy.sql",
+        "description": "sqlalchemy.sql",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.sql",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreate",
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDUser",
+        "importPath": "src.db.crud.crud_user",
+        "description": "src.db.crud.crud_user",
+        "isExtraImport": true,
+        "detail": "src.db.crud.crud_user",
+        "documentation": {}
+    },
+    {
+        "label": "Iterator",
+        "importPath": "collections.abc",
+        "description": "collections.abc",
+        "isExtraImport": true,
+        "detail": "collections.abc",
+        "documentation": {}
+    },
+    {
+        "label": "httpx",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "httpx",
+        "description": "httpx",
+        "detail": "httpx",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "config",
+        "importPath": "src.core",
+        "description": "src.core",
+        "isExtraImport": true,
+        "detail": "src.core",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_HEADERS",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_HEADERS",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_201",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_204",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_400",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_404",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_HEADERS",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_201",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_204",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_400",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_404",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_HEADERS",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_201",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_204",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_400",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_404",
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "isExtraImport": true,
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "requests",
+        "description": "requests",
+        "isExtraImport": true,
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "requests",
+        "description": "requests",
+        "isExtraImport": true,
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "requests",
+        "description": "requests",
+        "isExtraImport": true,
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "MyHTTPXClient",
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "isExtraImport": true,
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "MyHTTPXClient",
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "isExtraImport": true,
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "MyHTTPXClient",
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "isExtraImport": true,
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "SectorData",
+        "importPath": "src.api.schemas.sector_data",
+        "description": "src.api.schemas.sector_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.sector_data",
+        "documentation": {}
+    },
+    {
+        "label": "SectorDataData",
+        "importPath": "src.api.schemas.sector_data_data",
+        "description": "src.api.schemas.sector_data_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.sector_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "SectorResponse",
+        "importPath": "src.api.schemas.sector_response",
+        "description": "src.api.schemas.sector_response",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.sector_response",
+        "documentation": {}
+    },
+    {
+        "label": "SectorResponseDataInner",
+        "importPath": "src.api.schemas.sector_response_data_inner",
+        "description": "src.api.schemas.sector_response_data_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.sector_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "WorkstationData",
+        "importPath": "src.api.schemas.workstation_data",
+        "description": "src.api.schemas.workstation_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.workstation_data",
+        "documentation": {}
+    },
+    {
+        "label": "WorkstationDataData",
+        "importPath": "src.api.schemas.workstation_data_data",
+        "description": "src.api.schemas.workstation_data_data",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.workstation_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "WorkstationResponse",
+        "importPath": "src.api.schemas.workstation_response",
+        "description": "src.api.schemas.workstation_response",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.workstation_response",
+        "documentation": {}
+    },
+    {
+        "label": "\\",
+        "importPath": "src.api.schemas.workstation_response_data_inner",
+        "description": "src.api.schemas.workstation_response_data_inner",
+        "isExtraImport": true,
+        "detail": "src.api.schemas.workstation_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "CORSMiddleware",
+        "importPath": "fastapi.middleware.cors",
+        "description": "fastapi.middleware.cors",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.cors",
+        "documentation": {}
+    },
+    {
+        "label": "TrustedHostMiddleware",
+        "importPath": "fastapi.middleware.trustedhost",
+        "description": "fastapi.middleware.trustedhost",
+        "isExtraImport": true,
+        "detail": "fastapi.middleware.trustedhost",
+        "documentation": {}
+    },
+    {
+        "label": "ApiRouter",
+        "importPath": "src.api",
+        "description": "src.api",
+        "isExtraImport": true,
+        "detail": "src.api",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "src.api.endpoints.createdb",
+        "description": "src.api.endpoints.createdb",
+        "isExtraImport": true,
+        "detail": "src.api.endpoints.createdb",
+        "documentation": {}
+    },
+    {
+        "label": "manage_api_exceptions",
+        "importPath": "src.api.responses.exception_manager",
+        "description": "src.api.responses.exception_manager",
+        "isExtraImport": true,
+        "detail": "src.api.responses.exception_manager",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "importPath": "src.db.create_db",
+        "description": "src.db.create_db",
+        "isExtraImport": true,
+        "detail": "src.db.create_db",
+        "documentation": {}
+    },
+    {
+        "label": "bin_dir",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "bin_dir = os.path.dirname(abs_file)\nbase = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"src-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "base",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "base = bin_dir[: -len(\"Scripts\") - 1]  # strip away the bin part from the __file__, plus the path separator\n# prepend bin to PATH (this file is inside the bin directory)\nos.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"src-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"PATH\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"PATH\"] = os.pathsep.join([bin_dir, *os.environ.get(\"PATH\", \"\").split(os.pathsep)])\nos.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"src-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV\"] = base  # virtual env is right above bin directory\nos.environ[\"VIRTUAL_ENV_PROMPT\"] = \"src-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"VIRTUAL_ENV_PROMPT\"]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "os.environ[\"VIRTUAL_ENV_PROMPT\"] = \"src-py3.10\" or os.path.basename(base)  # noqa: SIM222\n# add the virtual environments libraries to the host python import mechanism\nprev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "prev_length",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "prev_length = len(sys.path)\nfor lib in \"..\\\\Lib\\\\site-packages\".split(os.pathsep):\n    path = os.path.realpath(os.path.join(bin_dir, lib))\n    site.addsitedir(path.decode(\"utf-8\") if \"\" else path)\nsys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.path[:]",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.path[:] = sys.path[prev_length:] + sys.path[0:prev_length]\nsys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.real_prefix",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.real_prefix = sys.prefix\nsys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "sys.prefix",
+        "kind": 5,
+        "importPath": ".venv.Scripts.activate_this",
+        "description": ".venv.Scripts.activate_this",
+        "peekOfCode": "sys.prefix = base",
+        "detail": ".venv.Scripts.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "src.api.endpoints.createdb",
+        "description": "src.api.endpoints.createdb",
+        "peekOfCode": "router = APIRouter()\n@router.post(\n    \"/create-db\",\n    responses={\n        201: {\"description\": \"Created.\"},\n        500: {\"model\": ErrorMessage, \"description\": \"Internal Server Error.\"},\n    },\n    tags=[\"DB\"],\n    summary=\"Create database.\",\n)",
+        "detail": "src.api.endpoints.createdb",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "kind": 5,
+        "importPath": "src.api.endpoints.offices_api",
+        "description": "src.api.endpoints.offices_api",
+        "peekOfCode": "router = APIRouter()\ndef _map_apimodel_to_dbmodel(\n    api_model: PostOfficesRequest,\n    model_id: int,\n) -> tuple[OfficeDBModel, AddressDBModel]:\n    kwargs = {\"id\": model_id, \"name\": api_model.name}\n    office = OfficeDBModel(**kwargs)\n    kwargs = {\n        \"id\": model_id,\n        \"line\": api_model.line,",
+        "detail": "src.api.endpoints.offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "ERROR_RESPONSES",
+        "kind": 5,
+        "importPath": "src.api.responses.error_responses",
+        "description": "src.api.responses.error_responses",
+        "peekOfCode": "ERROR_RESPONSES = {\n    400: ErrorMessage(\n        messages=[\n            ErrorMessageData(\n                code=\"BAD_REQUEST\",\n                type=\"FATAL\",\n                message=\"Bad Request\",\n                description=\"The request is incorrect because the selected parameters are wrong or a functional error has occurred.\",\n            ),\n        ],",
+        "detail": "src.api.responses.error_responses",
+        "documentation": {}
+    },
+    {
+        "label": "BadRequest",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class BadRequest(Exception):\n    \"\"\"Error 400\"\"\"\n    def __init__(\n        self,\n        message=\"The request is incorrect because the selected parameters are wrong or a functional error has occurred.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Unauthorized",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class Unauthorized(Exception):\n    \"\"\"Error 401\"\"\"\n    def __init__(\n        self,\n        message=\"The call needs some kind of authorization either expired or not reported.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Forbidden",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class Forbidden(Exception):\n    \"\"\"Error 403\"\"\"\n    def __init__(self, message=\"You do not have permissions to operate with this invocation.\"):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message\nclass NotFound(Exception):\n    \"\"\"Error 404\"\"\"\n    def __init__(self, message=\"Resource not found.\"):",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotFound",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class NotFound(Exception):\n    \"\"\"Error 404\"\"\"\n    def __init__(self, message=\"Resource not found.\"):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message\nclass MethodNotAllowed(Exception):\n    \"\"\"Error 405\"\"\"\n    def __init__(",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "MethodNotAllowed",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class MethodNotAllowed(Exception):\n    \"\"\"Error 405\"\"\"\n    def __init__(\n        self,\n        message=\"The request method is known by the server but is not supported by the target resource.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotAcceptable",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class NotAcceptable(Exception):\n    \"\"\"Error 406\"\"\"\n    def __init__(\n        self,\n        message='The format indicated in the \"Accept\" header of the request is not supported by the destination server.',\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Conflict",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class Conflict(Exception):\n    \"\"\"Error 409\"\"\"\n    def __init__(\n        self,\n        message=\"The request has not been completed due to a conflict with the current status of the resource.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "PayloadTooLarge",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class PayloadTooLarge(Exception):\n    \"\"\"Error 413\"\"\"\n    def __init__(\n        self,\n        message=\"The size of the client request has exceeded the server's file size limit.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "URITooLong",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class URITooLong(Exception):\n    \"\"\"Error 414\"\"\"\n    def __init__(self, message=\"The URL of the request has exceeded the length limit.\"):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message\nclass UnsupportedMediaType(Exception):\n    \"\"\"Error 415\"\"\"\n    def __init__(",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "UnsupportedMediaType",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class UnsupportedMediaType(Exception):\n    \"\"\"Error 415\"\"\"\n    def __init__(\n        self,\n        message='Incorrect format of the response, does not match the one indicated in the \"Content-Type\" header.',\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "TooManyRequests",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class TooManyRequests(Exception):\n    \"\"\"Error 429\"\"\"\n    def __init__(\n        self,\n        message=\"Too many requests in a given period of time and limit has been exceeded.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "UnprocessableEntity",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class UnprocessableEntity(Exception):\n    \"\"\"Error 422\"\"\"\n    def __init__(\n        self,\n        message=\"The structure of the request is correct, but it is not semantically correct.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "Locked",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class Locked(Exception):\n    \"\"\"Error 423\"\"\"\n    def __init__(self, message=\"The resource you are trying to access is blocked.\"):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message\nclass InternalServerError(Exception):\n    \"\"\"Error 500\"\"\"\n    def __init__(",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "InternalServerError",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class InternalServerError(Exception):\n    \"\"\"Error 500\"\"\"\n    def __init__(\n        self,\n        message=\"Unexpected error from the server, it has no way to respond to the invocation.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "NotImplemented",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class NotImplemented(Exception):\n    \"\"\"Error 501\"\"\"\n    def __init__(self, message=\"The functionality is not supported by the service.\"):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message\nclass BadGateway(Exception):\n    \"\"\"Error 502\"\"\"\n    def __init__(",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "BadGateway",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class BadGateway(Exception):\n    \"\"\"Error 502\"\"\"\n    def __init__(\n        self,\n        message=\"Indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound service that it accessed while attempting to fulfill the request.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "ServiceUnavailable",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class ServiceUnavailable(Exception):\n    \"\"\"Error 503\"\"\"\n    def __init__(\n        self,\n        message=\"Indicates that the server is unavailable to perform the request because it is overloaded or maintenance is being performed, and that it will probably be relieved after some time.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "GatewayTimeout",
+        "kind": 6,
+        "importPath": "src.api.responses.exceptions",
+        "description": "src.api.responses.exceptions",
+        "peekOfCode": "class GatewayTimeout(Exception):\n    \"\"\"Error 504\"\"\"\n    def __init__(\n        self,\n        message=\"Indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access to complete the request.\",\n    ):\n        self.message = message\n        super().__init__(self.message)\n    def __str__(self):\n        return self.message",
+        "detail": "src.api.responses.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "manage_api_exceptions",
+        "kind": 2,
+        "importPath": "src.api.responses.exception_manager",
+        "description": "src.api.responses.exception_manager",
+        "peekOfCode": "def manage_api_exceptions(app: FastAPI) -> None:  # noqa: C901\n    \"\"\"Add Exception listeners so raising errors is easier.\n    Args:\n        app (FastAPI): FastAPI application\n    \"\"\"\n    @app.exception_handler(exceptions.BadRequest)\n    @app.exception_handler(RequestValidationError)\n    async def bad_request_handler(request: Request, exc: exceptions.BadRequest):\n        code = status.HTTP_400_BAD_REQUEST\n        return _manage_exception(request, exc, code)",
+        "detail": "src.api.responses.exception_manager",
+        "documentation": {}
+    },
+    {
+        "label": "EXCEPTION_MAPPER",
+        "kind": 5,
+        "importPath": "src.api.responses.exception_mapper",
+        "description": "src.api.responses.exception_mapper",
+        "peekOfCode": "EXCEPTION_MAPPER = {\n    400: exceptions.BadRequest,\n    401: exceptions.Unauthorized,\n    403: exceptions.Forbidden,\n    404: exceptions.NotFound,\n    405: exceptions.MethodNotAllowed,\n    406: exceptions.NotAcceptable,\n    409: exceptions.Conflict,\n    413: exceptions.PayloadTooLarge,\n    414: exceptions.URITooLong,",
+        "detail": "src.api.responses.exception_mapper",
+        "documentation": {}
+    },
+    {
+        "label": "EmailContent",
+        "kind": 6,
+        "importPath": "src.api.schemas.emails",
+        "description": "src.api.schemas.emails",
+        "peekOfCode": "class EmailContent(BaseModel):\n    email: EmailStr\n    subject: str\n    content: str\nclass EmailValidation(BaseModel):\n    email: EmailStr\n    subject: str\n    token: str",
+        "detail": "src.api.schemas.emails",
+        "documentation": {}
+    },
+    {
+        "label": "EmailValidation",
+        "kind": 6,
+        "importPath": "src.api.schemas.emails",
+        "description": "src.api.schemas.emails",
+        "peekOfCode": "class EmailValidation(BaseModel):\n    email: EmailStr\n    subject: str\n    token: str",
+        "detail": "src.api.schemas.emails",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessage",
+        "kind": 6,
+        "importPath": "src.api.schemas.error_message",
+        "description": "src.api.schemas.error_message",
+        "peekOfCode": "class ErrorMessage(BaseModel):\n    \"\"\"ErrorMessage - A model defined in OpenAPI\n    messages: The messages of this ErrorMessage [Optional].\n    \"\"\"\n    messages: Optional[list[ErrorMessageData]] = Field(alias=\"messages\", default=None)\nErrorMessage.update_forward_refs()",
+        "detail": "src.api.schemas.error_message",
+        "documentation": {}
+    },
+    {
+        "label": "ErrorMessageData",
+        "kind": 6,
+        "importPath": "src.api.schemas.error_message_data",
+        "description": "src.api.schemas.error_message_data",
+        "peekOfCode": "class ErrorMessageData(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    ErrorMessageMessagesInner - a model defined in OpenAPI\n        code: The code of this ErrorMessageMessagesInner.\n        message: The message of this ErrorMessageMessagesInner.\n        type: The type of this ErrorMessageMessagesInner.\n        description: The description of this ErrorMessageMessagesInner [Optional].\n    \"\"\"\n    code: str = Field(alias=\"code\")",
+        "detail": "src.api.schemas.error_message_data",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleData",
+        "kind": 6,
+        "importPath": "src.api.schemas.example_data",
+        "description": "src.api.schemas.example_data",
+        "peekOfCode": "class ExampleData(BaseModel):\n    \"\"\"ExampleData - a model defined in OpenAPI\n    data: The data of this ExampleData [Optional].\n    \"\"\"\n    data: Optional[ExampleDataData] = Field(alias=\"data\", default=None)\nExampleData.model_rebuild()",
+        "detail": "src.api.schemas.example_data",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleDataData",
+        "kind": 6,
+        "importPath": "src.api.schemas.example_data_data",
+        "description": "src.api.schemas.example_data_data",
+        "peekOfCode": "class ExampleDataData(BaseModel):\n    \"\"\"ExampleDataData - a model defined in OpenAPI\n    exampleId: The exampleId of this ExampleDataData.\n    value1: Info of this ExampleDataData [Optional].\n    value2: Info of this ExampleDataData.\n    \"\"\"\n    exampleId: int = Field(alias=\"exampleId\")\n    value1: Optional[str] = Field(alias=\"value1\", default=None)\n    value2: Optional[int] = Field(alias=\"value2\", default=None)\n    @validator(\"exampleId\")",
+        "detail": "src.api.schemas.example_data_data",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleResponse",
+        "kind": 6,
+        "importPath": "src.api.schemas.example_response",
+        "description": "src.api.schemas.example_response",
+        "peekOfCode": "class ExampleResponse(BaseModel):\n    \"\"\"ExampleResponse - a model defined in OpenAPI\n    data: The data of this ExampleResponse [Optional].\n    pagination: The pagination of this ExampleResponse [Optional].\n    \"\"\"\n    data: Optional[list[ExampleResponseDataInner]] = Field(alias=\"data\", default=None)\n    pagination: Optional[Pagination] = Field(alias=\"pagination\", default=None)\nExampleResponse.model_rebuild()",
+        "detail": "src.api.schemas.example_response",
+        "documentation": {}
+    },
+    {
+        "label": "ExampleResponseDataInner",
+        "kind": 6,
+        "importPath": "src.api.schemas.example_response_data_inner",
+        "description": "src.api.schemas.example_response_data_inner",
+        "peekOfCode": "class ExampleResponseDataInner(BaseModel):\n    \"\"\"ExampleResponseDataInner - a model defined in OpenAPI\n    exampleId: The exampleId of this ExampleResponseDataInner.\n    value1: Info of this ExampleResponseDataInner [Optional].\n    \"\"\"\n    exampleId: int = Field(alias=\"exampleId\")\n    value1: Optional[str] = Field(alias=\"value1\", default=None)\n    @validator(\"exampleId\")\n    def exampleId_min(cls, value):\n        assert value >= 1",
+        "detail": "src.api.schemas.example_response_data_inner",
+        "documentation": {}
+    },
+    {
+        "label": "Pagination",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination",
+        "description": "src.api.schemas.pagination",
+        "peekOfCode": "class Pagination(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    Pagination - a model defined in OpenAPI\n        offset: The offset of this Pagination [Optional].\n        limit: The limit of this Pagination [Optional].\n        pageNumber: The pageNumber of this Pagination [Optional].\n        totalPages: The totalPages of this Pagination [Optional].\n        totalElements: The totalElements of this Pagination [Optional].\n        links: The links of this Pagination [Optional].",
+        "detail": "src.api.schemas.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinks",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination_links",
+        "description": "src.api.schemas.pagination_links",
+        "peekOfCode": "class PaginationLinks(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    PaginationLinks - a model defined in OpenAPI\n        first: The first of this PaginationLinks [Optional].\n        _self: The _self of this PaginationLinks.\n        prev: The prev of this PaginationLinks [Optional].\n        next: The next of this PaginationLinks [Optional].\n        last: The last of this PaginationLinks [Optional].\n    \"\"\"",
+        "detail": "src.api.schemas.pagination_links",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksFirst",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination_links_first",
+        "description": "src.api.schemas.pagination_links_first",
+        "peekOfCode": "class PaginationLinksFirst(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    PaginationLinksFirst - a model defined in OpenAPI\n        href: The href of this PaginationLinksFirst [Optional].\n    \"\"\"\n    href: Optional[str] = Field(alias=\"href\", default=None)\n    @validator(\"href\")\n    def href_pattern(cls, value):\n        if value is not None:",
+        "detail": "src.api.schemas.pagination_links_first",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksLast",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination_links_last",
+        "description": "src.api.schemas.pagination_links_last",
+        "peekOfCode": "class PaginationLinksLast(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    PaginationLinksLast - a model defined in OpenAPI\n        href: The href of this PaginationLinksLast [Optional].\n    \"\"\"\n    href: Optional[str] = Field(alias=\"href\", default=None)\n    @validator(\"href\")\n    def href_pattern(cls, value):\n        if value is not None:",
+        "detail": "src.api.schemas.pagination_links_last",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksNext",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination_links_next",
+        "description": "src.api.schemas.pagination_links_next",
+        "peekOfCode": "class PaginationLinksNext(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    PaginationLinksNext - a model defined in OpenAPI\n        href: The href of this PaginationLinksNext [Optional].\n    \"\"\"\n    href: Optional[str] = Field(alias=\"href\", default=None)\n    @validator(\"href\")\n    def href_pattern(cls, value):\n        if value is not None:",
+        "detail": "src.api.schemas.pagination_links_next",
+        "documentation": {}
+    },
+    {
+        "label": "PaginationLinksPrev",
+        "kind": 6,
+        "importPath": "src.api.schemas.pagination_links_prev",
+        "description": "src.api.schemas.pagination_links_prev",
+        "peekOfCode": "class PaginationLinksPrev(BaseModel):\n    \"\"\"NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n    Do not edit the class manually.\n    PaginationLinksPrev - a model defined in OpenAPI\n        href: The href of this PaginationLinksPrev [Optional].\n    \"\"\"\n    href: Optional[str] = Field(alias=\"href\", default=None)\n    @validator(\"href\")\n    def href_pattern(cls, value):\n        if value is not None:",
+        "detail": "src.api.schemas.pagination_links_prev",
+        "documentation": {}
+    },
+    {
+        "label": "PostExamplesRequest",
+        "kind": 6,
+        "importPath": "src.api.schemas.post_examples_request",
+        "description": "src.api.schemas.post_examples_request",
+        "peekOfCode": "class PostExamplesRequest(BaseModel):\n    \"\"\"PostExamplesRequest - a model defined in OpenAPI\n    value1: The value1 of this PostExamplesRequest.\n    value2: The value2 of this PostExamplesRequest [Optional].\n    \"\"\"\n    value1: str = Field(alias=\"value1\")\n    value2: Optional[int] = Field(alias=\"value2\", default=None)\n    @validator(\"value1\")\n    def value1_min_length(cls, value):\n        if value is not None:",
+        "detail": "src.api.schemas.post_examples_request",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshTokenBase",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class RefreshTokenBase(BaseModel):\n    token: str\n    authenticates_id: Optional[UUID] = None\nclass RefreshTokenCreate(RefreshTokenBase):\n    authenticates_id: UUID\nclass RefreshTokenUpdate(RefreshTokenBase):\n    pass\nclass RefreshToken(RefreshTokenUpdate):\n    class Config:\n        orm_mode = True",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshTokenCreate",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class RefreshTokenCreate(RefreshTokenBase):\n    authenticates_id: UUID\nclass RefreshTokenUpdate(RefreshTokenBase):\n    pass\nclass RefreshToken(RefreshTokenUpdate):\n    class Config:\n        orm_mode = True\nclass Token(BaseModel):\n    access_token: str\n    refresh_token: Optional[str] = None",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshTokenUpdate",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class RefreshTokenUpdate(RefreshTokenBase):\n    pass\nclass RefreshToken(RefreshTokenUpdate):\n    class Config:\n        orm_mode = True\nclass Token(BaseModel):\n    access_token: str\n    refresh_token: Optional[str] = None\n    token_type: str\nclass TokenPayload(BaseModel):",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "RefreshToken",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class RefreshToken(RefreshTokenUpdate):\n    class Config:\n        orm_mode = True\nclass Token(BaseModel):\n    access_token: str\n    refresh_token: Optional[str] = None\n    token_type: str\nclass TokenPayload(BaseModel):\n    sub: Optional[UUID] = None\n    refresh: Optional[bool] = False",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class Token(BaseModel):\n    access_token: str\n    refresh_token: Optional[str] = None\n    token_type: str\nclass TokenPayload(BaseModel):\n    sub: Optional[UUID] = None\n    refresh: Optional[bool] = False\n    totp: Optional[bool] = False\nclass MagicTokenPayload(BaseModel):\n    sub: Optional[UUID] = None",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "TokenPayload",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class TokenPayload(BaseModel):\n    sub: Optional[UUID] = None\n    refresh: Optional[bool] = False\n    totp: Optional[bool] = False\nclass MagicTokenPayload(BaseModel):\n    sub: Optional[UUID] = None\n    fingerprint: Optional[UUID] = None\nclass WebToken(BaseModel):\n    claim: str",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "MagicTokenPayload",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class MagicTokenPayload(BaseModel):\n    sub: Optional[UUID] = None\n    fingerprint: Optional[UUID] = None\nclass WebToken(BaseModel):\n    claim: str",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "WebToken",
+        "kind": 6,
+        "importPath": "src.api.schemas.token",
+        "description": "src.api.schemas.token",
+        "peekOfCode": "class WebToken(BaseModel):\n    claim: str",
+        "detail": "src.api.schemas.token",
+        "documentation": {}
+    },
+    {
+        "label": "NewTOTP",
+        "kind": 6,
+        "importPath": "src.api.schemas.totp",
+        "description": "src.api.schemas.totp",
+        "peekOfCode": "class NewTOTP(BaseModel):\n    secret: Optional[str] = None\n    key: str\n    uri: str\nclass EnableTOTP(BaseModel):\n    claim: str\n    uri: str\n    password: Optional[str] = None",
+        "detail": "src.api.schemas.totp",
+        "documentation": {}
+    },
+    {
+        "label": "EnableTOTP",
+        "kind": 6,
+        "importPath": "src.api.schemas.totp",
+        "description": "src.api.schemas.totp",
+        "peekOfCode": "class EnableTOTP(BaseModel):\n    claim: str\n    uri: str\n    password: Optional[str] = None",
+        "detail": "src.api.schemas.totp",
+        "documentation": {}
+    },
+    {
+        "label": "UserLogin",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserLogin(BaseModel):\n    username: str\n    password: str\n# Shared properties\nclass UserBase(BaseModel):\n    email: Optional[EmailStr] = None\n    email_validated: Optional[bool] = False\n    is_active: Optional[bool] = True\n    is_superuser: Optional[bool] = False\n    full_name: Optional[str] = None",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserBase",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserBase(BaseModel):\n    email: Optional[EmailStr] = None\n    email_validated: Optional[bool] = False\n    is_active: Optional[bool] = True\n    is_superuser: Optional[bool] = False\n    full_name: Optional[str] = None\n# Properties to receive via API on creation\nclass UserCreate(UserBase):\n    email: EmailStr\n    password: Optional[constr(min_length=8, max_length=64)] = None",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserCreate",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserCreate(UserBase):\n    email: EmailStr\n    password: Optional[constr(min_length=8, max_length=64)] = None\n# Properties to receive via API on update\nclass UserUpdate(UserBase):\n    original: Optional[constr(min_length=8, max_length=64)] = None\n    password: Optional[constr(min_length=8, max_length=64)] = None\nclass UserInDBBase(UserBase):\n    id: Optional[UUID] = None\n    class Config:",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserUpdate",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserUpdate(UserBase):\n    original: Optional[constr(min_length=8, max_length=64)] = None\n    password: Optional[constr(min_length=8, max_length=64)] = None\nclass UserInDBBase(UserBase):\n    id: Optional[UUID] = None\n    class Config:\n        orm_mode = True\n# Additional properties to return via API\nclass User(UserInDBBase):\n    hashed_password: bool = Field(default=False, alias=\"password\")",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserInDBBase",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserInDBBase(UserBase):\n    id: Optional[UUID] = None\n    class Config:\n        orm_mode = True\n# Additional properties to return via API\nclass User(UserInDBBase):\n    hashed_password: bool = Field(default=False, alias=\"password\")\n    totp_secret: bool = Field(default=False, alias=\"totp\")\n    class Config:\n        allow_population_by_field_name = True",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class User(UserInDBBase):\n    hashed_password: bool = Field(default=False, alias=\"password\")\n    totp_secret: bool = Field(default=False, alias=\"totp\")\n    class Config:\n        allow_population_by_field_name = True\n    @validator(\"hashed_password\", pre=True)\n    def evaluate_hashed_password(cls, hashed_password):\n        if hashed_password:\n            return True\n        return False",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "UserInDB",
+        "kind": 6,
+        "importPath": "src.api.schemas.user",
+        "description": "src.api.schemas.user",
+        "peekOfCode": "class UserInDB(UserInDBBase):\n    hashed_password: Optional[str] = None\n    totp_secret: Optional[str] = None\n    totp_counter: Optional[int] = None",
+        "detail": "src.api.schemas.user",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_page_number",
+        "kind": 2,
+        "importPath": "src.api.pagination",
+        "description": "src.api.pagination",
+        "peekOfCode": "def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:\n    \"\"\"Calculate the page number based on the given offset, limit, and total elements.\n    Args:\n        offset (int): The starting index of the current page (0-based).\n        limit (int): The maximum number of elements per page.\n        total_elements (int): The total number of elements across all pages.\n    Raises:\n        ValueError: If the limit is not a positive integer, or if the total elements is not a non-negative integer.\n    Returns:\n        int: The page number (1-based).",
+        "detail": "src.api.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "calculate_total_pages",
+        "kind": 2,
+        "importPath": "src.api.pagination",
+        "description": "src.api.pagination",
+        "peekOfCode": "def calculate_total_pages(limit: int, total_elements: int) -> int:\n    \"\"\"Calculate the total number of pages based on the given offset, limit, and total elements.\n    Args:\n        limit (int): The maximum number of elements per page.\n        total_elements (int): The total number of elements across all pages.\n    Raises:\n        ValueError: If the limit is not a positive integer, or if the total elements is not a non-negative integer.\n    Returns:\n        int: The total number of pages.\n    \"\"\"",
+        "detail": "src.api.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "generate_pagination_links",
+        "kind": 2,
+        "importPath": "src.api.pagination",
+        "description": "src.api.pagination",
+        "peekOfCode": "def generate_pagination_links(\n    request: Request,\n    total_pages: int,\n    limit: int,\n    offset: int,\n    no_elements: int,\n) -> PaginationLinks:\n    base_url = f\"{request.url.scheme}://{request.url.netloc}\"\n    path = request.scope.get(\"path\", \"\")\n    url_without_query_params = base_url + path",
+        "detail": "src.api.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "get_pagination",
+        "kind": 2,
+        "importPath": "src.api.pagination",
+        "description": "src.api.pagination",
+        "peekOfCode": "def get_pagination(offset: int, limit: int, no_elements: int, request: Request):\n    total_pages = calculate_total_pages(limit, no_elements)\n    links = generate_pagination_links(\n        request=request,\n        total_pages=total_pages,\n        limit=limit,\n        offset=offset,\n        no_elements=no_elements,\n    )\n    return Pagination(",
+        "detail": "src.api.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "check_entity_exists",
+        "kind": 2,
+        "importPath": "src.api.pagination",
+        "description": "src.api.pagination",
+        "peekOfCode": "def check_entity_exists(entity_id: Optional[int] = None, entity_type=None):\n    \"\"\"Checks if the entity exists in the database.\n    Args:\n        entity_id (Optional[int], optional): The ID of the entity. Defaults to None.\n        entity_type (Any, optional): The type of entity (e.g., BookingDBModel,\n            StatusDayDBModel, WorkStationDBModel). Defaults to None.\n    Raises:\n        NotFound: If the entity does not exist in the database.\n    Returns:\n        Union[BookingDBModel, StatusDayDBModel, WorkstationDBModel]: The entity.",
+        "detail": "src.api.pagination",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "kind": 6,
+        "importPath": "src.core.config",
+        "description": "src.core.config",
+        "peekOfCode": "class Settings(BaseSettings):\n    \"\"\"Represents the configuration settings for the application.\"\"\"\n    # CORE SETTINGS\n    API_V1_STR: str = \"/api/v1\"\n    SECRET_KEY: str = \"HDx09iYK97MzUqezQ8InThpcEBk791oi\"\n    ENVIRONMENT: Literal[\"DEV\", \"PYTEST\", \"PREPROD\", \"PROD\"] = \"PYTEST\"\n    SECURITY_BCRYPT_ROUNDS: int = 12\n    # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins\n    # For example: '[\"http://localhost:4200\", \"http://local.dockertoolbox.tiangolo.com\"]'\n    BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []",
+        "detail": "src.core.config",
+        "documentation": {}
+    },
+    {
+        "label": "logger",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "logger = logging.getLogger(__name__)\n# Set the logger level\nlogger.setLevel(logging.INFO)\n# Create a formatter object\nformatter = logging.Formatter(\"%(asctime)s - %(name)s - %(levelname)s - %(message)s\")\n# Determine log file path\nlog_file_path_env = os.getenv(\"APP_LOG_FILE_PATH\", \"logs/app.log\")\nlog_file_path = Path(log_file_path_env).resolve()\nif not log_file_path.parent.exists():\n    log_file_path.parent.mkdir(parents=True)",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "formatter",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "formatter = logging.Formatter(\"%(asctime)s - %(name)s - %(levelname)s - %(message)s\")\n# Determine log file path\nlog_file_path_env = os.getenv(\"APP_LOG_FILE_PATH\", \"logs/app.log\")\nlog_file_path = Path(log_file_path_env).resolve()\nif not log_file_path.parent.exists():\n    log_file_path.parent.mkdir(parents=True)\nif not log_file_path.exists():\n    log_file_path.touch()\n# Calculate the maximum log file size (15% of disk capacity or 4GB, whichever is smaller)\nmax_log_size = min(",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "log_file_path_env",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "log_file_path_env = os.getenv(\"APP_LOG_FILE_PATH\", \"logs/app.log\")\nlog_file_path = Path(log_file_path_env).resolve()\nif not log_file_path.parent.exists():\n    log_file_path.parent.mkdir(parents=True)\nif not log_file_path.exists():\n    log_file_path.touch()\n# Calculate the maximum log file size (15% of disk capacity or 4GB, whichever is smaller)\nmax_log_size = min(\n    0.15 * shutil.disk_usage(log_file_path.parent).total,\n    4 * 1024 * 1024 * 1024,",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "log_file_path",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "log_file_path = Path(log_file_path_env).resolve()\nif not log_file_path.parent.exists():\n    log_file_path.parent.mkdir(parents=True)\nif not log_file_path.exists():\n    log_file_path.touch()\n# Calculate the maximum log file size (15% of disk capacity or 4GB, whichever is smaller)\nmax_log_size = min(\n    0.15 * shutil.disk_usage(log_file_path.parent).total,\n    4 * 1024 * 1024 * 1024,\n)",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "max_log_size",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "max_log_size = min(\n    0.15 * shutil.disk_usage(log_file_path.parent).total,\n    4 * 1024 * 1024 * 1024,\n)\n# Create a temporary directory to hold old log files\ntemp_dir = Path(tempfile.mkdtemp())\n# Create a RotatingFileHandler with log rotation based on size\nfile_handler = RotatingFileHandler(\n    log_file_path,\n    maxBytes=int(max_log_size),",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "temp_dir",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "temp_dir = Path(tempfile.mkdtemp())\n# Create a RotatingFileHandler with log rotation based on size\nfile_handler = RotatingFileHandler(\n    log_file_path,\n    maxBytes=int(max_log_size),\n    backupCount=10,\n)\n# Set the formatter for the file handler\nfile_handler.setFormatter(formatter)\n# Add the file handler to the logger object",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "file_handler",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "file_handler = RotatingFileHandler(\n    log_file_path,\n    maxBytes=int(max_log_size),\n    backupCount=10,\n)\n# Set the formatter for the file handler\nfile_handler.setFormatter(formatter)\n# Add the file handler to the logger object\nlogger.addHandler(file_handler)\n# Create a stream handler",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "stream_handler",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "stream_handler = logging.StreamHandler()\n# Set the formatter for the stream handler\nstream_handler.setFormatter(formatter)\n# Add the stream handler to the logger object\nlogger.addHandler(stream_handler)\n# Clean up old log files in the temporary directory\nthreshold = datetime.now() - timedelta(days=7)  # Remove log files older than 7 days\nfor old_log_file in temp_dir.glob(\"*.log\"):\n    try:\n        file_time = datetime.fromtimestamp(old_log_file.stat().st_mtime)",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "threshold",
+        "kind": 5,
+        "importPath": "src.core.logger",
+        "description": "src.core.logger",
+        "peekOfCode": "threshold = datetime.now() - timedelta(days=7)  # Remove log files older than 7 days\nfor old_log_file in temp_dir.glob(\"*.log\"):\n    try:\n        file_time = datetime.fromtimestamp(old_log_file.stat().st_mtime)\n        if file_time < threshold:\n            old_log_file.unlink()\n    except Exception as error:\n        logger.error(f\"Failed to delete old log file {old_log_file}: {error}\")\n# Remove the temporary directory\ntry:",
+        "detail": "src.core.logger",
+        "documentation": {}
+    },
+    {
+        "label": "Filter",
+        "kind": 6,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "class Filter(BaseModel):\n    \"\"\"Filter to be applied to a query.\"\"\"\n    field: str\n    operator: str\n    value: str | int\nclass CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):\n    \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\"\"\"\n    def __init__(self: \"CRUDBase\", model: type[ModelType]):\n        \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\n        **Parameters**",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDBase",
+        "kind": 6,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):\n    \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\"\"\"\n    def __init__(self: \"CRUDBase\", model: type[ModelType]):\n        \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\n        **Parameters**\n        * `model`: A SQLAlchemy model class\n        * `schema`: A Pydantic model (schema) class\n        \"\"\"\n        self.model = model\n    def _get_filters(self: \"CRUDBase\", items: list[Filter]) -> list[SQLQuery]:",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "count",
+        "kind": 2,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "def count(\n    self: \"CRUDBase\",\n    db: Session,\n    filters: list[Filter] | None = None,\n) -> int:\n    \"\"\"Get the number of elements that can be filtered.\n    Args:\n        db (Session): Database session.\n        filters (list[Filter], optional): Filters to apply, where each filter is a tuple\n            of (operator, value). Defaults to None.",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "ModelType",
+        "kind": 5,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "ModelType = TypeVar(\"ModelType\", bound=Base)\nCreateSchemaType = TypeVar(\"CreateSchemaType\", bound=BaseModel)\nUpdateSchemaType = TypeVar(\"UpdateSchemaType\", bound=BaseModel)\nclass Filter(BaseModel):\n    \"\"\"Filter to be applied to a query.\"\"\"\n    field: str\n    operator: str\n    value: str | int\nclass CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):\n    \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\"\"\"",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "CreateSchemaType",
+        "kind": 5,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "CreateSchemaType = TypeVar(\"CreateSchemaType\", bound=BaseModel)\nUpdateSchemaType = TypeVar(\"UpdateSchemaType\", bound=BaseModel)\nclass Filter(BaseModel):\n    \"\"\"Filter to be applied to a query.\"\"\"\n    field: str\n    operator: str\n    value: str | int\nclass CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):\n    \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\"\"\"\n    def __init__(self: \"CRUDBase\", model: type[ModelType]):",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "UpdateSchemaType",
+        "kind": 5,
+        "importPath": "src.db.crud.base",
+        "description": "src.db.crud.base",
+        "peekOfCode": "UpdateSchemaType = TypeVar(\"UpdateSchemaType\", bound=BaseModel)\nclass Filter(BaseModel):\n    \"\"\"Filter to be applied to a query.\"\"\"\n    field: str\n    operator: str\n    value: str | int\nclass CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):\n    \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).\"\"\"\n    def __init__(self: \"CRUDBase\", model: type[ModelType]):\n        \"\"\"CRUD object with default methods to Create, Read, Update, Delete (CRUD).",
+        "detail": "src.db.crud.base",
+        "documentation": {}
+    },
+    {
+        "label": "Filter",
+        "kind": 6,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "class Filter(BaseModel):\n    \"\"\"Filter to be applied to a query.\"\"\"\n    field: str\n    operator: str\n    value: str | int\ndef get_filters(db_model, items: list[Filter]) -> list[SQLQuery]:\n    \"\"\"Get the filters to be applied to a query.\n    Args:\n        db_model (_type_): SQLAlchemy Model to be queried.\n        items (list[Filter]): List of filters to be applied.",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_filters",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def get_filters(db_model, items: list[Filter]) -> list[SQLQuery]:\n    \"\"\"Get the filters to be applied to a query.\n    Args:\n        db_model (_type_): SQLAlchemy Model to be queried.\n        items (list[Filter]): List of filters to be applied.\n    Raises:\n        ValueError: If the operator is not supported.\n    Returns:\n        list[SQLQuery]: List of filters to be applied.\n    \"\"\"",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_list",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def get_list(\n    db_model: Base,\n    limit: int,\n    offset: int,\n    filters: list[Filter] | None = None,\n    default_query: SQLQuery | None = None,\n    join_fields: list[str] | None = None,\n) -> list[Base] | None:\n    \"\"\"Get a list of elements that can be filtered.\n    Result requires mapping the objects to the desired response.",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "count",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def count(\n    db_model: Base,\n    filters: dict[str, tuple[str, object]] = None,  # type: ignore\n) -> int:\n    \"\"\"Get the number of elements that can be filtered.\n    Args:\n        db_model (Base): Model to be queried for.\n        filters (dict[str, Tuple[str, object]], optional): Filters to apply, where each filter is a tuple of (operator, value). Defaults to None.\n    Returns:\n        int: Number of elements that match the query.",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_by_id",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def get_by_id(\n    db_model: Base,\n    api_model_id: int,\n    default_query: Query = None,  # type: ignore\n    join_fields: list[str] = None,  # type: ignore\n) -> Union[Base, None]:\n    \"\"\"Returns an object of the model specified.\n    Args:\n        db_model (Base): Model to be queried.\n        api_model_id (int): ID of the row in the DB.",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "get_one_by_field",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def get_one_by_field(db_model: Base, field: str, value: str) -> Union[Base, None]:\n    \"\"\"Returns an object of the model specified.\n    Args:\n        db_model (Base): Model to be queried.\n        field (str): Field of the row in the DB.\n        value (str): Value to compare the Field with.\n    Raises:\n        sqlalchemy.orm.exc.NoResultFound: if the query selects no rows.\n        sqlalchemy.orm.exc.MultipleResultsFound: if multiple object identities are returned, or if multiple rows are returned for a query that returns only scalar values as opposed to full identity-mapped entities.\n    Returns:",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "delete_by_id",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def delete_by_id(db_model: Base, api_model_id: int, soft_delete: bool = False) -> Union[Base, None]:\n    \"\"\"Deletes a Model instance by its ID.\n    Args:\n        db_model (Base): Model to be queried.\n        api_model_id (int): ID of the object to be removed.\n        soft_delete (bool): If the element calls soft_delete method of the model. Defaults to False.\n    Raises:\n        OperationalError: If there was a database error.\n    Returns:\n        Union[Base, None]: The deleted object or None if couldn't find the object.",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "create",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def create(model_object: Base) -> int:\n    \"\"\"Create a Model instance.\n    Args:\n        model_object (Base): DB Model instance to be created.\n    Raises:\n        OperationalError: If there was a database error.\n    Returns:\n        int: The ID of the created object.\n    \"\"\"\n    with Session() as session:",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "update",
+        "kind": 2,
+        "importPath": "src.db.crud.crud",
+        "description": "src.db.crud.crud",
+        "peekOfCode": "def update(model_object: Base) -> Union[Base, None]:\n    \"\"\"Updates the provided model object with the given object and returns the updated object.\n    Args:\n        model_object (Base): The model object that is going to be merge with the database.\n    Raises:\n        OperationalError: An exception that occurred during the database update.\n    Returns:\n        Base: The updated model object.\n    \"\"\"\n    with Session() as session:",
+        "detail": "src.db.crud.crud",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDToken",
+        "kind": 6,
+        "importPath": "src.db.crud.crud_token",
+        "description": "src.db.crud.crud_token",
+        "peekOfCode": "class CRUDToken(CRUDBase[Token, RefreshTokenCreate, RefreshTokenUpdate]):\n    # Everything is user-dependent\n    def create(self, db: Session, *, obj_in: str, user_obj: User) -> Token:\n        db_obj = db.query(self.model).filter(self.model.token == obj_in).first()\n        if db_obj and db_obj.authenticates != user_obj:\n            raise ValueError(\"Token mismatch between key and user.\")\n        obj_in = RefreshTokenCreate(\n            token=obj_in,\n            authenticates_id=user_obj.id,\n        )",
+        "detail": "src.db.crud.crud_token",
+        "documentation": {}
+    },
+    {
+        "label": "token",
+        "kind": 5,
+        "importPath": "src.db.crud.crud_token",
+        "description": "src.db.crud.crud_token",
+        "peekOfCode": "token = CRUDToken(Token)",
+        "detail": "src.db.crud.crud_token",
+        "documentation": {}
+    },
+    {
+        "label": "CRUDUser",
+        "kind": 6,
+        "importPath": "src.db.crud.crud_user",
+        "description": "src.db.crud.crud_user",
+        "peekOfCode": "class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):\n    def get_by_email(self: \"CRUDUser\", db: Session, *, email: str) -> User | None:\n        return db.query(User).filter(User.email == email).first()\n    def create(self: \"CRUDUser\", db: Session, *, obj_in: UserCreate) -> User:\n        db_obj = User(\n            email=obj_in.email,\n            hashed_password=get_password_hash(obj_in.password)\n            if obj_in.password is not None\n            else None,\n            full_name=obj_in.full_name,",
+        "detail": "src.db.crud.crud_user",
+        "documentation": {}
+    },
+    {
+        "label": "user",
+        "kind": 5,
+        "importPath": "src.db.crud.crud_user",
+        "description": "src.db.crud.crud_user",
+        "peekOfCode": "user = CRUDUser(User)",
+        "detail": "src.db.crud.crud_user",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 6,
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "peekOfCode": "class Base(DeclarativeBase):\n    id: Mapped[UUID] = mapped_column(\n        UUID(as_uuid=True),\n        primary_key=True,\n        index=True,\n        default=uuid4,\n    )\n    # Generate __tablename__ automatically\n    @declared_attr\n    def __tablename__(cls) -> str:",
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "BaseTimestamps",
+        "kind": 6,
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "peekOfCode": "class BaseTimestamps(Base):\n    __abstract__ = True\n    created: Mapped[datetime] = mapped_column(\n        DateTime(timezone=True),\n        server_default=func.now(),\n        nullable=False,\n    )\n    modified: Mapped[datetime] = mapped_column(\n        DateTime(timezone=True),\n        server_default=func.now(),",
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "BaseDeletedOn",
+        "kind": 6,
+        "importPath": "src.db.models.base",
+        "description": "src.db.models.base",
+        "peekOfCode": "class BaseDeletedOn(Base):\n    __abstract__ = True\n    deleted_on: Mapped[datetime] = mapped_column(\n        DateTime(timezone=False),\n        nullable=True,\n    )\n    def soft_delete(self):\n        self.deleted_on = datetime.now()\n        return self",
+        "detail": "src.db.models.base",
+        "documentation": {}
+    },
+    {
+        "label": "Token",
+        "kind": 6,
+        "importPath": "src.db.models.token",
+        "description": "src.db.models.token",
+        "peekOfCode": "class Token(Base):\n    token: Mapped[str] = mapped_column(primary_key=True, index=True)\n    authenticates_id: Mapped[UUID] = mapped_column(\n        UUID(as_uuid=True),\n        ForeignKey(\"user.id\"),\n    )\n    authenticates: Mapped[User] = relationship(back_populates=\"refresh_tokens\")",
+        "detail": "src.db.models.token",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "src.db.models.user",
+        "description": "src.db.models.user",
+        "peekOfCode": "class User(Base):\n    # METADATA\n    full_name: Mapped[str] = mapped_column(index=True, nullable=True)\n    email: Mapped[str] = mapped_column(unique=True, index=True, nullable=False)\n    hashed_password: Mapped[Optional[str]] = mapped_column(nullable=True)\n    # AUTHENTICATION AND PERSISTENCE\n    totp_secret: Mapped[Optional[str]] = mapped_column(nullable=True)\n    totp_counter: Mapped[Optional[int]] = mapped_column(nullable=True)\n    email_validated: Mapped[bool] = mapped_column(default=False)\n    is_active: Mapped[bool] = mapped_column(default=True)",
+        "detail": "src.db.models.user",
+        "documentation": {}
+    },
+    {
+        "label": "init_db",
+        "kind": 2,
+        "importPath": "src.db.create_db",
+        "description": "src.db.create_db",
+        "peekOfCode": "def init_db() -> None:\n    \"\"\"Initialize the database.\"\"\"\n    # Creates database if it doesn't exist.\n    if not database_exists(engine.url):\n        create_database(engine.url)\n    with engine.begin() as conn:\n        # Creates the tables if they don't exist.\n        Base.metadata.create_all(bind=conn)\n    crud_user = CRUDUser()\n    with get_db_session() as db:",
+        "detail": "src.db.create_db",
+        "documentation": {}
+    },
+    {
+        "label": "get_db_session",
+        "kind": 2,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "def get_db_session() -> Iterator[Session]:\n    \"\"\"Get a SQLAlchemy database session.\n    Yields:\n        Generator[Session, None, None]: A SQLAlchemy database session.\n    Example:\n        Usage in a FastAPI route:\n        ```python\n        @app.get(\"/example/\")\n        async def example_route(db: Session = Depends(get_db_session)):\n            # Your route logic here",
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "engine",
+        "kind": 5,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), pool_pre_ping=True)\n# Create a session factory\nsession_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n@contextmanager()\ndef get_db_session() -> Iterator[Session]:\n    \"\"\"Get a SQLAlchemy database session.\n    Yields:\n        Generator[Session, None, None]: A SQLAlchemy database session.\n    Example:\n        Usage in a FastAPI route:",
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "session_local",
+        "kind": 5,
+        "importPath": "src.db.session",
+        "description": "src.db.session",
+        "peekOfCode": "session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)\n@contextmanager()\ndef get_db_session() -> Iterator[Session]:\n    \"\"\"Get a SQLAlchemy database session.\n    Yields:\n        Generator[Session, None, None]: A SQLAlchemy database session.\n    Example:\n        Usage in a FastAPI route:\n        ```python\n        @app.get(\"/example/\")",
+        "detail": "src.db.session",
+        "documentation": {}
+    },
+    {
+        "label": "MyHTTPXClient",
+        "kind": 6,
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "peekOfCode": "class MyHTTPXClient:\n    def __init__(self, base_url: str, headers: dict = None):\n        self.base_url = base_url\n        self.headers = headers or REQUEST_HEADERS\n    def request(\n        self,\n        method: str,\n        url: str,\n        headers: dict = None,\n        params: dict = None,",
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "test_db_setup_sessionmaker",
+        "kind": 2,
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "peekOfCode": "def test_db_setup_sessionmaker():\n    # assert if we use TEST_DB URL for 100%\n    assert config.settings.ENVIRONMENT == \"PYTEST\"\n    # always drop and create test db tables between tests session\n    with engine.begin() as conn:\n        Base.metadata.drop_all(bind=conn)\n        Base.metadata.create_all(bind=conn)\nclass MyHTTPXClient:\n    def __init__(self, base_url: str, headers: dict = None):\n        self.base_url = base_url",
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "client",
+        "kind": 2,
+        "importPath": "src.tests.conftest",
+        "description": "src.tests.conftest",
+        "peekOfCode": "def client() -> MyHTTPXClient:\n    return MyHTTPXClient(base_url=\"http://localhost:8000/offices-system/v1\")",
+        "detail": "src.tests.conftest",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_office",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def assert_200_office(response: Response):\n    assert response.status_code == status.HTTP_200_OK\n    office_response = OfficeResponse.parse_obj(response.json())\n    assert isinstance(office_response, OfficeResponse)\n    assert isinstance(office_response.data[0], OfficeResponseDataInner)\n    assert isinstance(office_response.pagination, Pagination)\ndef assert_200_office_id(response: Response):\n    assert response.status_code == status.HTTP_200_OK\n    office_response = OfficeData.parse_obj(response.json())\n    assert isinstance(office_response, OfficeData)",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_office_id",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def assert_200_office_id(response: Response):\n    assert response.status_code == status.HTTP_200_OK\n    office_response = OfficeData.parse_obj(response.json())\n    assert isinstance(office_response, OfficeData)\n    assert isinstance(office_response.data, OfficeDataData)\n@pytest.mark.order(2)\ndef test_get_offices(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices\n    List of offices.\n    \"\"\"",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def test_get_offices(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices\n    List of offices.\n    \"\"\"\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": \"/offices\",\n        \"headers\": REQUEST_HEADERS,\n        \"params\": [(\"limit\", 10), (\"offset\", 0), (\"address_province\", \"address_province_example\")],\n    }",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices_office_id",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def test_get_offices_office_id(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id\n    Office information.\n    \"\"\"\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": f\"/offices/{56}\",\n        \"headers\": REQUEST_HEADERS,\n    }\n    response = client.request(**kwargs)",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_offices",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def test_post_offices(client: MyHTTPXClient):\n    \"\"\"Test case for post_offices\n    Create a new office.\n    \"\"\"\n    kwargs = {\n        \"method\": \"POST\",\n        \"url\": \"/offices\",\n        \"headers\": REQUEST_HEADERS,\n        \"json\": {\n            \"data\": {",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_put_offices_office_id",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def test_put_offices_office_id(client: MyHTTPXClient):\n    \"\"\"Test case for put_offices_office_id\n    Update information from a office.\n    \"\"\"\n    kwargs = {\n        \"method\": \"PUT\",\n        \"url\": f\"/offices/{56}\",\n        \"headers\": REQUEST_HEADERS,\n        \"json\": {\n            \"data\": {",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_delete_offices_office_id",
+        "kind": 2,
+        "importPath": "src.tests.test_offices_api",
+        "description": "src.tests.test_offices_api",
+        "peekOfCode": "def test_delete_offices_office_id(client: MyHTTPXClient):\n    \"\"\"Test case for delete_offices_office_id\n    Delete specific office.\n    \"\"\"\n    kwargs = {\n        \"method\": \"DELETE\",\n        \"url\": f\"/offices/{56}\",\n        \"headers\": REQUEST_HEADERS,\n    }\n    response = client.request(**kwargs)",
+        "detail": "src.tests.test_offices_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_sector",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def assert_200_sector(response: Response):\n    assert response.status_code == 200\n    sector_response = SectorResponse.parse_obj(response.json())\n    assert isinstance(sector_response, SectorResponse)\n    assert isinstance(sector_response.data[0], SectorResponseDataInner)\n    assert isinstance(sector_response.pagination, Pagination)\ndef assert_200_sector_id(response: Response):\n    assert response.status_code == 200\n    sector_response = SectorData.parse_obj(response.json())\n    assert isinstance(sector_response, SectorData)",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_sector_id",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def assert_200_sector_id(response: Response):\n    assert response.status_code == 200\n    sector_response = SectorData.parse_obj(response.json())\n    assert isinstance(sector_response, SectorData)\n    assert isinstance(sector_response.data, SectorDataData)\n@pytest.mark.order(6)\ndef test_get_offices_office_id_sectors(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors\n    List of sectors.\n    \"\"\"",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices_office_id_sectors",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def test_get_offices_office_id_sectors(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors\n    List of sectors.\n    \"\"\"\n    params = [(\"limit\", 10), (\"offset\", 0)]\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": f\"/offices/{56}/sectors\",\n        \"headers\": REQUEST_HEADERS,\n        \"params\": params,",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices_office_id_sectors_sector_id",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def test_get_offices_office_id_sectors_sector_id(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors_sector_id\n    Sector information.\n    \"\"\"\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": f\"/offices/{56}/sectors/{56}\",\n        \"headers\": REQUEST_HEADERS,\n    }\n    response = client.request(**kwargs)",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_offices_office_id_sectors",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def test_post_offices_office_id_sectors(client: MyHTTPXClient):\n    \"\"\"Test case for post_offices_office_id_sectors\n    Create a new sector.\n    \"\"\"\n    post_offices_office_id_sectors_request = {\"name\": \"O+D\", \"isPhysical\": False}\n    kwargs = {\n        \"method\": \"POST\",\n        \"url\": f\"/offices/{56}/sectors\",\n        \"headers\": REQUEST_HEADERS,\n        \"json\": post_offices_office_id_sectors_request,",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_put_offices_office_id_sectors_sector_id",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def test_put_offices_office_id_sectors_sector_id(client: MyHTTPXClient):\n    \"\"\"Test case for put_offices_office_id_sectors_sector_id\n    Update information from a sector.\n    \"\"\"\n    post_offices_office_id_sectors_request = {\"name\": \"O+D\", \"isPhysical\": False}\n    kwargs = {\n        \"method\": \"PUT\",\n        \"url\": f\"/offices/{56}/sectors/{56}\",\n        \"headers\": REQUEST_HEADERS,\n        \"json\": post_offices_office_id_sectors_request,",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_delete_offices_office_id_sectors_sector_id",
+        "kind": 2,
+        "importPath": "src.tests.test_sectors_api",
+        "description": "src.tests.test_sectors_api",
+        "peekOfCode": "def test_delete_offices_office_id_sectors_sector_id(client: MyHTTPXClient):\n    \"\"\"Test case for delete_offices_office_id_sectors_sector_id\n    Delete specific sector.\n    \"\"\"\n    kwargs = {\n        \"method\": \"DELETE\",\n        \"url\": f\"/offices/{56}/sectors/{56}\",\n        \"headers\": REQUEST_HEADERS,\n    }\n    response = client.request(**kwargs)",
+        "detail": "src.tests.test_sectors_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_workstation",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def assert_200_workstation(response: Response):\n    assert response.status_code == 200\n    workstation_response = WorkstationResponse.parse_obj(response.json())\n    assert isinstance(workstation_response, WorkstationResponse)\n    assert isinstance(workstation_response.data[0], WorkstationResponseDataInner)\n    assert isinstance(workstation_response.pagination, Pagination)\ndef assert_200_workstation_id(response: Response):\n    assert response.status_code == 200\n    workstation_response = WorkstationData.parse_obj(response.json())\n    assert isinstance(workstation_response, WorkstationData)",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_200_workstation_id",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def assert_200_workstation_id(response: Response):\n    assert response.status_code == 200\n    workstation_response = WorkstationData.parse_obj(response.json())\n    assert isinstance(workstation_response, WorkstationData)\n    assert isinstance(workstation_response.data, WorkstationDataData)\n@pytest.mark.order(10)\ndef test_get_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors_sector_id_workstations\n    List of Workstations.\n    \"\"\"",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices_office_id_sectors_sector_id_workstations",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def test_get_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors_sector_id_workstations\n    List of Workstations.\n    \"\"\"\n    params = [(\"limit\", 10), (\"offset\", 0)]\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": f\"/offices/{56}/sectors/{56}/workstations\",\n        \"headers\": REQUEST_HEADERS,\n        \"params\": params,",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_get_offices_office_id_sectors_sector_id_workstations_workstation_id",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def test_get_offices_office_id_sectors_sector_id_workstations_workstation_id(client: MyHTTPXClient):\n    \"\"\"Test case for get_offices_office_id_sectors_sector_id_workstations_workstation_id\n    Wokstation information.\n    \"\"\"\n    kwargs = {\n        \"method\": \"GET\",\n        \"url\": f\"/offices/{56}/sectors/{56}/workstations/{56}\",\n        \"headers\": REQUEST_HEADERS,\n    }\n    response = client.request(**kwargs)",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_post_offices_office_id_sectors_sector_id_workstations",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def test_post_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXClient):\n    \"\"\"Test case for post_offices_office_id_sectors_sector_id_workstations\n    Create a new workstations.\n    \"\"\"\n    json_body = {\n        \"name\": \"Site 11\",\n        \"position\": 80,\n        \"xCoordinate\": 20,\n        \"yCoordinate\": 100,\n        \"rotation\": 180,",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_put_offices_office_id_sectors_sector_id_workstation_workstation_id",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def test_put_offices_office_id_sectors_sector_id_workstation_workstation_id(client: MyHTTPXClient):\n    \"\"\"Test case for put_offices_office_id_sectors_sector_id_workstation_workstation_id\n    Update information from a workstations.\n    \"\"\"\n    json_body = {\n        \"name\": \"Site 11\",\n        \"position\": 80,\n        \"xCoordinate\": 20,\n        \"yCoordinate\": 100,\n        \"rotation\": 180,",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_delete_offices_office_id_sectors_sector_id_workstation_workstation_id",
+        "kind": 2,
+        "importPath": "src.tests.test_workstations_api",
+        "description": "src.tests.test_workstations_api",
+        "peekOfCode": "def test_delete_offices_office_id_sectors_sector_id_workstation_workstation_id(\n    client: MyHTTPXClient,\n):\n    \"\"\"Test case for delete_offices_office_id_sectors_sector_id_workstation_workstation_id\n    Delete specific workstation.\n    \"\"\"\n    kwargs = {\n        \"method\": \"DELETE\",\n        \"url\": f\"/offices/{56}/sectors/{56}/workstations/{56}\",\n        \"headers\": REQUEST_HEADERS,",
+        "detail": "src.tests.test_workstations_api",
+        "documentation": {}
+    },
+    {
+        "label": "assert_400",
+        "kind": 2,
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "peekOfCode": "def assert_400(response: Response):\n    assert response.status_code == status.HTTP_400_BAD_REQUEST\n    assert str(response.json()) == str(ERROR_RESPONSES.get(400).dict())\n    assert \"X-Request-ID\" in response.headers\ndef assert_404(response: Response):\n    assert response.status_code == status.HTTP_404_NOT_FOUND\n    assert str(response.json()) == str(ERROR_RESPONSES.get(404).dict())\n    assert \"X-Request-ID\" in response.headers\ndef assert_204(response: Response):\n    assert response.status_code == status.HTTP_204_NO_CONTENT",
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_404",
+        "kind": 2,
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "peekOfCode": "def assert_404(response: Response):\n    assert response.status_code == status.HTTP_404_NOT_FOUND\n    assert str(response.json()) == str(ERROR_RESPONSES.get(404).dict())\n    assert \"X-Request-ID\" in response.headers\ndef assert_204(response: Response):\n    assert response.status_code == status.HTTP_204_NO_CONTENT\n    assert \"X-Request-ID\" in response.headers\ndef assert_201(response: Response):\n    assert response.status_code == status.HTTP_201_CREATED\n    assert \"X-Request-ID\" in response.headers",
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_204",
+        "kind": 2,
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "peekOfCode": "def assert_204(response: Response):\n    assert response.status_code == status.HTTP_204_NO_CONTENT\n    assert \"X-Request-ID\" in response.headers\ndef assert_201(response: Response):\n    assert response.status_code == status.HTTP_201_CREATED\n    assert \"X-Request-ID\" in response.headers\n    # TODO\n    # assert \"Location\" in response.headers",
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "assert_201",
+        "kind": 2,
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "peekOfCode": "def assert_201(response: Response):\n    assert response.status_code == status.HTTP_201_CREATED\n    assert \"X-Request-ID\" in response.headers\n    # TODO\n    # assert \"Location\" in response.headers",
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "REQUEST_HEADERS",
+        "kind": 5,
+        "importPath": "src.tests.utils",
+        "description": "src.tests.utils",
+        "peekOfCode": "REQUEST_HEADERS = {\n    \"Accept-Language\": \"en-EN\",\n    \"X-Request-ID\": \"54b9c11c-9162-45a1-a352-0d95734cd079\",\n    # \"Authorization\": \"Bearer special-key\",\n}\ndef assert_400(response: Response):\n    assert response.status_code == status.HTTP_400_BAD_REQUEST\n    assert str(response.json()) == str(ERROR_RESPONSES.get(400).dict())\n    assert \"X-Request-ID\" in response.headers\ndef assert_404(response: Response):",
+        "detail": "src.tests.utils",
+        "documentation": {}
+    },
+    {
+        "label": "ACCEPT_LANGUAGE_REGEX",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "ACCEPT_LANGUAGE_REGEX = r\"^[a-z]{2}-[A-Z]{2}$\"\nX_REQUEST_ID_REGEX = (\n    r\"^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$\"\n)\nport = 8000\nbase_path = \"offices-system\"\nmajor_version = \"v1\"\nroot_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "X_REQUEST_ID_REGEX",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "X_REQUEST_ID_REGEX = (\n    r\"^[0-9a-fA-F]{8}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{4}\\-[0-9a-fA-F]{12}$\"\n)\nport = 8000\nbase_path = \"offices-system\"\nmajor_version = \"v1\"\nroot_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "port",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "port = 8000\nbase_path = \"offices-system\"\nmajor_version = \"v1\"\nroot_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    version=\"1.0.0\",\n    description=\"{{cookiecutter.project_description}}\",\n    contact={",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "base_path",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "base_path = \"offices-system\"\nmajor_version = \"v1\"\nroot_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    version=\"1.0.0\",\n    description=\"{{cookiecutter.project_description}}\",\n    contact={\n        \"name\": \"{{cookiecutter.author_name}}\",",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "major_version",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "major_version = \"v1\"\nroot_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    version=\"1.0.0\",\n    description=\"{{cookiecutter.project_description}}\",\n    contact={\n        \"name\": \"{{cookiecutter.author_name}}\",\n        \"email\": \"{{cookiecutter.author_email}}\",",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "root_path",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "root_path = f\"/{base_path}/{major_version}\"\napp = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    version=\"1.0.0\",\n    description=\"{{cookiecutter.project_description}}\",\n    contact={\n        \"name\": \"{{cookiecutter.author_name}}\",\n        \"email\": \"{{cookiecutter.author_email}}\",\n    },",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "app = FastAPI(\n    title=settings.PROJECT_NAME,\n    openapi_url=f\"{settings.API_V1_STR}/openapi.json\",\n    version=\"1.0.0\",\n    description=\"{{cookiecutter.project_description}}\",\n    contact={\n        \"name\": \"{{cookiecutter.author_name}}\",\n        \"email\": \"{{cookiecutter.author_email}}\",\n    },\n    servers=[",
+        "detail": "src.app",
+        "documentation": {}
+    }
+]

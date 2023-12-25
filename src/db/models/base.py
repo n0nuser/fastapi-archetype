@@ -1,21 +1,24 @@
-"""
-SQL Alchemy models declaration.
+"""SQL Alchemy models declaration.
 https://docs.sqlalchemy.org/en/20/orm/declarative_styles.html#example-two-dataclasses-with-declarative-table
 Dataclass style for powerful autocompletion support.
 """
 
 from datetime import datetime
+from uuid import uuid4
 
 from sqlalchemy import DateTime
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
-from sqlalchemy.sql import func
 from sqlalchemy.dialects.postgresql import UUID
-from uuid import uuid4
+from sqlalchemy.orm import (DeclarativeBase, Mapped, declared_attr,
+                            mapped_column)
+from sqlalchemy.sql import func
 
 
 class Base(DeclarativeBase):
     id: Mapped[UUID] = mapped_column(
-        UUID(as_uuid=True), primary_key=True, index=True, default=uuid4
+        UUID(as_uuid=True),
+        primary_key=True,
+        index=True,
+        default=uuid4,
     )
 
     # Generate __tablename__ automatically
@@ -42,7 +45,8 @@ class BaseTimestamps(Base):
 class BaseDeletedOn(Base):
     __abstract__ = True
     deleted_on: Mapped[datetime] = mapped_column(
-        DateTime(timezone=False), nullable=True
+        DateTime(timezone=False),
+        nullable=True,
     )
 
     def soft_delete(self):

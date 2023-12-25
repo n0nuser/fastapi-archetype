@@ -16,7 +16,8 @@ class Unauthorized(Exception):
     """Error 401"""
 
     def __init__(
-        self, message="The call needs some kind of authorization either expired or not reported."
+        self,
+        message="The call needs some kind of authorization either expired or not reported.",
     ):
         self.message = message
         super().__init__(self.message)
@@ -93,7 +94,8 @@ class PayloadTooLarge(Exception):
     """Error 413"""
 
     def __init__(
-        self, message="The size of the client request has exceeded the server's file size limit."
+        self,
+        message="The size of the client request has exceeded the server's file size limit.",
     ):
         self.message = message
         super().__init__(self.message)
@@ -131,7 +133,8 @@ class TooManyRequests(Exception):
     """Error 429"""
 
     def __init__(
-        self, message="Too many requests in a given period of time and limit has been exceeded."
+        self,
+        message="Too many requests in a given period of time and limit has been exceeded.",
     ):
         self.message = message
         super().__init__(self.message)
@@ -144,7 +147,8 @@ class UnprocessableEntity(Exception):
     """Error 422"""
 
     def __init__(
-        self, message="The structure of the request is correct, but it is not semantically correct."
+        self,
+        message="The structure of the request is correct, but it is not semantically correct.",
     ):
         self.message = message
         super().__init__(self.message)

@@ -1,16 +1,13 @@
-# coding: utf-8
-
 from typing import Optional
 
 from pydantic import BaseModel, Field, validator
 
 
 class PostExamplesRequest(BaseModel):
-    """
-    PostExamplesRequest - a model defined in OpenAPI
+    """PostExamplesRequest - a model defined in OpenAPI
 
-        value1: The value1 of this PostExamplesRequest.
-        value2: The value2 of this PostExamplesRequest [Optional].
+    value1: The value1 of this PostExamplesRequest.
+    value2: The value2 of this PostExamplesRequest [Optional].
     """
 
     value1: str = Field(alias="value1")

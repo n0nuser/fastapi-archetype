@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import re
 from typing import Optional
 
@@ -22,7 +20,8 @@ class PaginationLinksPrev(BaseModel):
     def href_pattern(cls, value):
         if value is not None:
             assert re.match(
-                r"^(https?://)?([\w.-]+)(:[0-9]+)?(/[a-zA-Z0-9/-]*)?(\?[\w=&]*)?$", value
+                r"^(https?://)?([\w.-]+)(:[0-9]+)?(/[a-zA-Z0-9/-]*)?(\?[\w=&]*)?$",
+                value,
             )
         return value
 

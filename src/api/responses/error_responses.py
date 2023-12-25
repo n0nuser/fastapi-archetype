@@ -9,7 +9,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Bad Request",
                 description="The request is incorrect because the selected parameters are wrong or a functional error has occurred.",
-            )
+            ),
         ],
     ),
     401: ErrorMessage(
@@ -19,7 +19,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Unauthorized",
                 description="The call needs some kind of authorization either expired or not reported.",
-            )
+            ),
         ],
     ),
     403: ErrorMessage(
@@ -29,7 +29,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Forbidden",
                 description="You do not have permissions to operate with this invocation.",
-            )
+            ),
         ],
     ),
     404: ErrorMessage(
@@ -39,7 +39,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Not Found",
                 description="Resource not found.",
-            )
+            ),
         ],
     ),
     405: ErrorMessage(
@@ -49,7 +49,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Method not allowed",
                 description="The request method is known by the server but is not supported by the target resource.",
-            )
+            ),
         ],
     ),
     406: ErrorMessage(
@@ -59,7 +59,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Not Acceptable",
                 description='The format indicated in the "Accept" header of the request is not supported by the destination server.',
-            )
+            ),
         ],
     ),
     409: ErrorMessage(
@@ -69,7 +69,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Conflict",
                 description="The request has not been completed due to a conflict with the current status of the resource.",
-            )
+            ),
         ],
     ),
     413: ErrorMessage(
@@ -79,7 +79,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Payload Too Large",
                 description="The size of the client request has exceeded the server's file size limit.",
-            )
+            ),
         ],
     ),
     414: ErrorMessage(
@@ -89,7 +89,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="URI Too Long",
                 description="The size of the client request has exceeded the server's file size limit.",
-            )
+            ),
         ],
     ),
     415: ErrorMessage(
@@ -99,7 +99,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Unsupported Media Type",
                 description='Incorrect format of the response, does not match the one indicated in the "Content-Type" header.',
-            )
+            ),
         ],
     ),
     422: ErrorMessage(
@@ -109,7 +109,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Unprocessable Entity",
                 description="The structure of the request is correct, but it is not semantically correct.",
-            )
+            ),
         ],
     ),
     423: ErrorMessage(
@@ -119,7 +119,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Locked",
                 description="The resource you are trying to access is blocked.",
-            )
+            ),
         ],
     ),
     429: ErrorMessage(
@@ -129,7 +129,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Too Many Requests",
                 description="Too many requests in a given period of time and limit has been exceeded.",
-            )
+            ),
         ],
     ),
     500: ErrorMessage(
@@ -139,7 +139,7 @@ ERROR_RESPONSES = {
                 type="FATAL",
                 message="Internal server error",
                 description="Unexpected error from the server, it has no way to respond to the invocation.",
-            )
+            ),
         ],
         description="Internal Server Error.",
     ),
@@ -150,7 +150,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Not implemented",
                 description="The functionality is not supported by the service.",
-            )
+            ),
         ],
     ),
     502: ErrorMessage(
@@ -160,7 +160,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Bad Gateway",
                 description="Indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound service that it accessed while attempting to fulfill the request.",
-            )
+            ),
         ],
     ),
     503: ErrorMessage(
@@ -170,7 +170,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Service unavailable",
                 description="Indicates that the server is unavailable to perform the request because it is overloaded or maintenance is being performed, and that it will probably be relieved after some time.",
-            )
+            ),
         ],
     ),
     504: ErrorMessage(
@@ -180,7 +180,7 @@ ERROR_RESPONSES = {
                 type="ERROR",
                 message="Gateway timeout",
                 description="Indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access to complete the request.",
-            )
+            ),
         ],
     ),
 }

@@ -1,6 +1,7 @@
 from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, EmailStr, constr, validator
+
+from pydantic import BaseModel, EmailStr, Field, constr, validator
 
 
 class UserLogin(BaseModel):

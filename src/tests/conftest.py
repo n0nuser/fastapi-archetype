@@ -24,7 +24,12 @@ class MyHTTPXClient:
         self.headers = headers or REQUEST_HEADERS
 
     def request(
-        self, method: str, url: str, headers: dict = None, params: dict = None, **kwargs
+        self,
+        method: str,
+        url: str,
+        headers: dict = None,
+        params: dict = None,
+        **kwargs,
     ):
         headers = headers or self.headers
         url = self.base_url + url
@@ -36,6 +41,6 @@ class MyHTTPXClient:
             return client.request(method, url, headers=headers, params=params, **kwargs)
 
 
-@pytest.fixture
+@pytest.fixture()
 def client() -> MyHTTPXClient:
     return MyHTTPXClient(base_url="http://localhost:8000/offices-system/v1")

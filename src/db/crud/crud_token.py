@@ -1,10 +1,11 @@
 from __future__ import annotations
+
 from sqlalchemy.orm import Session
 
-from src.db.crud.base import CRUDBase
-from src.db.models import User, Token
 from src.api.schemas.token import RefreshTokenCreate, RefreshTokenUpdate
 from src.core.config import settings
+from src.db.crud.base import CRUDBase
+from src.db.models import Token, User
 
 
 class CRUDToken(CRUDBase[Token, RefreshTokenCreate, RefreshTokenUpdate]):
@@ -14,7 +15,8 @@ class CRUDToken(CRUDBase[Token, RefreshTokenCreate, RefreshTokenUpdate]):
         if db_obj and db_obj.authenticates != user_obj:
             raise ValueError("Token mismatch between key and user.")
         obj_in = RefreshTokenCreate(
-            **{"token": obj_in, "authenticates_id": user_obj.id}
+            token=obj_in,
+            authenticates_id=user_obj.id,
         )
         return super().create(db=db, obj_in=obj_in)
 
@@ -22,7 +24,11 @@ class CRUDToken(CRUDBase[Token, RefreshTokenCreate, RefreshTokenUpdate]):
         return user.refresh_tokens.filter(self.model.token == token).first()
 
     def get_multi(
-        self, *, user: User, page: int = 0, page_break: bool = False
+        self,
+        *,
+        user: User,
+        page: int = 0,
+        page_break: bool = False,
     ) -> list[Token]:
         db_objs = user.refresh_tokens
         if not page_break:
@@ -34,7 +40,6 @@ class CRUDToken(CRUDBase[Token, RefreshTokenCreate, RefreshTokenUpdate]):
     def remove(self, db: Session, *, db_obj: Token) -> None:
         db.delete(db_obj)
         db.commit()
-        return None
 
 
 token = CRUDToken(Token)
