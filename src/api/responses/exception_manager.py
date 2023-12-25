@@ -7,11 +7,12 @@ from typing import Union
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
-from sqlalchemy.exc import IntegrityError, NoResultFound, OperationalError, ProgrammingError
+from sqlalchemy.exc import (IntegrityError, NoResultFound, OperationalError,
+                            ProgrammingError)
 
-import src.api.responses.exceptions as exceptions
-from src.api.schemas.error_message import ErrorMessage
+from src.api.responses import exceptions
 from src.api.responses.error_responses import ERROR_RESPONSES
+from src.api.schemas.error_message import ErrorMessage
 from src.core.logger import logger
 
 
@@ -98,7 +99,8 @@ def manage_api_exceptions(app: FastAPI) -> None:  # noqa: C901
 
     @app.exception_handler(exceptions.UnsupportedMediaType)
     async def unsupported_media_type_handler(
-        request: Request, exc: exceptions.UnsupportedMediaType
+        request: Request,
+        exc: exceptions.UnsupportedMediaType,
     ):
         code = status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
         return _manage_exception(request, exc, code)

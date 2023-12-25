@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import pytest
 from requests import Response
 
@@ -9,7 +7,8 @@ from src.api.schemas.sector_data_data import SectorDataData
 from src.api.schemas.sector_response import SectorResponse
 from src.api.schemas.sector_response_data_inner import SectorResponseDataInner
 from src.tests.conftest import MyHTTPXClient
-from src.tests.utils import REQUEST_HEADERS, assert_201, assert_204, assert_400, assert_404
+from src.tests.utils import (REQUEST_HEADERS, assert_201, assert_204,
+                             assert_400, assert_404)
 
 
 def assert_200_sector(response: Response):
@@ -36,7 +35,7 @@ def test_get_offices_office_id_sectors(client: MyHTTPXClient):
     params = [("limit", 10), ("offset", 0)]
     kwargs = {
         "method": "GET",
-        "url": "/offices/{officeId}/sectors".format(officeId=56),
+        "url": f"/offices/{56}/sectors",
         "headers": REQUEST_HEADERS,
         "params": params,
     }
@@ -44,7 +43,7 @@ def test_get_offices_office_id_sectors(client: MyHTTPXClient):
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors".format(officeId=1)
+    kwargs["url"] = f"/offices/{1}/sectors"
     response = client.request(**kwargs)
     assert_200_sector(response)
 
@@ -55,20 +54,19 @@ def test_get_offices_office_id_sectors_sector_id(client: MyHTTPXClient):
 
     Sector information.
     """
-
     kwargs = {
         "method": "GET",
-        "url": "/offices/{officeId}/sectors/{sectorId}".format(officeId=56, sectorId=56),
+        "url": f"/offices/{56}/sectors/{56}",
         "headers": REQUEST_HEADERS,
     }
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=56)
+    kwargs["url"] = f"/offices/{1}/sectors/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=1)
+    kwargs["url"] = f"/offices/{1}/sectors/{1}"
     response = client.request(**kwargs)
     assert_200_sector_id(response)
 
@@ -82,7 +80,7 @@ def test_post_offices_office_id_sectors(client: MyHTTPXClient):
     post_offices_office_id_sectors_request = {"name": "O+D", "isPhysical": False}
     kwargs = {
         "method": "POST",
-        "url": "/offices/{officeId}/sectors".format(officeId=56),
+        "url": f"/offices/{56}/sectors",
         "headers": REQUEST_HEADERS,
         "json": post_offices_office_id_sectors_request,
     }
@@ -90,7 +88,7 @@ def test_post_offices_office_id_sectors(client: MyHTTPXClient):
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors".format(officeId=1)
+    kwargs["url"] = f"/offices/{1}/sectors"
     response = client.request(**kwargs)
     assert_201(response)
 
@@ -107,7 +105,7 @@ def test_put_offices_office_id_sectors_sector_id(client: MyHTTPXClient):
     post_offices_office_id_sectors_request = {"name": "O+D", "isPhysical": False}
     kwargs = {
         "method": "PUT",
-        "url": "/offices/{officeId}/sectors/{sectorId}".format(officeId=56, sectorId=56),
+        "url": f"/offices/{56}/sectors/{56}",
         "headers": REQUEST_HEADERS,
         "json": post_offices_office_id_sectors_request,
     }
@@ -115,11 +113,11 @@ def test_put_offices_office_id_sectors_sector_id(client: MyHTTPXClient):
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=56)
+    kwargs["url"] = f"/offices/{1}/sectors/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=1)
+    kwargs["url"] = f"/offices/{1}/sectors/{1}"
     response = client.request(**kwargs)
     assert_204(response)
 
@@ -136,17 +134,17 @@ def test_delete_offices_office_id_sectors_sector_id(client: MyHTTPXClient):
     """
     kwargs = {
         "method": "DELETE",
-        "url": "/offices/{officeId}/sectors/{sectorId}".format(officeId=56, sectorId=56),
+        "url": f"/offices/{56}/sectors/{56}",
         "headers": REQUEST_HEADERS,
     }
 
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=56)
+    kwargs["url"] = f"/offices/{1}/sectors/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}".format(officeId=1, sectorId=1)
+    kwargs["url"] = f"/offices/{1}/sectors/{1}"
     response = client.request(**kwargs)
     assert_204(response)

@@ -5,16 +5,8 @@ from fastapi.responses import Response
 from sqlalchemy_utils import create_database
 
 from src.api.schemas.error_message import ErrorMessage
-from src.db.models import (
-    Absence,
-    Address,
-    Base,
-    Booking,
-    Office,
-    Section,
-    StatusDay,
-    Workstation,
-)
+from src.db.models import (Absence, Address, Base, Booking, Office, Section,
+                           StatusDay, Workstation)
 from src.db.session import Session, engine
 
 router = APIRouter()

@@ -3,19 +3,18 @@ from typing import Optional
 
 from fastapi import Request
 
+from src.api.responses.exceptions import InternalServerError, NotFound
 from src.api.schemas.pagination import Pagination
 from src.api.schemas.pagination_links import PaginationLinks
 from src.api.schemas.pagination_links_first import PaginationLinksFirst
 from src.api.schemas.pagination_links_last import PaginationLinksLast
 from src.api.schemas.pagination_links_next import PaginationLinksNext
 from src.api.schemas.pagination_links_prev import PaginationLinksPrev
-from src.api.responses.exceptions import InternalServerError, NotFound
 from src.db.crud import get_by_id
 
 
 def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:
-    """
-    Calculate the page number based on the given offset, limit, and total elements.
+    """Calculate the page number based on the given offset, limit, and total elements.
 
     Args:
         offset (int): The starting index of the current page (0-based).
@@ -38,8 +37,7 @@ def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:
 
 
 def calculate_total_pages(limit: int, total_elements: int) -> int:
-    """
-    Calculate the total number of pages based on the given offset, limit, and total elements.
+    """Calculate the total number of pages based on the given offset, limit, and total elements.
 
     Args:
         limit (int): The maximum number of elements per page.
@@ -61,7 +59,11 @@ def calculate_total_pages(limit: int, total_elements: int) -> int:
 
 
 def generate_pagination_links(
-    request: Request, total_pages: int, limit: int, offset: int, no_elements: int
+    request: Request,
+    total_pages: int,
+    limit: int,
+    offset: int,
+    no_elements: int,
 ) -> PaginationLinks:
     base_url = f"{request.url.scheme}://{request.url.netloc}"
     path = request.scope.get("path", "")

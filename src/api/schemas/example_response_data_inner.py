@@ -1,16 +1,13 @@
-# coding: utf-8
-
 from typing import Optional
 
 from pydantic import BaseModel, Field, validator
 
 
 class ExampleResponseDataInner(BaseModel):
-    """
-    ExampleResponseDataInner - a model defined in OpenAPI
+    """ExampleResponseDataInner - a model defined in OpenAPI
 
-        exampleId: The exampleId of this ExampleResponseDataInner.
-        value1: Info of this ExampleResponseDataInner [Optional].
+    exampleId: The exampleId of this ExampleResponseDataInner.
+    value1: Info of this ExampleResponseDataInner [Optional].
     """
 
     exampleId: int = Field(alias="exampleId")

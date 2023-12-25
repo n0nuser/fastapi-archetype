@@ -1,5 +1,3 @@
-# coding: utf-8
-
 import pytest
 from fastapi import Response
 
@@ -7,9 +5,11 @@ from src.api.schemas.pagination import Pagination
 from src.api.schemas.workstation_data import WorkstationData
 from src.api.schemas.workstation_data_data import WorkstationDataData
 from src.api.schemas.workstation_response import WorkstationResponse
-from src.api.schemas.workstation_response_data_inner import WorkstationResponseDataInner
+from src.api.schemas.workstation_response_data_inner import \
+    WorkstationResponseDataInner
 from src.tests.conftest import MyHTTPXClient
-from src.tests.utils import REQUEST_HEADERS, assert_201, assert_204, assert_400, assert_404
+from src.tests.utils import (REQUEST_HEADERS, assert_201, assert_204,
+                             assert_400, assert_404)
 
 
 def assert_200_workstation(response: Response):
@@ -36,9 +36,7 @@ def test_get_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXCli
     params = [("limit", 10), ("offset", 0)]
     kwargs = {
         "method": "GET",
-        "url": "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-            officeId=56, sectorId=56
-        ),
+        "url": f"/offices/{56}/sectors/{56}/workstations",
         "headers": REQUEST_HEADERS,
         "params": params,
     }
@@ -46,15 +44,11 @@ def test_get_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXCli
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-        officeId=1, sectorId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{56}/workstations"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-        officeId=1, sectorId=1
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations"
     response = client.request(**kwargs)
     assert_200_workstation(response)
 
@@ -65,33 +59,24 @@ def test_get_offices_office_id_sectors_sector_id_workstations_workstation_id(cli
 
     Wokstation information.
     """
-
     kwargs = {
         "method": "GET",
-        "url": "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-            officeId=56, sectorId=56, workstationId=56
-        ),
+        "url": f"/offices/{56}/sectors/{56}/workstations/{56}",
         "headers": REQUEST_HEADERS,
     }
 
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=56, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{56}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=1
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{1}"
     response = client.request(**kwargs)
     assert_200_workstation_id(response)
 
@@ -112,24 +97,18 @@ def test_post_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXCl
     }
     kwargs = {
         "method": "POST",
-        "url": "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-            officeId=56, sectorId=56
-        ),
+        "url": f"/offices/{56}/sectors/{56}/workstations",
         "headers": REQUEST_HEADERS,
         "json": json_body,
     }
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-        officeId=1, sectorId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{56}/workstations"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations".format(
-        officeId=1, sectorId=1
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations"
     response = client.request(**kwargs)
     assert_201(response)
 
@@ -141,7 +120,7 @@ def test_post_offices_office_id_sectors_sector_id_workstations(client: MyHTTPXCl
             "yCoordinate": 100,
             "rotation": 180,
             "isLocked": True,
-        }
+        },
     }
     response = client.request(**kwargs)
     assert_400(response)
@@ -163,30 +142,22 @@ def test_put_offices_office_id_sectors_sector_id_workstation_workstation_id(clie
     }
     kwargs = {
         "method": "PUT",
-        "url": "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-            officeId=56, sectorId=56, workstationId=56
-        ),
+        "url": f"/offices/{56}/sectors/{56}/workstations/{56}",
         "headers": REQUEST_HEADERS,
         "json": json_body,
     }
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=56, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{56}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=1
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{1}"
     response = client.request(**kwargs)
     assert_204(response)
 
@@ -198,7 +169,7 @@ def test_put_offices_office_id_sectors_sector_id_workstation_workstation_id(clie
             "yCoordinate": 100,
             "rotation": 180,
             "isLocked": True,
-        }
+        },
     }
     response = client.request(**kwargs)
     assert_400(response)
@@ -214,29 +185,21 @@ def test_delete_offices_office_id_sectors_sector_id_workstation_workstation_id(
     """
     kwargs = {
         "method": "DELETE",
-        "url": "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-            officeId=56, sectorId=56, workstationId=56
-        ),
+        "url": f"/offices/{56}/sectors/{56}/workstations/{56}",
         "headers": REQUEST_HEADERS,
     }
 
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=56, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{56}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=56
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{56}"
     response = client.request(**kwargs)
     assert_404(response)
 
-    kwargs["url"] = "/offices/{officeId}/sectors/{sectorId}/workstations/{workstationId}".format(
-        officeId=1, sectorId=1, workstationId=1
-    )
+    kwargs["url"] = f"/offices/{1}/sectors/{1}/workstations/{1}"
     response = client.request(**kwargs)
     assert_204(response)

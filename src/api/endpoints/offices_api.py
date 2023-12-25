@@ -1,10 +1,7 @@
-# coding: utf-8
-
-from typing import List, Tuple
-
 from fastapi import APIRouter, Body, Header, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 
+from src.api.responses.exceptions import InternalServerError, NotFound
 # from src.api.schemas.extra_models import TokenModel
 # from src.api.security_api import get_token_oAuthSample
 from src.api.schemas.error_message import ErrorMessage
@@ -13,7 +10,6 @@ from src.api.schemas.office_data_data import OfficeDataData
 from src.api.schemas.office_response import OfficeResponse
 from src.api.schemas.office_response_data_inner import OfficeResponseDataInner
 from src.api.schemas.post_offices_request import PostOfficesRequest
-from src.api.responses.exceptions import InternalServerError, NotFound
 from src.api.utils import check_entity_exists, get_pagination
 from src.db.crud import count, create, delete_by_id, get_list, update
 from src.db.models import Address as AddressDBModel
@@ -23,8 +19,9 @@ router = APIRouter()
 
 
 def _map_apimodel_to_dbmodel(
-    api_model: PostOfficesRequest, model_id: int
-) -> Tuple[OfficeDBModel, AddressDBModel]:
+    api_model: PostOfficesRequest,
+    model_id: int,
+) -> tuple[OfficeDBModel, AddressDBModel]:
     kwargs = {"id": model_id, "name": api_model.name}
     office = OfficeDBModel(**kwargs)
 
@@ -185,7 +182,7 @@ async def get_offices(
     relationships = ["office"]
 
     try:
-        db_data: List[AddressDBModel]
+        db_data: list[AddressDBModel]
         if db_data := get_list(AddressDBModel, limit, offset, filters, join_fields=relationships):  # type: ignore
             response_data = [
                 OfficeResponseDataInner(officeId=d.id, name=d.office.name) for d in db_data
@@ -342,7 +339,7 @@ async def post_offices(
                 province=post_offices_request.province,
                 country=post_offices_request.country,
                 office_id=office_id,
-            )
+            ),
         )
     except Exception as error:
         raise InternalServerError from error

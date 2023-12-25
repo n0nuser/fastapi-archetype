@@ -25,6 +25,17 @@ pytest = "^7.4.3"
 pytest-mock = "^3.12.0"
 pre-commit = "^3.5.0"
 
+[tool.ruff]
+select = ["ALL"]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.black]
+line-length = 100
+
 [build-system]
 build-backend = "poetry.core.masonry.api"
 requires = ["poetry-core>=1.0.0"]

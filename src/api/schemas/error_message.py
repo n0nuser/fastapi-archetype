@@ -1,6 +1,4 @@
-# coding: utf-8
-
-from typing import List, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -13,7 +11,7 @@ class ErrorMessage(BaseModel):
     messages: The messages of this ErrorMessage [Optional].
     """
 
-    messages: Optional[List[ErrorMessageData]] = Field(alias="messages", default=None)
+    messages: Optional[list[ErrorMessageData]] = Field(alias="messages", default=None)
 
 
 ErrorMessage.update_forward_refs()
