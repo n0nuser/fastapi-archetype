@@ -1,16 +1,7 @@
+"""Defines data models for representing hyperlinks and pagination configuration."""
 import math
-from typing import Optional
 
-from fastapi import Request
-
-from src.api.responses.exceptions import InternalServerError, NotFound
-from src.api.schemas.pagination import Pagination
-from src.api.schemas.pagination_links import PaginationLinks
-from src.api.schemas.pagination_links_first import PaginationLinksFirst
-from src.api.schemas.pagination_links_last import PaginationLinksLast
-from src.api.schemas.pagination_links_next import PaginationLinksNext
-from src.api.schemas.pagination_links_prev import PaginationLinksPrev
-from src.db.crud import get_by_id
+from pydantic import AnyHttpUrl, BaseModel, Field, HttpUrl, field_validator
 
 
 def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:
@@ -26,12 +17,14 @@ def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:
 
     Returns:
         int: The page number (1-based).
-    """
+    """  # noqa: E501
     if limit <= 0:
-        raise ValueError("Limit must be a positive integer.")
+        error_message = "Limit must be a positive integer."
+        raise ValueError(error_message)
 
     if total_elements < 0:
-        raise ValueError("Total elements must be a non-negative integer.")
+        error_message = "Total elements must be a non-negative integer."
+        raise ValueError(error_message)
 
     return math.ceil((offset - 1) / limit) + 1
 
@@ -48,99 +41,166 @@ def calculate_total_pages(limit: int, total_elements: int) -> int:
 
     Returns:
         int: The total number of pages.
-    """
+    """  # noqa: E501
     if limit <= 0:
-        raise ValueError("Limit must be a positive integer.")
+        error_message = "Limit must be a positive integer."
+        raise ValueError(error_message)
 
     if total_elements < 0:
-        raise ValueError("Total elements must be a non-negative integer.")
+        error_message = "Total elements must be a non-negative integer."
+        raise ValueError(error_message)
 
     return math.ceil(float(total_elements) / limit)
 
 
-def generate_pagination_links(
-    request: Request,
-    total_pages: int,
-    limit: int,
-    offset: int,
-    no_elements: int,
-) -> PaginationLinks:
-    base_url = f"{request.url.scheme}://{request.url.netloc}"
-    path = request.scope.get("path", "")
-    url_without_query_params = base_url + path
+class HyperLink(BaseModel):
+    """Represents a hyperlinked reference.
 
-    self_href = f"{url_without_query_params}?limit={limit}&offset={offset}"
-    _self = PaginationLinksFirst(href=self_href)
-
-    if no_elements == 0:
-        return PaginationLinks(first=None, self_=_self, prev=None, next=None, last=None)
-
-    last_page = total_pages - 1
-
-    first_href = f"{url_without_query_params}?limit={limit}&offset=0"
-    prev_href = f"{url_without_query_params}?limit={limit}&offset={max(0, offset - limit)}"
-    next_href = (
-        f"{url_without_query_params}?limit={limit}&offset={min(last_page * limit, offset + limit)}"
-    )
-    last_href = f"{url_without_query_params}?limit={limit}&offset={max(0, (last_page - 1) * limit)}"
-
-    first = PaginationLinksFirst(href=first_href)
-    if offset > 0:
-        prev = PaginationLinksPrev(href=prev_href)
-    else:
-        prev = PaginationLinksPrev(href=self_href)
-    if offset < last_page * limit:
-        _next = PaginationLinksNext(href=next_href)
-    else:
-        _next = PaginationLinksNext(href=self_href)
-    last = PaginationLinksLast(href=last_href)
-
-    return PaginationLinks(first=first, self_=_self, prev=prev, next=_next, last=last)
-
-
-def get_pagination(offset: int, limit: int, no_elements: int, request: Request):
-    total_pages = calculate_total_pages(limit, no_elements)
-    links = generate_pagination_links(
-        request=request,
-        total_pages=total_pages,
-        limit=limit,
-        offset=offset,
-        no_elements=no_elements,
-    )
-    return Pagination(
-        offset=offset,
-        limit=limit,
-        pageNumber=calculate_page_number(offset, limit, no_elements),
-        totalPages=total_pages,
-        totalElements=no_elements,
-        links=links,
-    )
-
-
-def check_entity_exists(entity_id: Optional[int] = None, entity_type=None):
-    """Checks if the entity exists in the database.
-
-    Args:
-        entity_id (Optional[int], optional): The ID of the entity. Defaults to None.
-        entity_type (Any, optional): The type of entity (e.g., BookingDBModel,
-            StatusDayDBModel, WorkStationDBModel). Defaults to None.
-
-    Raises:
-        NotFound: If the entity does not exist in the database.
-
-    Returns:
-        Union[BookingDBModel, StatusDayDBModel, WorkstationDBModel]: The entity.
+    Attributes:
+        href (AnyHttpUrl, optional): The URL reference. Defaults to None.
     """
-    if entity_id and entity_type:
-        try:
-            entity = get_by_id(entity_type, entity_id)  # type: ignore
-        except Exception as error:
-            raise InternalServerError from error
-        # TODO: Improve classes by:
-        #   - Create CRUDManager as Base class with generic annotations
-        #   - Adding this method to each DB class with concrete annotations
-        if not entity or hasattr(entity, "deleted_on") and entity.deleted_on:  # type: ignore
-            raise NotFound
-        return entity
-    else:
-        raise ValueError("Both entity_id and entity_type must be provided.")
+
+    href: AnyHttpUrl | None = Field(default=None)
+
+
+class PaginationLinks(BaseModel):
+    """Represents a set of hyperlinks for pagination purposes.
+
+    Attributes:
+        first (HyperLink, optional): The link to the first page. Defaults to None.
+        prev (HyperLink, optional): The link to the previous page. Defaults to None.
+        actual (HyperLink): The link to the current page.
+        next (HyperLink, optional): The link to the next page. Defaults to None.
+        last (HyperLink, optional): The link to the last page. Defaults to None.
+    """
+
+    first: HyperLink | None = Field(default=None)
+    prev: HyperLink | None = Field(default=None)
+    actual: HyperLink = Field()
+    next: HyperLink | None = Field(default=None)  # noqa: A003
+    last: HyperLink | None = Field(default=None)
+
+    @classmethod
+    def generate_pagination_links(  # noqa: PLR0913
+        cls: type["PaginationLinks"],
+        url: HttpUrl,
+        total_pages: int,
+        limit: int,
+        offset: int,
+        no_elements: int,
+    ) -> "PaginationLinks":
+        """Generate pagination links and return a new instance of PaginationLinks.
+
+        Args:
+            url (HttpUrl): The base URL for the pagination links.
+            total_pages (int): The total number of pages available.
+            limit (int): The number of elements per page.
+            offset (int): The current offset for the pagination.
+            no_elements (int): The total number of elements.
+
+        Returns:
+            PaginationLinks: An object containing HyperLink instances for first, actual, prev, next, and last pages.
+            The actual page link is based on the provided offset.
+        """  # noqa: E501
+        base_href = f"{url}&" if "?" in str(url) else f"{url}?"
+        base_href = f"{base_href}limit={limit}"
+        self_href = f"{base_href}&offset={offset}"
+        actual = HyperLink(href=self_href)
+
+        if no_elements == 0:
+            return cls(first=None, actual=actual, prev=None, next=None, last=None)
+
+        last_page = total_pages - 1
+
+        first_href = f"{base_href}&offset=0"
+        prev_href = f"{base_href}&offset={max(0, offset - limit)}"
+        next_href = f"{base_href}&offset={min(last_page * limit, offset + limit)}"
+        last_href = f"{base_href}&offset={max(0, (last_page - 1) * limit)}"
+
+        first = HyperLink(href=first_href)
+        prev = HyperLink(href=prev_href) if offset > 0 else HyperLink(href=self_href)
+        next = (  # noqa: A001
+            HyperLink(href=next_href) if offset < last_page * limit else HyperLink(href=self_href)
+        )
+        last = HyperLink(href=last_href)
+
+        return cls(first=first, actual=actual, prev=prev, next=next, last=last)
+
+
+class Pagination(BaseModel):
+    """Represents a pagination configuration for handling offsets, limits, page numbers, total pages, total elements, and pagination links.
+
+    Attributes:
+    - offset (int | None): The offset for pagination.
+    - limit (int | None): The limit of elements per page.
+    - page_number (int | None): The current page number.
+    - total_pages (int | None): The total number of pages.
+    - total_elements (int | None): The total number of elements.
+    - links (PaginationLinks | None): Links associated with the pagination.
+
+    Class Methods:
+    - offset_validator(cls: type[Pagination], value: int | None) -> int | None:
+        Validates the offset value based on specified constraints.
+
+    Note: The offset value must be within the range [0, 255].
+    """  # noqa: E501
+
+    offset: int | None = Field(default=None)
+    limit: int | None = Field(default=None)
+    page_number: int | None = Field(default=None)
+    total_pages: int | None = Field(default=None)
+    total_elements: int | None = Field(default=None)
+    links: PaginationLinks | None = Field(default=None)
+
+    @field_validator("offset", "limit", "page_number", "total_pages", "total_elements")
+    @classmethod
+    def offset_validator(cls: type["Pagination"], value: int | None) -> int | None:
+        """Validates values of the model."""
+        max_value = 255
+        min_value = 0
+        if value and (value > max_value or value < min_value):
+            error_message = "Must be less than 0 or more than 255."
+            raise ValueError(error_message)
+        return value
+
+    @classmethod
+    def get_pagination(
+        cls: type["Pagination"],
+        offset: int,
+        limit: int,
+        no_elements: int,
+        url: HttpUrl,
+    ) -> "Pagination":
+        """Generate pagination information based on the provided parameters.
+
+        Parameters:
+        - offset (int): The starting index of the current page.
+        - limit (int): The maximum number of elements per page.
+        - no_elements (int): The total number of elements to be paginated.
+        - url (HttpUrl): The base URL used for generating pagination links.
+
+        Returns:
+        Pagination: An object containing pagination information, including offset,
+        limit, current page number, total pages, total elements, and pagination links.
+        """
+        total_pages = calculate_total_pages(limit, no_elements)
+        links = PaginationLinks.generate_pagination_links(
+            url=url,
+            total_pages=total_pages,
+            limit=limit,
+            offset=offset,
+            no_elements=no_elements,
+        )
+        return cls(
+            offset=offset,
+            limit=limit,
+            page_number=calculate_page_number(offset, limit, no_elements),
+            total_pages=total_pages,
+            total_elements=no_elements,
+            links=links,
+        )
+
+
+HyperLink.model_rebuild()
+PaginationLinks.model_rebuild()
+Pagination.model_rebuild()
