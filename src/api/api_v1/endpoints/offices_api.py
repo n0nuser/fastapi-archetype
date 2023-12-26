@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Body, Header, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 
-from src.api.responses.exceptions import InternalServerError, NotFound
 # from src.api.schemas.extra_models import TokenModel
 # from src.api.security_api import get_token_oAuthSample
-from src.api.schemas.error_message import ErrorMessage
-from src.api.schemas.office_data import OfficeData
-from src.api.schemas.office_data_data import OfficeDataData
-from src.api.schemas.office_response import OfficeResponse
-from src.api.schemas.office_response_data_inner import OfficeResponseDataInner
-from src.api.schemas.post_offices_request import PostOfficesRequest
-from src.api.utils import check_entity_exists, get_pagination
+from src.api.api_v1.schemas.error_message import ErrorMessage
+from src.api.api_v1.schemas.office_data import OfficeData
+from src.api.api_v1.schemas.office_data_data import OfficeDataData
+from src.api.api_v1.schemas.office_response import OfficeResponse
+from src.api.api_v1.schemas.office_response_data_inner import OfficeResponseDataInner
+from src.api.api_v1.schemas.post_offices_request import PostOfficesRequest
+from src.api.pagination import Pagination
+from src.api.responses.exceptions import InternalServerError, NotFound
 from src.db.crud import count, create, delete_by_id, get_list, update
 from src.db.models import Address as AddressDBModel
 from src.db.models import Office as OfficeDBModel
@@ -194,7 +194,12 @@ async def get_offices(
     except Exception as error:
         raise InternalServerError from error
 
-    pagination = get_pagination(offset=offset, limit=limit, no_elements=db_count, request=request)
+    pagination = Pagination.get_pagination(
+        offset=offset,
+        limit=limit,
+        no_elements=db_count,
+        request=request,
+    )
 
     headers = {"X-Request-ID": x_request_id}
     response = OfficeResponse(data=response_data, pagination=pagination)
