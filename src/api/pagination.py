@@ -159,7 +159,7 @@ class Pagination(BaseModel):
         max_value = 255
         min_value = 0
         if value and (value > max_value or value < min_value):
-            error_message = "Must be less than 0 or more than 255."
+            error_message = f"Must be less than {min_value} or more than {max_value}."
             raise ValueError(error_message)
         return value
 
