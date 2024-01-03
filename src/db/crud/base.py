@@ -1,16 +1,14 @@
-from typing import Any, Generic, TypeVar, Union
+from typing import Generic, TypeVar
 
-from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy import func, select
+from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session, joinedload
 
 from src.db.models.base import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
-CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
-UpdateSchemaType = TypeVar("UpdateSchemaType", bound=BaseModel)
 
 
 class Filter(BaseModel):
@@ -21,10 +19,10 @@ class Filter(BaseModel):
     value: str | int
 
 
-class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class CRUDBase(Generic[ModelType]):
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
-    def __init__(self: "CRUDBase", model: type[ModelType]):
+    def __init__(self: "CRUDBase", model: type[ModelType]) -> None:
         """CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
@@ -96,13 +94,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         """
         return db.query(self.model).filter(getattr(self.model, field) == value).first()
 
-    def get_multi(
+    def get_list(
         self: "CRUDBase",
         db: Session,
         offset: int = 0,
         limit: int = 20,
         filters: list[Filter] | None = None,
-        default_query: SQLQuery | None = None,
         join_fields: list[str] | None = None,
     ) -> list[ModelType]:
         """Get a list of elements that can be filtered.
@@ -115,15 +112,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
             limit (int): Limit the number of rows returned from a query.
             filters (dict[str, Tuple[str, object]], optional): Filters to apply, where each filter
                 is a tuple of (operator, value). Defaults to None.
-            default_query (str, optional): Starting query before filtering and
-                applying limits and offsets. Defaults to None.
             join_fields (list[str], optional): List of foreign key fields to perform
                 joined loading on. Defaults to None.
 
         Returns:
             list[ModelType] | None: Result with the Data or None if not found.
         """
-        query: SQLQuery = default_query or db.query(self.model)
+        query: SQLQuery = db.query(self.model)
         if join_fields:
             for join_field in join_fields:
                 query = query.options(
@@ -140,58 +135,143 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db_elements = query.order_by(self.model.id.asc()).offset(offset).limit(limit).all()
         return db_elements or None  # type: ignore
 
+    def count(
+        self: "CRUDBase",
+        db: Session,
+        filters: list[Filter] | None = None,
+    ) -> int:
+        """Get the number of elements that can be filtered.
 
-def count(
-    self: "CRUDBase",
-    db: Session,
-    filters: list[Filter] | None = None,
-) -> int:
-    """Get the number of elements that can be filtered.
+        Args:
+            db (Session): Database session.
+            filters (list[Filter], optional): Filters to apply, where each filter is a tuple
+                of (operator, value). Defaults to None.
 
-    Args:
-        db (Session): Database session.
-        filters (list[Filter], optional): Filters to apply, where each filter is a tuple
-            of (operator, value). Defaults to None.
+        Returns:
+            int: Number of elements that match the query.
+        """
+        count_query = select(func.count()).select_from(self.model)
+        if filters:
+            filter_clauses = self._get_filters(filters)
+            count_query = count_query.where(*filter_clauses)
+        return db.scalar(count_query)
 
-    Returns:
-        int: Number of elements that match the query.
-    """
-    count_query = select(func.count()).select_from(self.model)
-    if filters:
-        filter_clauses = self._get_filters(filters)
-        count_query = count_query.where(*filter_clauses)
-    return db.scalar(count_query)
+    def create(self: "CRUDBase", db: Session, data: ModelType) -> ModelType:
+        """Creates a new record in the database.
 
-    def create(self, db: Session, *, obj_in: CreateSchemaType) -> ModelType:
-        obj_in_data = jsonable_encoder(obj_in)
-        db_obj = self.model(**obj_in_data)  # type: ignore
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+        Args:
+            db (Session): The database session.
+            data (ModelType): The data to be created.
+
+        Returns:
+            ModelType: The created data.
+        """
+        try:
+            db.add(data)
+            db.commit()
+            db.refresh(data)
+        except OperationalError:
+            db.rollback()
+            raise
+        else:
+            return data
 
     def update(
-        self,
+        self: "CRUDBase",
         db: Session,
-        *,
-        db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, dict[str, Any]],
+        data: ModelType,
     ) -> ModelType:
-        obj_data = jsonable_encoder(db_obj)
-        if isinstance(obj_in, dict):
-            update_data = obj_in
-        else:
-            update_data = obj_in.dict(exclude_unset=True)
-        for field in obj_data:
-            if field in update_data:
-                setattr(db_obj, field, update_data[field])
-        db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
-        return db_obj
+        """Update an existing record in the database.
 
-    def remove(self, db: Session, *, id: int) -> ModelType:
-        obj = db.query(self.model).get(id)
-        db.delete(obj)
-        db.commit()
-        return obj
+        This method merges the provided data with the existing record in the database.
+        If the operation is successful, the updated record is returned.
+        If an OperationalError occurs during the operation, the changes are rolled back.
+
+        Args:
+            db (Session): The database session.
+            data (ModelType): The data to be updated.
+
+        Returns:
+            ModelType: The updated record.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        try:
+            db.merge(data)
+            db.commit()
+            db.refresh(data)
+        except OperationalError:
+            db.rollback()
+            raise
+        else:
+            return data
+
+    def delete_by_id(
+        self: "CRUDBase",
+        db: Session,
+        model_id: int,
+    ) -> ModelType | None:
+        """Delete a record from the database by its id.
+
+        This method retrieves the record by its id and deletes it from the database.
+        If the operation is successful, the deleted record is returned.
+        If an OperationalError occurs during the operation, the changes are rolled back.
+
+        Args:
+            db (Session): The database session.
+            model_id (int): The id of the record to be deleted.
+
+        Returns:
+            ModelType | None: The deleted record if found, None otherwise.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        try:
+            obj = db.query(self.model).get(model_id)
+            if obj is None:
+                return None
+            db.delete(obj)
+            db.commit()
+        except OperationalError:
+            db.rollback()
+            raise
+        else:
+            return obj
+
+    def soft_delete_by_id(
+        self: "CRUDBase",
+        db: Session,
+        model_id: int,
+    ) -> ModelType | None:
+        """Soft delete a record from the database by its id.
+
+        This method retrieves the record by its id and sets its 'deleted_on' attribute to the
+        current time.
+        If the operation is successful, the updated record is returned.
+        If an OperationalError occurs during the operation, the changes are rolled back.
+        If the model does not support soft delete, a ValueError is raised.
+
+        Args:
+            db (Session): The database session.
+            model_id (int): The id of the record to be soft deleted.
+
+        Returns:
+            ModelType | None: The updated record if found and soft deleted, None otherwise.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+            ValueError: If the model does not support soft delete.
+        """
+        try:
+            obj = db.query(self.model).get(model_id)
+            if obj is None:
+                return None
+            if not hasattr(obj, "deleted_on"):
+                error_message = "Model does not support soft delete."
+                raise ValueError(error_message)
+            return self.update(db, obj.soft_delete())
+        except OperationalError:
+            db.rollback()
+            raise

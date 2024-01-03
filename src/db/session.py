@@ -35,9 +35,5 @@ def get_db_session() -> Iterator[Session]:
     session = Session()
     try:
         yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
     finally:
         session.close()
