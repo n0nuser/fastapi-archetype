@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Generic, Literal, TypeVar
 
 from pydantic import BaseModel
 from sqlalchemy import func, select
@@ -15,8 +15,8 @@ class Filter(BaseModel):
     """Filter to be applied to a query."""
 
     field: str
-    operator: str
-    value: str | int
+    operator: Literal["eq", "neq", "contains", "not_contains", "gt", "gte", "lt", "lte"]
+    value: str | int | float
 
 
 class CRUDBase(Generic[ModelType]):
@@ -93,6 +93,20 @@ class CRUDBase(Generic[ModelType]):
             ModelType | None: Element of the DB.
         """
         return db.query(self.model).filter(getattr(self.model, field) == value).first()
+
+    def get_one_by_fields(self: "CRUDBase", db: Session, filters: list[Filter]) -> ModelType | None:
+        """Returns an object of the model specified.
+
+        Args:
+            db (Session): Database session.
+            filters (dict[str, Tuple[str, object]]): Filters to apply, where each filter
+                is a tuple of (operator, value).
+
+        Returns:
+            ModelType | None: Element of the DB.
+        """
+        filter_clauses = self._get_filters(filters)
+        return db.query(self.model).filter(*filter_clauses).first()
 
     def get_list(
         self: "CRUDBase",
@@ -207,47 +221,44 @@ class CRUDBase(Generic[ModelType]):
         else:
             return data
 
-    def delete_by_id(
+    def delete_row(
         self: "CRUDBase",
         db: Session,
-        model_id: int,
+        model_obj: ModelType,
     ) -> ModelType | None:
-        """Delete a record from the database by its id.
+        """Delete a record from the database.
 
-        This method retrieves the record by its id and deletes it from the database.
+        This method retrieves the record and deletes it from the database.
         If the operation is successful, the deleted record is returned.
         If an OperationalError occurs during the operation, the changes are rolled back.
 
         Args:
             db (Session): The database session.
-            model_id (int): The id of the record to be deleted.
+            model_obj (ModelType): The object of the record to be deleted.
 
         Returns:
-            ModelType | None: The deleted record if found, None otherwise.
+            ModelType: The deleted record.
 
         Raises:
             OperationalError: If an error occurs during the operation.
         """
         try:
-            obj = db.query(self.model).get(model_id)
-            if obj is None:
-                return None
-            db.delete(obj)
+            db.delete(model_obj)
             db.commit()
         except OperationalError:
             db.rollback()
             raise
         else:
-            return obj
+            return model_obj
 
-    def soft_delete_by_id(
+    def soft_delete_row(
         self: "CRUDBase",
         db: Session,
-        model_id: int,
+        model_obj: ModelType,
     ) -> ModelType | None:
-        """Soft delete a record from the database by its id.
+        """Soft delete a record from the database.
 
-        This method retrieves the record by its id and sets its 'deleted_on' attribute to the
+        This method retrieves the record and sets its 'deleted_on' attribute to the
         current time.
         If the operation is successful, the updated record is returned.
         If an OperationalError occurs during the operation, the changes are rolled back.
@@ -255,23 +266,20 @@ class CRUDBase(Generic[ModelType]):
 
         Args:
             db (Session): The database session.
-            model_id (int): The id of the record to be soft deleted.
+            model_obj (ModelTypedelType): The object of the record to be soft deleted.
 
         Returns:
-            ModelType | None: The updated record if found and soft deleted, None otherwise.
+            ModelType: The updated record if found and soft deleted.
 
         Raises:
             OperationalError: If an error occurs during the operation.
             ValueError: If the model does not support soft delete.
         """
         try:
-            obj = db.query(self.model).get(model_id)
-            if obj is None:
-                return None
-            if not hasattr(obj, "deleted_on"):
+            if not hasattr(model_obj, "deleted_on") or not hasattr(model_obj, "soft_delete"):
                 error_message = "Model does not support soft delete."
                 raise ValueError(error_message)
-            return self.update(db, obj.soft_delete())
+            return self.update(db, model_obj.soft_delete())
         except OperationalError:
             db.rollback()
             raise

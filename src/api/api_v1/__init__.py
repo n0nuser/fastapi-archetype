@@ -1,8 +1,6 @@
 from fastapi import APIRouter
 
-from src.api.api_v1.endpoints import createdb
-from src.core.config import settings
+from src.api.api_v1.endpoints import customer
 
 router = APIRouter()
-if settings.ENVIRONMENT in ["PYTEST", "DEV"]:
-    router.include_router(createdb.router)
+router.include_router(customer.router)

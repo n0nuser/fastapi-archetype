@@ -12,31 +12,25 @@ class AddressBase(BaseModel):
 
 
 class AddressResponse(AddressBase):
-    id: UUID4
-
-    class Config:
-        orm_mode = True
+    address_id: UUID4
 
 
 class CustomerListDataResponse(BaseModel):
-    id: UUID4
+    customer_id: UUID4
     name: str
-    addresses: list[AddressResponse]
 
 
 class CustomerDetailResponse(CustomerListDataResponse):
-    class Config:
-        orm_mode = True
+    addresses: list[AddressResponse]
 
 
 class CustomerCreate(BaseModel):
     name: str
-    addresses: list[AddressBase] = []
+    addresses: list[AddressBase] = Field(default=[])
 
 
 class CustomerUpdate(BaseModel):
-    name: str | None = None
-    addresses: list[AddressBase] | None = None
+    name: str | None = Field(default=None)
 
 
 class CustomerListResponse(BaseModel):
@@ -54,5 +48,5 @@ class CustomerListResponse(BaseModel):
             If no pagination information is provided, this is None.
     """
 
-    data: list[CustomerListDataResponse] | None = Field(default=None)
+    data: list[CustomerListDataResponse] = Field(default=[])
     pagination: Pagination | None = Field(default=None)

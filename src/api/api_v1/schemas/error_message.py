@@ -1,5 +1,5 @@
 """This module contains the data models for error messages."""
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 
 
 class ErrorMessageData(BaseModel):
@@ -12,32 +12,10 @@ class ErrorMessageData(BaseModel):
         description (str | None): The description of the error message (optional).
     """
 
-    code: str = Field()
-    message: str = Field()
+    code: str = Field(min_length=1, max_length=50)
+    message: str = Field(min_length=1, max_length=500)
     error_type: str = Field()
-    description: str | None = Field(default=None)
-
-    @field_validator("code")
-    @classmethod
-    def code_length(cls: type["ErrorMessageData"], value: str) -> str:
-        """Validates values of the model."""
-        max_value = 50
-        min_value = 1
-        if value and (len(value) > max_value or len(value) < min_value):
-            error_message = f"Characters must be more than {min_value} or less than {max_value}."
-            raise ValueError(error_message)
-        return value
-
-    @field_validator("message", "description")
-    @classmethod
-    def message_description_length(cls: type["ErrorMessageData"], value: str | None) -> str | None:
-        """Validates values of the model."""
-        max_value = 500
-        min_value = 1
-        if value and (len(value) > max_value or len(value) < min_value):
-            error_message = f"Characters must be more than {min_value} or less than {max_value}."
-            raise ValueError(error_message)
-        return value
+    description: str | None = Field(default=None, min_length=1, max_length=500)
 
 
 class ErrorMessage(BaseModel):
