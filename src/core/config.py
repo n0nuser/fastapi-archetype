@@ -21,23 +21,24 @@ Note, complex types like lists are read as json-encoded strings.
 """
 
 import os
+import pathlib
 from typing import Any, Literal
 
 from dotenv import load_dotenv
-from pydantic import AnyHttpUrl, EmailStr, PostgresDsn, validator
+from pydantic import AnyHttpUrl, PostgresDsn, validator
 from pydantic_settings import BaseSettings
 
 from src.core.logger import logger
 
-load_dotenv()
-logger.info(os.environ)
+IS_ENV_FOUND = load_dotenv(dotenv_path=pathlib.Path(__file__).parent.parent / ".env")
+logger.debug(os.environ)
 
 
 class Settings(BaseSettings):
     """Represents the configuration settings for the application."""
 
     # CORE SETTINGS
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str = "/v1"
     SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"
     ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "PYTEST"
     SECURITY_BCRYPT_ROUNDS: int = 12
@@ -47,7 +48,7 @@ class Settings(BaseSettings):
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
 
     # POSTGRESQL DATABASE
-    DATABASE_HOSTNAME: str = "db"
+    POSTGRES_SERVER: str = "db"
     POSTGRES_USER: str = "postgres"
     POSTGRES_PASSWORD: str = "postgres"
     POSTGRES_PORT: int = 5432
@@ -68,36 +69,6 @@ class Settings(BaseSettings):
         )
 
     PROJECT_NAME: str = "{{cookiecutter.project_name}}"
-
-    SMTP_TLS: bool = True
-    SMTP_PORT: int | None = None
-    SMTP_HOST: str | None = None
-    SMTP_USER: str | None = None
-    SMTP_PASSWORD: str | None = None
-    EMAILS_FROM_EMAIL: EmailStr | None = None
-    EMAILS_FROM_NAME: str | None = None
-    EMAILS_TO_EMAIL: EmailStr | None = None
-
-    @validator("EMAILS_FROM_NAME")
-    @classmethod
-    def get_project_name(cls, v: str | None, values: dict[str, Any]) -> str:
-        return v or values["PROJECT_NAME"]
-
-    EMAIL_RESET_TOKEN_EXPIRE_HOURS: int = 48
-    EMAIL_TEMPLATES_DIR: str = "/app/app/email-templates/build"
-    EMAILS_ENABLED: bool = False
-
-    @validator("EMAILS_ENABLED", pre=True)
-    @classmethod
-    def get_emails_enabled(cls, v: bool, values: dict[str, Any]) -> bool:
-        return bool(
-            values.get("SMTP_HOST") and values.get("SMTP_PORT") and values.get("EMAILS_FROM_EMAIL"),
-        )
-
-    EMAIL_TEST_USER: EmailStr = "test@example.com"  # type: ignore
-    FIRST_SUPERUSER: EmailStr
-    FIRST_SUPERUSER_PASSWORD: str
-    USERS_OPEN_REGISTRATION: bool = True
 
     class Config:
         env_file = ".env"

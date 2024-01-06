@@ -8,12 +8,14 @@ from src.db.models.base import BaseTimestamps
 class Customer(BaseTimestamps):
     name: Mapped[str] = mapped_column(String, nullable=False)
     addresses: Mapped[list["Address"]] = relationship(
-        back_populates="customer", cascade="all, delete-orphan", lazy="subquery"
+        back_populates="customer",
+        cascade="all, delete-orphan",
+        lazy="subquery",
     )
 
 
 class Address(BaseTimestamps):
-    customer_id: Mapped[UUID] = mapped_column(ForeignKey("customer_table.id"))
+    customer_id: Mapped[UUID] = mapped_column(ForeignKey("customer.id"))
     customer: Mapped["Customer"] = relationship(back_populates="addresses")
     street: Mapped[str] = mapped_column(String, nullable=False)
     city: Mapped[str] = mapped_column(String, nullable=False)

@@ -10,7 +10,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 # Set the logger level
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 # Create a formatter object
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")

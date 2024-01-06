@@ -1,6 +1,5 @@
 """Database session management."""
 from collections.abc import Iterator
-from contextlib import contextmanager
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
@@ -14,7 +13,6 @@ engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), pool_pre_ping=True
 session_local = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-@contextmanager()
 def get_db_session() -> Iterator[Session]:
     """Get a SQLAlchemy database session.
 
