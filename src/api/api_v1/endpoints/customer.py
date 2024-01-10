@@ -215,7 +215,7 @@ async def get_customers(
     tags=["Customers"],
     summary="Customer information.",
     response_model_by_alias=True,
-    response_class=CustomerDetailResponse,
+    response_model=CustomerDetailResponse,
 )
 async def get_customers_customer_id(
     accept_language: Annotated[

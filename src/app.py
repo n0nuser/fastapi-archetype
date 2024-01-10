@@ -18,10 +18,10 @@ app = FastAPI(
     openapi_url=f"{root_path}/openapi.json",
     version="1.0.0",
     description="{{cookiecutter.project_description}}",
-    contact={
-        "name": "{{cookiecutter.author_name}}",
-        "email": "{{cookiecutter.author_email}}",
-    },
+    # contact={
+    #     "name": "{{cookiecutter.author_name}}",
+    #     "email": "{{cookiecutter.author_email}}",
+    # },
     docs_url=root_path,
     on_startup=[init_db],
     on_shutdown=[],
