@@ -30,7 +30,7 @@ def _log_exception(request: Request, exc: Exception) -> None:
     exc_str = None
     try:
         exc_str = f"{exc}".replace("\n", " ").replace("   ", " ")
-    except Exception:  # noqa: BLE001
+    except:  # noqa: E722
         exc_str = traceback.format_exc().replace("\n", " ").replace("   ", " ")
     logger.error("%s: %s", request, exc_str)
 
@@ -173,6 +173,7 @@ def manage_api_exceptions(app: FastAPI) -> None:  # noqa: C901
         code = status.HTTP_429_TOO_MANY_REQUESTS
         return _manage_exception(request, exc, code)
 
+    @app.exception_handler(AttributeError)
     @app.exception_handler(ValueError)
     @app.exception_handler(exceptions.HTTP429TooManyRequestsError)
     @app.exception_handler(OperationalError)

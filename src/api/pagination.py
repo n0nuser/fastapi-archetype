@@ -57,10 +57,10 @@ class HyperLink(BaseModel):
     """Represents a hyperlinked reference.
 
     Attributes:
-        href (AnyHttpUrl, optional): The URL reference. Defaults to None.
+        href (str, optional): The URL reference. Defaults to None.
     """
 
-    href: AnyHttpUrl | None = Field(default=None)
+    href: str | None = Field(default=None)
 
 
 class PaginationLinks(BaseModel):
@@ -105,7 +105,7 @@ class PaginationLinks(BaseModel):
         base_href = f"{url}&" if "?" in str(url) else f"{url}?"
         base_href = f"{base_href}limit={limit}"
         self_href = f"{base_href}&offset={offset}"
-        actual = HyperLink(href=self_href)
+        actual = HyperLink(href=str(AnyHttpUrl(self_href)))
 
         if no_elements == 0:
             return cls(first=None, actual=actual, prev=None, next=None, last=None)
@@ -117,12 +117,18 @@ class PaginationLinks(BaseModel):
         next_href = f"{base_href}&offset={min(last_page * limit, offset + limit)}"
         last_href = f"{base_href}&offset={max(0, (last_page - 1) * limit)}"
 
-        first = HyperLink(href=first_href)
-        prev = HyperLink(href=prev_href) if offset > 0 else HyperLink(href=self_href)
-        next = (  # noqa: A001
-            HyperLink(href=next_href) if offset < last_page * limit else HyperLink(href=self_href)
+        first = HyperLink(href=str(AnyHttpUrl(first_href)))
+        prev = (
+            HyperLink(href=str(AnyHttpUrl(prev_href)))
+            if offset > 0
+            else HyperLink(href=str(AnyHttpUrl(self_href)))
         )
-        last = HyperLink(href=last_href)
+        next = (  # noqa: A001
+            HyperLink(href=str(AnyHttpUrl(next_href)))
+            if offset < last_page * limit
+            else HyperLink(href=str(AnyHttpUrl(self_href)))
+        )
+        last = HyperLink(href=str(AnyHttpUrl(last_href)))
 
         return cls(first=first, actual=actual, prev=prev, next=next, last=last)
 
