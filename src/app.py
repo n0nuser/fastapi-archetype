@@ -22,7 +22,7 @@ app = FastAPI(
     #     "name": "{{cookiecutter.author_name}}",
     #     "email": "{{cookiecutter.author_email}}",
     # },
-    docs_url=root_path,
+    docs_url=f"{root_path}/swagger",
     on_startup=[init_db],
     on_shutdown=[],
 )

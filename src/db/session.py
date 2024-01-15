@@ -30,7 +30,7 @@ def get_db_session() -> Iterator[Session]:
         ```
     """
     # Create a new session
-    session = Session()
+    session = session_local()
     try:
         yield session
     finally:
