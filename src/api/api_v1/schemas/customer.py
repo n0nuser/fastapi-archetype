@@ -25,8 +25,20 @@ class CustomerDetailResponse(CustomerListDataResponse):
 
 
 class CustomerCreate(BaseModel):
-    name: str
-    addresses: list[AddressBase] = Field(default=[])
+    name: str = Field(..., examples=["John Doe"])
+    addresses: list[AddressBase] = Field(
+        default=[],
+        examples=[
+            [
+                {
+                    "street": "123 Main St",
+                    "city": "Anytown",
+                    "country": "USA",
+                    "postal_code": "12345",
+                }
+            ],
+        ],
+    )
 
 
 class CustomerUpdate(BaseModel):
