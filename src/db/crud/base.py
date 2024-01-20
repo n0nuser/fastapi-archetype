@@ -22,7 +22,7 @@ class Filter(BaseModel):
 class CRUDBase(Generic[ModelType]):
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
-    def __init__(self: "CRUDBase", model: type[ModelType]) -> None:
+    def __init__(self: "CRUDBase[ModelType]", model: type[ModelType]) -> None:
         """CRUD object with default methods to Create, Read, Update, Delete (CRUD).
 
         **Parameters**
@@ -32,7 +32,7 @@ class CRUDBase(Generic[ModelType]):
         """
         self.model = model
 
-    def _get_filters(self: "CRUDBase", items: list[Filter]) -> list[SQLQuery]:
+    def _get_filters(self: "CRUDBase[ModelType]", items: list[Filter]) -> list[SQLQuery]:
         """Get the filters to be applied to a query.
 
         Args:
@@ -46,7 +46,11 @@ class CRUDBase(Generic[ModelType]):
         """
         filter_clauses = []
         for filter_obj in items:
-            filter_field = getattr(self.model, filter_obj.field)
+            field_parts = filter_obj.field.split(".")
+            filter_field = getattr(self.model, field_parts[0])
+
+            for part in field_parts[1:]:
+                filter_field = getattr(filter_field.property.mapper.class_, part)
 
             if filter_obj.operator == "eq":
                 filter_clauses.append(filter_field == filter_obj.value)
@@ -69,7 +73,7 @@ class CRUDBase(Generic[ModelType]):
                 raise ValueError(error_message)
         return filter_clauses
 
-    def get_by_id(self: "CRUDBase", db: Session, row_id: int) -> ModelType | None:
+    def get_by_id(self: "CRUDBase[ModelType]", db: Session, row_id: int) -> ModelType | None:
         """Returns an object of the model specified.
 
         Args:
@@ -81,7 +85,12 @@ class CRUDBase(Generic[ModelType]):
         """
         return db.query(self.model).filter(self.model.id == row_id).first()
 
-    def get_one_by_field(self: "CRUDBase", db: Session, field: str, value: str) -> ModelType | None:
+    def get_one_by_field(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        field: str,
+        value: str,
+    ) -> ModelType | None:
         """Returns an object of the model specified.
 
         Args:
@@ -94,7 +103,11 @@ class CRUDBase(Generic[ModelType]):
         """
         return db.query(self.model).filter(getattr(self.model, field) == value).first()
 
-    def get_one_by_fields(self: "CRUDBase", db: Session, filters: list[Filter]) -> ModelType | None:
+    def get_one_by_fields(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        filters: list[Filter],
+    ) -> ModelType | None:
         """Returns an object of the model specified.
 
         Args:
@@ -109,7 +122,7 @@ class CRUDBase(Generic[ModelType]):
         return db.query(self.model).filter(*filter_clauses).first()
 
     def get_list(
-        self: "CRUDBase",
+        self: "CRUDBase[ModelType]",
         db: Session,
         offset: int = 0,
         limit: int = 20,
@@ -150,7 +163,7 @@ class CRUDBase(Generic[ModelType]):
         return db_elements or None  # type: ignore
 
     def count(
-        self: "CRUDBase",
+        self: "CRUDBase[ModelType]",
         db: Session,
         filters: list[Filter] | None = None,
     ) -> int:
@@ -170,7 +183,7 @@ class CRUDBase(Generic[ModelType]):
             count_query = count_query.where(*filter_clauses)
         return db.scalar(count_query)
 
-    def create(self: "CRUDBase", db: Session, data: ModelType) -> ModelType:
+    def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.
 
         Args:
@@ -191,7 +204,7 @@ class CRUDBase(Generic[ModelType]):
             return data
 
     def update(
-        self: "CRUDBase",
+        self: "CRUDBase[ModelType]",
         db: Session,
         data: ModelType,
     ) -> ModelType:
@@ -222,7 +235,7 @@ class CRUDBase(Generic[ModelType]):
             return data
 
     def delete_row(
-        self: "CRUDBase",
+        self: "CRUDBase[ModelType]",
         db: Session,
         model_obj: ModelType,
     ) -> ModelType | None:
@@ -252,7 +265,7 @@ class CRUDBase(Generic[ModelType]):
             return model_obj
 
     def soft_delete_row(
-        self: "CRUDBase",
+        self: "CRUDBase[ModelType]",
         db: Session,
         model_obj: ModelType,
     ) -> ModelType | None:

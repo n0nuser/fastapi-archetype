@@ -159,13 +159,13 @@ async def get_customers(
     """List of customers."""
     filters = []
     if street:
-        filters.append(Filter(field="street", operator="contains", value=street))
+        filters.append(Filter(field="addresses.street", operator="contains", value=street))
     if city:
-        filters.append(Filter(field="city", operator="contains", value=city))
+        filters.append(Filter(field="addresses.city", operator="contains", value=city))
     if country:
-        filters.append(Filter(field="country", operator="contains", value=country))
+        filters.append(Filter(field="addresses.country", operator="contains", value=country))
     if postal_code:
-        filters.append(Filter(field="postal_code", operator="eq", value=postal_code))
+        filters.append(Filter(field="addresses.postal_code", operator="eq", value=postal_code))
     relationships = ["addresses"]
 
     try:
