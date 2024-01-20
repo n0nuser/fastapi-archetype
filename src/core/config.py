@@ -25,7 +25,7 @@ import pathlib
 from typing import Any, Literal
 
 from dotenv import load_dotenv
-from pydantic import AnyHttpUrl, PostgresDsn, validator
+from pydantic import PostgresDsn, validator
 from pydantic_settings import BaseSettings
 
 from src.core.logger import logger
@@ -38,14 +38,13 @@ class Settings(BaseSettings):
     """Represents the configuration settings for the application."""
 
     # CORE SETTINGS
-    API_V1_STR: str = "/v1"
     SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"
-    ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "PYTEST"
-    SECURITY_BCRYPT_ROUNDS: int = 12
-    # BACKEND_CORS_ORIGINS is a JSON-formatted list of origins
-    # For example: '["http://localhost:4200", "http://local.dockertoolbox.tiangolo.com"]'
-    BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = []
+    ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "DEV"
+    # BACKEND_CORS_ORIGINS and ALLOWED_HOSTS are a JSON-formatted list of origins
+    # For example: ["http://localhost:4200", "https://myfrontendapp.com"]
+    BACKEND_CORS_ORIGINS: list[str] = []
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
+    APP_LOG_FILE_PATH: str = "logs/app.log"
 
     # POSTGRESQL DATABASE
     POSTGRES_SERVER: str = "db"
@@ -68,7 +67,12 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
-    PROJECT_NAME: str = "{{cookiecutter.project_name}}"
+    BASE_API_PATH: str
+    PROJECT_NAME: str
+    PROJECT_DESCRIPTION: str
+    PROJECT_VERSION: str
+    CONTACT_NAME: str
+    CONTACT_EMAIL: str
 
     class Config:
         env_file = ".env"

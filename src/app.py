@@ -10,18 +10,17 @@ from src.core.config import settings
 from src.core.logger import logger
 from src.db.create_db import init_db
 
-BASE_PATH = "customer-system"
-root_path = f"/api/{BASE_PATH}"
+root_path = f"/api/{settings.BASE_API_PATH}"
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{root_path}/openapi.json",
     version="1.0.0",
-    description="{{cookiecutter.project_description}}",
-    # contact={
-    #     "name": "{{cookiecutter.author_name}}",
-    #     "email": "{{cookiecutter.author_email}}",
-    # },
+    description=settings.PROJECT_DESCRIPTION,
+    contact={
+        "name": settings.CONTACT_NAME,
+        "email": settings.CONTACT_EMAIL,
+    },
     docs_url=f"{root_path}/swagger",
     on_startup=[init_db],
     on_shutdown=[],
