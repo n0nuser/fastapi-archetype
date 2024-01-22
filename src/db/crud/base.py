@@ -4,8 +4,9 @@ from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session
 
+from src.core.logger import logger
 from src.db.models.base import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
@@ -145,22 +146,23 @@ class CRUDBase(Generic[ModelType]):
         Returns:
             list[ModelType] | None: Result with the Data or None if not found.
         """
-        query: SQLQuery = db.query(self.model)
+        query = select(self.model)
         if join_fields:
             for join_field in join_fields:
-                query = query.options(
-                    joinedload(getattr(self.model, join_field)),
-                )
+                query = query.join(getattr(self.model, join_field))
 
         if filters:
             filter_clauses = self._get_filters(filters)
             # OR
             # query = query.filter(sqlalchemy.or_(*filter_clauses))
             # AND
-            query = query.filter(*filter_clauses)
+            query = query.where(*filter_clauses)
 
-        db_elements = query.order_by(self.model.id.asc()).offset(offset).limit(limit).all()
-        return db_elements or None  # type: ignore
+        query = query.order_by(self.model.id).offset(offset).limit(limit)
+        string_query = str(query)
+        logger.debug(string_query)
+        data = db.execute(query).all()
+        return data or None  # type: ignore
 
     def count(
         self: "CRUDBase[ModelType]",
