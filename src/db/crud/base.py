@@ -161,7 +161,7 @@ class CRUDBase(Generic[ModelType]):
         query = query.order_by(self.model.id).offset(offset).limit(limit)
         string_query = str(query)
         logger.debug(string_query)
-        data = db.execute(query).all()
+        data = db.scalars(query).all()
         return data or None  # type: ignore
 
     def count(
