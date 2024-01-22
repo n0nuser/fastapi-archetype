@@ -169,14 +169,15 @@ async def get_customers(
     relationships = ["addresses"]
 
     try:
-        db_data: list[CustomerDBModel]
+        # db_data: list[CustomerDBModel]
         if db_data := customer_crud.get_list(db, offset, limit, filters, join_fields=relationships):
-            for row in db_data:
-                response_data = [
-                    CustomerListDataResponse(
-                        customer_id=str(row.Customer.id), name=row.Customer.name
-                    ),
-                ]
+            response_data = [
+                CustomerListDataResponse(
+                    customer_id=str(row.id),
+                    name=row.name,
+                )
+                for row in db_data
+            ]
             db_count = customer_crud.count(db, filters)
         else:
             response_data = []
