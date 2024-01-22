@@ -48,7 +48,7 @@ def _manage_exception(request: Request, exc: Exception, code: int) -> JSONRespon
     """
     _log_exception(request, exc)
     if x_request_id := request.headers.get("x-request-id"):
-        headers = {"X-Request-ID": x_request_id}
+        headers = {"X-Request-ID": str(x_request_id)}
     else:
         headers = None
 

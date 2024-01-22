@@ -1,6 +1,6 @@
 from typing import Generic, Literal, TypeVar
 
-from pydantic import BaseModel
+from pydantic import UUID4, BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
@@ -74,7 +74,9 @@ class CRUDBase(Generic[ModelType]):
                 raise ValueError(error_message)
         return filter_clauses
 
-    def get_by_id(self: "CRUDBase[ModelType]", db: Session, row_id: int) -> ModelType | None:
+    def get_by_id(
+        self: "CRUDBase[ModelType]", db: Session, row_id: int | UUID4
+    ) -> ModelType | None:
         """Returns an object of the model specified.
 
         Args:
