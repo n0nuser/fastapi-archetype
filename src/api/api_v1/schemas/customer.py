@@ -1,5 +1,6 @@
 """This module defines the response structure for an customer API endpoint."""
-from pydantic import UUID4, BaseModel, Field
+
+from pydantic import BaseModel, Field
 
 from src.api.pagination import Pagination
 
@@ -12,11 +13,11 @@ class AddressBase(BaseModel):
 
 
 class AddressResponse(AddressBase):
-    address_id: UUID4
+    address_id: str  # UUID
 
 
 class CustomerListDataResponse(BaseModel):
-    customer_id: UUID4
+    customer_id: str  # UUID
     name: str
 
 
@@ -35,7 +36,7 @@ class CustomerCreate(BaseModel):
                     "city": "Anytown",
                     "country": "USA",
                     "postal_code": "12345",
-                }
+                },
             ],
         ],
     )

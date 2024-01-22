@@ -171,7 +171,12 @@ async def get_customers(
     try:
         db_data: list[CustomerDBModel]
         if db_data := customer_crud.get_list(db, offset, limit, filters, join_fields=relationships):
-            response_data = [CustomerListDataResponse(id=row.id, name=row.name) for row in db_data]
+            for row in db_data:
+                response_data = [
+                    CustomerListDataResponse(
+                        customer_id=str(row.Customer.id), name=row.Customer.name
+                    ),
+                ]
             db_count = customer_crud.count(db, filters)
         else:
             response_data = []
@@ -189,7 +194,7 @@ async def get_customers(
 
     headers = {"X-Request-ID": x_request_id}
     response = CustomerListResponse(data=response_data, pagination=pagination)
-    return JSONResponse(content=response.dict(), status_code=200, headers=headers)
+    return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
 
 
 @router.get(
