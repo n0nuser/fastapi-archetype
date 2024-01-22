@@ -2,6 +2,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends, Header, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
+from pydantic import UUID4
 from sqlalchemy.orm import Session
 
 from src.api.api_v1.schemas.customer import (
@@ -53,26 +54,17 @@ router = APIRouter()
     response_model=None,
 )
 async def delete_customer_id(
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
             ...,
             description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            ...,
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
-    customer_id: Annotated[int, Path(description="Id of a specific customer.", ge=1)],
+    ] = None,
     db: Session = Depends(get_db_session),
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
@@ -82,7 +74,7 @@ async def delete_customer_id(
             raise HTTP404NotFoundError
         customer_crud.delete_row(db, db_customer)
         headers = {
-            "X-Request-ID": x_request_id,
+            "X-Request-ID": str(x_request_id),
         }
         return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
     except Exception as error:
@@ -117,27 +109,21 @@ async def delete_customer_id(
 )
 async def get_customers(
     request: Request,
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
+    ] = None,
     limit: Annotated[
         int,
         Query(
-            description="Number of records returned per page. If specified on entry, this will be the value of the query, otherwise it will be the value value set by default.",
+            description="Number of records returned per page. If specified on entry, this will be"
+            + " the value of the query, otherwise it will be the value value set by default.",
             ge=1,
             le=100,
         ),
@@ -145,7 +131,8 @@ async def get_customers(
     offset: Annotated[
         int,
         Query(
-            description="Record number from which you want to receive the number of records indicated in the limit. If it is indicated at the entry, it will be the value of the query. If it is not indicated at the input, as the query is on the first page, its value will be 0.",
+            description="Record number from which you want to receive the number of records"
+            + " indicated in the limit. If it is indicated at the entry, it will be the value of the query. If it is not indicated at the input, as the query is on the first page, its value will be 0.",
             ge=0,
             le=100,
         ),
@@ -193,7 +180,7 @@ async def get_customers(
         url=request.url,
     )
 
-    headers = {"X-Request-ID": x_request_id}
+    headers = {"X-Request-ID": str(x_request_id)}
     response = CustomerListResponse(data=response_data, pagination=pagination)
     return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
 
@@ -224,39 +211,31 @@ async def get_customers(
     response_model=CustomerDetailResponse,
 )
 async def get_customers_customer_id(
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            ...,
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
-    customer_id: Annotated[int, Path(description="Id of a specific customer.", ge=1)],
+    ] = None,
     db: Session = Depends(get_db_session),
 ) -> JSONResponse:
     """Retrieve the information of the customer with the matching code."""
     headers = {
-        "X-Request-ID": x_request_id,
+        "X-Request-ID": str(x_request_id),
     }
     try:
         if db_data := customer_crud.get_by_id(db, customer_id):
             api_data = CustomerDetailResponse(
-                id=db_data.id,
+                customer_id=str(db_data.id),
                 name=db_data.name,
                 addresses=[
                     AddressResponse(
-                        id=address.id,
+                        address_id=str(address.id),
                         street=address.street,
                         city=address.city,
                         country=address.country,
@@ -297,23 +276,16 @@ async def get_customers_customer_id(
 )
 async def post_customers(
     request: Request,
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
+    ] = None,
     db: Session = Depends(get_db_session),
     post_customers_request: CustomerCreate = Body(description=""),
 ) -> Response:
@@ -332,7 +304,7 @@ async def post_customers(
             address_crud.create(db, db_address)
         url = request.url
         headers = {
-            "X-Request-ID": x_request_id,
+            "X-Request-ID": str(x_request_id),
             "Location": f"{url.scheme}://{url.netloc}/customers/{customer.id}",
         }
         return Response(status_code=status.HTTP_201_CREATED, headers=headers)
@@ -368,24 +340,17 @@ async def post_customers(
     response_model_by_alias=True,
 )
 async def put_customers_customer_id(
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
-    customer_id: Annotated[int, Path(description="Id of a specific customer.", ge=1)],
+    ] = None,
     db: Session = Depends(get_db_session),
     post_customers_request: CustomerUpdate = Body(description=""),
 ) -> Response:
@@ -398,7 +363,7 @@ async def put_customers_customer_id(
             db_customer.name = post_customers_request.name
             customer_crud.update(db, db_customer)
         headers = {
-            "X-Request-ID": x_request_id,
+            "X-Request-ID": str(x_request_id),
         }
         return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
     except Exception as error:
@@ -433,33 +398,26 @@ async def put_customers_customer_id(
     response_model_by_alias=True,
 )
 async def put_addresses_customer_id(
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
+    address_id: Annotated[UUID4, Path(description="Id of a specific address.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
-    customer_id: Annotated[int, Path(description="Id of a specific customer.", ge=1)],
-    address_id: Annotated[int, Path(description="Id of a specific address.", ge=1)],
+    ] = None,
     db: Session = Depends(get_db_session),
     post_address_request: AddressBase = Body(description=""),
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     try:
         filters = [
-            Filter(field="customer_id", operator="eq", value=customer_id),
-            Filter(field="id", operator="eq", value=address_id),
+            Filter(field="customer_id", operator="eq", value=str(customer_id)),
+            Filter(field="id", operator="eq", value=str(address_id)),
         ]
         db_address = address_crud.get_one_by_fields(db, filters)
         if not db_address:
@@ -471,7 +429,7 @@ async def put_addresses_customer_id(
         db_address.postal_code = post_address_request.postal_code
         address_crud.update(db, db_address)
         headers = {
-            "X-Request-ID": x_request_id,
+            "X-Request-ID": str(x_request_id),
         }
         return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
     except Exception as error:
@@ -505,39 +463,32 @@ async def put_addresses_customer_id(
     response_model=None,
 )
 async def delete_address_id(
+    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
+    address_id: Annotated[UUID4, Path(description="Id of a specific address.")],
     accept_language: Annotated[
-        str,
+        str | None,
         Header(
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"^[a-z]{2}-[A-Z]{2}$",
-            min_length=1,
-            max_length=6,
-        ),
-    ],
-    x_request_id: Annotated[
-        str,
-        Header(
-            description="Request ID.",
-            regex=r"^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$",
+            description="ISO code of the language that the client accepts"
+            + " in response from the server.",
+            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ],
-    customer_id: Annotated[int, Path(description="Id of a specific customer.", ge=1)],
-    address_id: Annotated[int, Path(description="Id of a specific address.", ge=1)],
+    ] = None,
     db: Session = Depends(get_db_session),
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
     try:
         filters = [
-            Filter(field="customer_id", operator="eq", value=customer_id),
-            Filter(field="id", operator="eq", value=address_id),
+            Filter(field="customer_id", operator="eq", value=str(customer_id)),
+            Filter(field="id", operator="eq", value=str(address_id)),
         ]
         db_address = address_crud.get_one_by_fields(db, filters)
         if not db_address:
             raise HTTP404NotFoundError
         address_crud.delete_row(db, db_address)
         headers = {
-            "X-Request-ID": x_request_id,
+            "X-Request-ID": str(x_request_id),
         }
         return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
     except Exception as error:
