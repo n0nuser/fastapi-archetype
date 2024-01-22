@@ -6,23 +6,35 @@ from src.api.pagination import Pagination
 
 
 class AddressBase(BaseModel):
-    street: str
-    city: str
-    country: str
-    postal_code: str
+    street: str = Field(..., examples=["123 Main St"])
+    city: str = Field(..., examples=["Anytown"])
+    country: str = Field(..., examples=["USA"])
+    postal_code: str = Field(..., examples=["12345"])
 
 
 class AddressResponse(AddressBase):
-    address_id: str  # UUID
+    address_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
 
 
 class CustomerListDataResponse(BaseModel):
-    customer_id: str  # UUID
-    name: str
+    customer_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
+    name: str = Field(..., examples=["John Doe"])
 
 
 class CustomerDetailResponse(CustomerListDataResponse):
-    addresses: list[AddressResponse]
+    addresses: list[AddressResponse] = Field(
+        examples=[
+            [
+                {
+                    "address_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+                    "street": "123 Main St",
+                    "city": "Anytown",
+                    "country": "USA",
+                    "postal_code": "12345",
+                },
+            ],
+        ],
+    )
 
 
 class CustomerCreate(BaseModel):
@@ -43,7 +55,7 @@ class CustomerCreate(BaseModel):
 
 
 class CustomerUpdate(BaseModel):
-    name: str | None = Field(default=None)
+    name: str | None = Field(default=None, examples=["John Doe"])
 
 
 class CustomerListResponse(BaseModel):
