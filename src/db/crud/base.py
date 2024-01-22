@@ -1,6 +1,6 @@
 from typing import Generic, Literal, TypeVar
 
-from pydantic import UUID4, BaseModel
+from pydantic import UUID4, BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
@@ -15,9 +15,12 @@ ModelType = TypeVar("ModelType", bound=Base)
 class Filter(BaseModel):
     """Filter to be applied to a query."""
 
-    field: str
-    operator: Literal["eq", "neq", "contains", "not_contains", "gt", "gte", "lt", "lte"]
-    value: str | int | float
+    field: str = Field(..., examples=["name"])
+    operator: Literal["eq", "neq", "contains", "not_contains", "gt", "gte", "lt", "lte"] = Field(
+        ...,
+        examples=["eq"],
+    )
+    value: str | int | float | bool = Field(..., examples=["John Doe"])
 
 
 class CRUDBase(Generic[ModelType]):
@@ -75,7 +78,9 @@ class CRUDBase(Generic[ModelType]):
         return filter_clauses
 
     def get_by_id(
-        self: "CRUDBase[ModelType]", db: Session, row_id: int | UUID4
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        row_id: int | UUID4,
     ) -> ModelType | None:
         """Returns an object of the model specified.
 

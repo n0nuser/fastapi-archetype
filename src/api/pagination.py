@@ -60,7 +60,9 @@ class HyperLink(BaseModel):
         href (str, optional): The URL reference. Defaults to None.
     """
 
-    href: str | None = Field(default=None)
+    href: str | None = Field(
+        default=None, examples=["http://localhost:8000/api/v1/customers?limit=10&offset=0"]
+    )
 
 
 class PaginationLinks(BaseModel):
@@ -74,11 +76,25 @@ class PaginationLinks(BaseModel):
         last (HyperLink, optional): The link to the last page. Defaults to None.
     """
 
-    first: HyperLink | None = Field(default=None)
-    prev: HyperLink | None = Field(default=None)
-    actual: HyperLink = Field()
-    next: HyperLink | None = Field(default=None)  # noqa: A003
-    last: HyperLink | None = Field(default=None)
+    first: HyperLink | None = Field(
+        default=None,
+        examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"}],
+    )
+    prev: HyperLink | None = Field(
+        default=None,
+        examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"}],
+    )
+    actual: HyperLink = Field(
+        examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"}],
+    )
+    next: HyperLink | None = Field(  # noqa: A003
+        default=None,
+        examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=10"}],
+    )
+    last: HyperLink | None = Field(
+        default=None,
+        examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=10"}],
+    )
 
     @classmethod
     def generate_pagination_links(  # noqa: PLR0913
@@ -156,7 +172,18 @@ class Pagination(BaseModel):
     page_number: int | None = Field(default=None)
     total_pages: int | None = Field(default=None)
     total_elements: int | None = Field(default=None)
-    links: PaginationLinks | None = Field(default=None)
+    links: PaginationLinks | None = Field(
+        default=None,
+        examples=[
+            {
+                "actual": {"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"},
+                "first": {"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"},
+                "prev": {"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"},
+                "next": {"href": "http://localhost:8000/api/v1/customers?limit=10&offset=10"},
+                "last": {"href": "http://localhost:8000/api/v1/customers?limit=10&offset=10"},
+            },
+        ],
+    )
 
     @field_validator("offset", "limit", "page_number", "total_pages", "total_elements")
     @classmethod

@@ -12,10 +12,18 @@ class ErrorMessageData(BaseModel):
         description (str | None): The description of the error message (optional).
     """
 
-    code: str = Field(min_length=1, max_length=50)
-    message: str = Field(min_length=1, max_length=500)
-    error_type: str = Field()
-    description: str | None = Field(default=None, min_length=1, max_length=500)
+    code: str = Field(min_length=1, max_length=50, examples=["BAD_REQUEST"])
+    error_type: str = Field(examples=["FATAL"])
+    message: str = Field(min_length=1, max_length=500, examples=["Bad Request"])
+    description: str | None = Field(
+        default=None,
+        min_length=1,
+        max_length=500,
+        examples=[
+            "The request is incorrect because the selected parameters are"  # noqa: ISC003
+            + " wrong or a functional error has occurred.",
+        ],
+    )
 
 
 class ErrorMessage(BaseModel):
