@@ -38,10 +38,11 @@ class Settings(BaseSettings):
     """Represents the configuration settings for the application."""
 
     # CORE SETTINGS
+    ## Could be improved by using a secret manager like AWS Secrets Manager or Hashicorp Vault
     SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"
     ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "DEV"
-    # BACKEND_CORS_ORIGINS and ALLOWED_HOSTS are a JSON-formatted list of origins
-    # For example: ["http://localhost:4200", "https://myfrontendapp.com"]
+    ## BACKEND_CORS_ORIGINS and ALLOWED_HOSTS are a JSON-formatted list of origins
+    ## For example: ["http://localhost:4200", "https://myfrontendapp.com"]
     BACKEND_CORS_ORIGINS: list[str] = []
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
     APP_LOG_FILE_PATH: str = "logs/app.log"
@@ -67,6 +68,7 @@ class Settings(BaseSettings):
             path=values.get("POSTGRES_DB", "") or "",
         )
 
+    # Additional Project Settings
     BASE_API_PATH: str
     PROJECT_NAME: str
     PROJECT_DESCRIPTION: str

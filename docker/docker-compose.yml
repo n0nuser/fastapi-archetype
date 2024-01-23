@@ -8,12 +8,11 @@ services:
     restart: unless-stopped
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; uvicorn src.app:app --host 0.0.0.0 --port 8000'
     env_file:
-      - ../.env
+      - ../src/.env
     ports:
       - "8000:8000"
     depends_on:
       - db
-      - sites
     networks:
       - app-network
     volumes:
@@ -24,12 +23,12 @@ services:
     container_name: app-db
     restart: unless-stopped
     env_file:
-      - .env
+      - ../src/.env
     environment:
-      - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=task-manager
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-app_db}
     volumes:
       - app-db-data:/var/lib/postgresql/data/pgdata
     networks:
@@ -37,17 +36,45 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-admin}
+      - PGADMIN_CONFIG_SERVER_MODE=False
+      - PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED=False
     networks:
       - app-network
     depends_on:
       - db
-    env_file:
-      - .env
-    
+    ports:
+      - "5050:80"
+    entrypoint: /bin/sh -c "chmod 600 /pgpass; /entrypoint.sh;"
+    user: root
+    configs:
+      - source: servers.json
+        target: /pgadmin4/servers.json
+      - source: pgpass
+        target: /pgpass
+
+configs:
+  pgpass:
+    content: db:5432:*:postgres:postgres
+  servers.json:
+    content: |
+      {"Servers": {"1": {
+        "Group": "Servers",
+        "Name": "app_server",
+        "Host": "db",
+        "Port": 5432,
+        "MaintenanceDB": "postgres",
+        "Username": "postgres",
+        "PassFile": "/pgpass",
+        "SSLMode": "prefer"
+      }}}
+
 networks:
   app-network:
     driver: bridge
     name: app-network
 volumes:
-  db-data:
+  app-db-data:
   logs:
