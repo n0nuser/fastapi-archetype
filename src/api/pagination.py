@@ -61,7 +61,8 @@ class HyperLink(BaseModel):
     """
 
     href: str | None = Field(
-        default=None, examples=["http://localhost:8000/api/v1/customers?limit=10&offset=0"]
+        default=None,
+        examples=["http://localhost:8000/api/v1/customers?limit=10&offset=0"],
     )
 
 
@@ -87,7 +88,7 @@ class PaginationLinks(BaseModel):
     actual: HyperLink = Field(
         examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=0"}],
     )
-    next: HyperLink | None = Field(  # noqa: A003
+    next: HyperLink | None = Field(
         default=None,
         examples=[{"href": "http://localhost:8000/api/v1/customers?limit=10&offset=10"}],
     )
