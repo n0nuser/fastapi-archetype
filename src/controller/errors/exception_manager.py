@@ -19,10 +19,10 @@ from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, NoResultFound, OperationalError, ProgrammingError
 
 if TYPE_CHECKING:
-    from src.api.api_v1.schemas.error_message import ErrorMessage
+    from src.controller.api.schemas.error_message import ErrorMessage
 
-from src.api.errors import exceptions
-from src.api.errors.error_responses import ERROR_RESPONSES
+from src.controller.errors import exceptions
+from src.controller.errors.error_responses import ERROR_RESPONSES
 from src.core.logger import logger
 
 

@@ -2,7 +2,7 @@ from sqlalchemy import ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from src.db.models.base import BaseTimestamps
+from src.repository.models.base import BaseTimestamps
 
 
 class Customer(BaseTimestamps):

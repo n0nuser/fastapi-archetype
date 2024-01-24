@@ -2,8 +2,8 @@
 
 from sqlalchemy_utils import create_database, database_exists
 
-from src.db.models.base import Base
-from src.db.session import engine
+from src.repository.models.base import Base
+from src.repository.session import engine
 
 
 def init_db() -> None:

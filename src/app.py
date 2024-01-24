@@ -4,11 +4,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 
-from src.api import router
-from src.api.errors.exception_manager import manage_api_exceptions
+from src.controller import router
+from src.controller.errors.exception_manager import manage_api_exceptions
 from src.core.config import settings
 from src.core.logger import logger
-from src.db.create_db import init_db
+from src.repository.create_db import init_db
 
 root_path = f"/api/{settings.BASE_API_PATH}"
 
