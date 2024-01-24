@@ -1,5 +1,5 @@
 """Maps HTTP status codes to their corresponding exception classes."""
-from src.api.errors import exceptions
+from src.controller.errors import exceptions
 
 EXCEPTION_MAPPER = {
     400: exceptions.HTTP400BadRequestError,

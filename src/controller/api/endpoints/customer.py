@@ -5,24 +5,19 @@ from fastapi.responses import JSONResponse, Response
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
-from src.api.api_v1.schemas.customer import (
+from src.controller.api.schemas.customer import (
     AddressBase,
-    AddressResponse,
     CustomerCreate,
     CustomerDetailResponse,
-    CustomerListDataResponse,
     CustomerListResponse,
     CustomerUpdate,
 )
-from src.api.api_v1.schemas.error_message import ErrorMessage
-from src.api.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
-from src.api.pagination import Pagination
-from src.db.crud.address import address_crud
-from src.db.crud.base import Filter
-from src.db.crud.customer import customer_crud
-from src.db.models.customer import Address as AddressDBModel
-from src.db.models.customer import Customer as CustomerDBModel
-from src.db.session import get_db_session
+from src.controller.api.schemas.error_message import ErrorMessage
+from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
+from src.controller.pagination import Pagination
+from src.repository.exceptions import ElementNotFound
+from src.repository.session import get_db_session
+from src.service.application.customer import CustomerApplicationService
 
 router = APIRouter()
 
@@ -69,16 +64,13 @@ async def delete_customer_id(
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
     try:
-        db_customer = customer_crud.get_by_id(db, customer_id)
-        if not db_customer:
-            raise HTTP404NotFoundError
-        customer_crud.delete_row(db, db_customer)
-        headers = {
-            "X-Request-ID": str(x_request_id),
-        }
-        return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+        CustomerApplicationService.delete_customer(db, customer_id)
+    except ElementNotFound as error:
+        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
+    headers = {"X-Request-ID": str(x_request_id)}
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
 @router.get(
@@ -144,31 +136,18 @@ async def get_customers(
     db: Session = Depends(get_db_session),
 ) -> JSONResponse:
     """List of customers."""
-    filters = []
-    if street:
-        filters.append(Filter(field="addresses.street", operator="contains", value=street))
-    if city:
-        filters.append(Filter(field="addresses.city", operator="contains", value=city))
-    if country:
-        filters.append(Filter(field="addresses.country", operator="contains", value=country))
-    if postal_code:
-        filters.append(Filter(field="addresses.postal_code", operator="eq", value=postal_code))
-    relationships = ["addresses"]
-
     try:
-        # db_data: list[CustomerDBModel]
-        if db_data := customer_crud.get_list(db, offset, limit, filters, join_fields=relationships):
-            response_data = [
-                CustomerListDataResponse(
-                    customer_id=str(row.id),
-                    name=row.name,
-                )
-                for row in db_data
-            ]
-            db_count = customer_crud.count(db, filters)
-        else:
-            response_data = []
-            db_count = 0
+        response_data, db_count = CustomerApplicationService.get_customers(
+            db,
+            limit,
+            offset,
+            street,
+            city,
+            country,
+            postal_code,
+        )
+    except ElementNotFound as error:
+        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
 
@@ -179,7 +158,6 @@ async def get_customers(
         no_elements=db_count,
         url=request.url,
     )
-
     headers = {"X-Request-ID": str(x_request_id)}
     response = CustomerListResponse(data=response_data, pagination=pagination)
     return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
@@ -210,7 +188,7 @@ async def get_customers(
     response_model_by_alias=True,
     response_model=CustomerDetailResponse,
 )
-async def get_customers_customer_id(
+async def get_customer_id(
     x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     accept_language: Annotated[
@@ -225,28 +203,14 @@ async def get_customers_customer_id(
     db: Session = Depends(get_db_session),
 ) -> JSONResponse:
     """Retrieve the information of the customer with the matching code."""
-    headers = {
-        "X-Request-ID": str(x_request_id),
-    }
     try:
-        if db_data := customer_crud.get_by_id(db, customer_id):
-            api_data = CustomerDetailResponse(
-                customer_id=str(db_data.id),
-                name=db_data.name,
-                addresses=[
-                    AddressResponse(
-                        address_id=str(address.id),
-                        street=address.street,
-                        city=address.city,
-                        country=address.country,
-                        postal_code=address.postal_code,
-                    )
-                    for address in db_data.addresses
-                ],
-            )
+        api_data = CustomerApplicationService.get_customer_id(db, customer_id)
+    except ElementNotFound as error:
+        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
-    return JSONResponse(content=api_data.dict(), status_code=200, headers=headers)
+    headers = {"X-Request-ID": str(x_request_id)}
+    return JSONResponse(content=api_data.model_dump(), status_code=200, headers=headers)
 
 
 @router.post(
@@ -274,7 +238,7 @@ async def get_customers_customer_id(
     summary="Create a new customer.",
     response_model_by_alias=True,
 )
-async def post_customers(
+async def post_customer(
     request: Request,
     x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     accept_language: Annotated[
@@ -291,25 +255,15 @@ async def post_customers(
 ) -> Response:
     """Add a new customer into the list."""
     try:
-        customer = CustomerDBModel(name=post_customers_request.name)
-        customer_crud.create(db, customer)
-        for address in post_customers_request.addresses:
-            db_address = AddressDBModel(
-                customer_id=customer.id,
-                street=address.street,
-                city=address.city,
-                country=address.country,
-                postal_code=address.postal_code,
-            )
-            address_crud.create(db, db_address)
-        url = request.url
-        headers = {
-            "X-Request-ID": str(x_request_id),
-            "Location": f"{url.scheme}://{url.netloc}/customers/{customer.id}",
-        }
-        return Response(status_code=status.HTTP_201_CREATED, headers=headers)
+        customer_id = CustomerApplicationService.post_customer(db, post_customers_request)
     except Exception as error:
         raise HTTP500InternalServerError from error
+    url = request.url
+    headers = {
+        "X-Request-ID": str(x_request_id),
+        "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
+    }
+    return Response(status_code=status.HTTP_201_CREATED, headers=headers)
 
 
 @router.put(
@@ -356,18 +310,13 @@ async def put_customers_customer_id(
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     try:
-        db_customer = customer_crud.get_by_id(db, customer_id)
-        if not db_customer:
-            raise HTTP404NotFoundError
-        if post_customers_request.name:
-            db_customer.name = post_customers_request.name
-            customer_crud.update(db, db_customer)
-        headers = {
-            "X-Request-ID": str(x_request_id),
-        }
-        return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+        CustomerApplicationService.put_customers(db, customer_id, post_customers_request)
+    except ElementNotFound as error:
+        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
+    headers = {"X-Request-ID": str(x_request_id)}
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
 @router.put(
@@ -415,25 +364,13 @@ async def put_addresses_customer_id(
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     try:
-        filters = [
-            Filter(field="customer_id", operator="eq", value=str(customer_id)),
-            Filter(field="id", operator="eq", value=str(address_id)),
-        ]
-        db_address = address_crud.get_one_by_fields(db, filters)
-        if not db_address:
-            raise HTTP404NotFoundError
-
-        db_address.street = post_address_request.street
-        db_address.city = post_address_request.city
-        db_address.country = post_address_request.country
-        db_address.postal_code = post_address_request.postal_code
-        address_crud.update(db, db_address)
-        headers = {
-            "X-Request-ID": str(x_request_id),
-        }
-        return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+        CustomerApplicationService.put_adress(db, customer_id, address_id, post_address_request)
+    except ElementNotFound as error:
+        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
+    headers = {"X-Request-ID": str(x_request_id)}
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
 @router.delete(
@@ -479,17 +416,10 @@ async def delete_address_id(
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
     try:
-        filters = [
-            Filter(field="customer_id", operator="eq", value=str(customer_id)),
-            Filter(field="id", operator="eq", value=str(address_id)),
-        ]
-        db_address = address_crud.get_one_by_fields(db, filters)
-        if not db_address:
-            raise HTTP404NotFoundError
-        address_crud.delete_row(db, db_address)
-        headers = {
-            "X-Request-ID": str(x_request_id),
-        }
-        return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+        CustomerApplicationService.delete_address(db, customer_id, address_id)
     except Exception as error:
         raise HTTP500InternalServerError from error
+    headers = {
+        "X-Request-ID": str(x_request_id),
+    }
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)

@@ -7,7 +7,8 @@ from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session
 
 from src.core.logger import logger
-from src.db.models.base import Base
+from src.repository.exceptions import ElementNotFound
+from src.repository.models.base import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
 
@@ -81,7 +82,7 @@ class CRUDBase(Generic[ModelType]):
         self: "CRUDBase[ModelType]",
         db: Session,
         row_id: int | UUID4,
-    ) -> ModelType | None:
+    ) -> ModelType:
         """Returns an object of the model specified.
 
         Args:
@@ -89,16 +90,21 @@ class CRUDBase(Generic[ModelType]):
             row_id (int): ID of the row in the DB.
 
         Returns:
-            ModelType | None: Element, or None if it wasn't found.
+            ModelType: Element.
+
+        Raises:
+            ElementNotFound: If the element is not found.
         """
-        return db.query(self.model).filter(self.model.id == row_id).first()
+        if data := db.query(self.model).filter(self.model.id == row_id).first():
+            return data
+        raise ElementNotFound
 
     def get_one_by_field(
         self: "CRUDBase[ModelType]",
         db: Session,
         field: str,
         value: str,
-    ) -> ModelType | None:
+    ) -> ModelType:
         """Returns an object of the model specified.
 
         Args:
@@ -107,15 +113,20 @@ class CRUDBase(Generic[ModelType]):
             value (str): Value to compare the Field with.
 
         Returns:
-            ModelType | None: Element of the DB.
+            ModelType: Element.
+
+        Raises:
+            ElementNotFound: If the element is not found.
         """
-        return db.query(self.model).filter(getattr(self.model, field) == value).first()
+        if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
+            return data
+        raise ElementNotFound
 
     def get_one_by_fields(
         self: "CRUDBase[ModelType]",
         db: Session,
         filters: list[Filter],
-    ) -> ModelType | None:
+    ) -> ModelType:
         """Returns an object of the model specified.
 
         Args:
@@ -124,10 +135,15 @@ class CRUDBase(Generic[ModelType]):
                 is a tuple of (operator, value).
 
         Returns:
-            ModelType | None: Element of the DB.
+            ModelType: Element.
+
+        Raises:
+            ElementNotFound: If the element is not found.
         """
         filter_clauses = self._get_filters(filters)
-        return db.query(self.model).filter(*filter_clauses).first()
+        if data := db.query(self.model).filter(*filter_clauses).first():
+            return data
+        raise ElementNotFound
 
     def get_list(
         self: "CRUDBase[ModelType]",
@@ -151,7 +167,10 @@ class CRUDBase(Generic[ModelType]):
                 joined loading on. Defaults to None.
 
         Returns:
-            list[ModelType] | None: Result with the Data or None if not found.
+            list[ModelType]: Result with the Data.
+
+        Raises:
+            ElementNotFound: If the element is not found.
         """
         query = select(self.model)
         if join_fields:
@@ -168,8 +187,9 @@ class CRUDBase(Generic[ModelType]):
         query = query.order_by(self.model.id).offset(offset).limit(limit)
         string_query = str(query)
         logger.debug(string_query)
-        data = db.scalars(query).all()
-        return data or None  # type: ignore
+        if data := db.scalars(query).all():
+            return data  # type: ignore
+        raise ElementNotFound
 
     def count(
         self: "CRUDBase[ModelType]",
@@ -185,12 +205,17 @@ class CRUDBase(Generic[ModelType]):
 
         Returns:
             int: Number of elements that match the query.
+
+        Raises:
+            ElementNotFound: If the element is not found.
         """
         count_query = select(func.count()).select_from(self.model)
         if filters:
             filter_clauses = self._get_filters(filters)
             count_query = count_query.where(*filter_clauses)
-        return db.scalar(count_query)
+        if data := db.scalar(count_query):
+            return data  # type: ignore
+        raise ElementNotFound
 
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.
@@ -247,7 +272,7 @@ class CRUDBase(Generic[ModelType]):
         self: "CRUDBase[ModelType]",
         db: Session,
         model_obj: ModelType,
-    ) -> ModelType | None:
+    ) -> ModelType:
         """Delete a record from the database.
 
         This method retrieves the record and deletes it from the database.
@@ -277,7 +302,7 @@ class CRUDBase(Generic[ModelType]):
         self: "CRUDBase[ModelType]",
         db: Session,
         model_obj: ModelType,
-    ) -> ModelType | None:
+    ) -> ModelType:
         """Soft delete a record from the database.
 
         This method retrieves the record and sets its 'deleted_on' attribute to the

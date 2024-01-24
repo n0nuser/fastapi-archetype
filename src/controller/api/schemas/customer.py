@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, Field
 
-from src.api.pagination import Pagination
+from src.controller.pagination import Pagination
 
 
 class AddressBase(BaseModel):
