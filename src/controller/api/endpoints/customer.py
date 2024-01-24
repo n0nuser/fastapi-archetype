@@ -1,10 +1,11 @@
-from typing import Annotated
+from typing import Annotated, Any
 
-from fastapi import APIRouter, Body, Depends, Header, Path, Query, Request, status
+from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
+from src.controller.api.endpoints.base import common_query_parameters
 from src.controller.api.schemas.customer import (
     AddressBase,
     CustomerCreate,
@@ -14,12 +15,14 @@ from src.controller.api.schemas.customer import (
 )
 from src.controller.api.schemas.error_message import ErrorMessage
 from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
-from src.controller.pagination import Pagination
+from src.controller.utils.pagination import Pagination
 from src.repository.exceptions import ElementNotFound
 from src.repository.session import get_db_session
-from src.service.application.customer import CustomerApplicationService
+from src.service.customer_service import CustomerApplicationService
 
 router = APIRouter()
+
+CommonDeps = Annotated[dict[str, Any], Depends(common_query_parameters)]
 
 
 @router.delete(
@@ -49,18 +52,9 @@ router = APIRouter()
     response_model=None,
 )
 async def delete_customer_id(
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            ...,
-            description="ISO code of the language that the client accepts in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
     try:
@@ -69,7 +63,7 @@ async def delete_customer_id(
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(x_request_id)}
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -101,21 +95,14 @@ async def delete_customer_id(
 )
 async def get_customers(
     request: Request,
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
     limit: Annotated[
         int,
         Query(
-            description="Number of records returned per page. If specified on entry, this will be"
-            + " the value of the query, otherwise it will be the value value set by default.",
+            description="Number of records returned per page."  # noqa: ISC003
+            + " If specified on entry, this will be the value of the query,"
+            + " otherwise it will be the value value set by default.",
             ge=1,
             le=100,
         ),
@@ -123,8 +110,11 @@ async def get_customers(
     offset: Annotated[
         int,
         Query(
-            description="Record number from which you want to receive the number of records"
-            + " indicated in the limit. If it is indicated at the entry, it will be the value of the query. If it is not indicated at the input, as the query is on the first page, its value will be 0.",
+            description="Record number from which you want to receive"  # noqa: ISC003
+            + " the number of records indicated in the limit."
+            + " If it is indicated at the entry, it will be the value of the query."
+            + " If it is not indicated at the input, as the query is on the first page,"
+            + " its value will be 0.",
             ge=0,
             le=100,
         ),
@@ -133,7 +123,6 @@ async def get_customers(
     city: Annotated[str | None, Query(description="")] = None,
     country: Annotated[str | None, Query(description="")] = None,
     postal_code: Annotated[str | None, Query(description="")] = None,
-    db: Session = Depends(get_db_session),
 ) -> JSONResponse:
     """List of customers."""
     try:
@@ -158,7 +147,7 @@ async def get_customers(
         no_elements=db_count,
         url=request.url,
     )
-    headers = {"X-Request-ID": str(x_request_id)}
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     response = CustomerListResponse(data=response_data, pagination=pagination)
     return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
 
@@ -189,18 +178,9 @@ async def get_customers(
     response_model=CustomerDetailResponse,
 )
 async def get_customer_id(
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
 ) -> JSONResponse:
     """Retrieve the information of the customer with the matching code."""
     try:
@@ -209,7 +189,7 @@ async def get_customer_id(
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(x_request_id)}
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     return JSONResponse(content=api_data.model_dump(), status_code=200, headers=headers)
 
 
@@ -240,18 +220,9 @@ async def get_customer_id(
 )
 async def post_customer(
     request: Request,
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
-    post_customers_request: CustomerCreate = Body(description=""),
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
+    post_customers_request: Annotated[CustomerCreate, Body(description="")],
 ) -> Response:
     """Add a new customer into the list."""
     try:
@@ -260,7 +231,7 @@ async def post_customer(
         raise HTTP500InternalServerError from error
     url = request.url
     headers = {
-        "X-Request-ID": str(x_request_id),
+        "X-Request-ID": str(http_request_info["x_request_id"]),
         "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
     }
     return Response(status_code=status.HTTP_201_CREATED, headers=headers)
@@ -294,19 +265,10 @@ async def post_customer(
     response_model_by_alias=True,
 )
 async def put_customers_customer_id(
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
-    post_customers_request: CustomerUpdate = Body(description=""),
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
+    post_customers_request: Annotated[CustomerUpdate, Body(description="")],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     try:
@@ -315,7 +277,7 @@ async def put_customers_customer_id(
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(x_request_id)}
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -347,20 +309,11 @@ async def put_customers_customer_id(
     response_model_by_alias=True,
 )
 async def put_addresses_customer_id(
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     address_id: Annotated[UUID4, Path(description="Id of a specific address.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
-    post_address_request: AddressBase = Body(description=""),
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
+    post_address_request: Annotated[AddressBase, Body(description="")],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     try:
@@ -369,7 +322,7 @@ async def put_addresses_customer_id(
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(x_request_id)}
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -400,26 +353,15 @@ async def put_addresses_customer_id(
     response_model=None,
 )
 async def delete_address_id(
-    x_request_id: Annotated[UUID4, Header(description="Request ID.")],
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     address_id: Annotated[UUID4, Path(description="Id of a specific address.")],
-    accept_language: Annotated[
-        str | None,
-        Header(
-            description="ISO code of the language that the client accepts"
-            + " in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
-            min_length=1,
-        ),
-    ] = None,
-    db: Session = Depends(get_db_session),
+    http_request_info: CommonDeps,
+    db: Annotated[Session, Depends(get_db_session)],
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
     try:
         CustomerApplicationService.delete_address(db, customer_id, address_id)
     except Exception as error:
         raise HTTP500InternalServerError from error
-    headers = {
-        "X-Request-ID": str(x_request_id),
-    }
+    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
