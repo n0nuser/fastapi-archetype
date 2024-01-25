@@ -18,7 +18,7 @@ from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500Intern
 from src.controller.utils.pagination import Pagination
 from src.repository.exceptions import ElementNotFound
 from src.repository.session import get_db_session
-from src.service.customer_service import CustomerApplicationService
+from src.service.customer.service import CustomerApplicationService
 
 router = APIRouter()
 
