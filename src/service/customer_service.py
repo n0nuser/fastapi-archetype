@@ -135,32 +135,58 @@ class CustomerApplicationService:
             raise CustomerServiceException from error
 
     @staticmethod
-    def put_adress(db: Session, customer_id: UUID4, address_id: UUID4, address: AddressBase):
+    def post_address(db_connection: Session, customer_id: UUID4, address: AddressBase) -> UUID:
+        try:
+            # Check if Customer Exists
+            customer_crud.get_by_id(db_connection, customer_id)
+
+            db_address = Address(
+                customer_id=customer_id,
+                street=address.street,
+                city=address.city,
+                country=address.country,
+                postal_code=address.postal_code,
+            )
+            db_address = address_crud.create(db_connection, db_address)
+        except ElementNotFound:
+            raise
+        except Exception as error:
+            raise CustomerServiceException from error
+        else:
+            return UUID(str(db_address.id))
+
+    @staticmethod
+    def put_adress(
+        db_connection: Session,
+        customer_id: UUID4,
+        address_id: UUID4,
+        address: AddressBase,
+    ):
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
                 Filter(field="id", operator="eq", value=str(address_id)),
             ]
-            db_address = address_crud.get_one_by_fields(db, filters)
+            db_address = address_crud.get_one_by_fields(db_connection, filters)
             db_address.street = address.street
             db_address.city = address.city
             db_address.country = address.country
             db_address.postal_code = address.postal_code
-            address_crud.update(db, db_address)
+            address_crud.update(db_connection, db_address)
         except ElementNotFound:
             raise
         except Exception as error:
             raise CustomerServiceException from error
 
     @staticmethod
-    def delete_address(db: Session, customer_id: UUID4, address_id: UUID4):
+    def delete_address(db_connection: Session, customer_id: UUID4, address_id: UUID4):
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
                 Filter(field="id", operator="eq", value=str(address_id)),
             ]
-            db_address = address_crud.get_one_by_fields(db, filters)
-            address_crud.delete_row(db, db_address)
+            db_address = address_crud.get_one_by_fields(db_connection, filters)
+            address_crud.delete_row(db_connection, db_address)
         except ElementNotFound:
             raise
         except Exception as error:
