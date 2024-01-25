@@ -135,8 +135,6 @@ async def get_customers(
             country,
             postal_code,
         )
-    except ElementNotFound as error:
-        raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
 
