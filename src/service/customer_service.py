@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
@@ -70,7 +72,7 @@ class CustomerApplicationService:
             ]
             db_count = customer_crud.count(db_connection, filters)
         except ElementNotFound:
-            raise
+            return [], 0
         except Exception as error:
             raise CustomerServiceException from error
         else:
@@ -102,7 +104,7 @@ class CustomerApplicationService:
             return api_data
 
     @staticmethod
-    def post_customer(db_connection: Session, customer: CustomerCreate) -> UUID4:
+    def post_customer(db_connection: Session, customer: CustomerCreate) -> UUID:
         try:
             db_customer = Customer(name=customer.name)
             customer_crud.create(db_connection, db_customer)
@@ -118,7 +120,7 @@ class CustomerApplicationService:
         except Exception as error:
             raise CustomerServiceException from error
         else:
-            return UUID4(str(db_customer.id))
+            return UUID(str(db_customer.id))
 
     @staticmethod
     def put_customers(db_connection: Session, customer_id: UUID4, customer: CustomerUpdate):
