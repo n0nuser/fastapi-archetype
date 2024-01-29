@@ -10,7 +10,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 # Set the logger level
-logger.setLevel(logging.INFO)
+logger.setLevel(logging.DEBUG)
 
 # Create a formatter object
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -25,7 +25,8 @@ if not log_file_path.exists():
 
 # Calculate the maximum log file size (15% of disk capacity or 4GB, whichever is smaller)
 max_log_size = min(
-    0.15 * shutil.disk_usage(log_file_path.parent).total, 4 * 1024 * 1024 * 1024
+    0.15 * shutil.disk_usage(log_file_path.parent).total,
+    4 * 1024 * 1024 * 1024,
 )
 
 # Create a temporary directory to hold old log files
@@ -33,7 +34,9 @@ temp_dir = Path(tempfile.mkdtemp())
 
 # Create a RotatingFileHandler with log rotation based on size
 file_handler = RotatingFileHandler(
-    log_file_path, maxBytes=int(max_log_size), backupCount=10
+    log_file_path,
+    maxBytes=int(max_log_size),
+    backupCount=10,
 )
 
 # Set the formatter for the file handler
