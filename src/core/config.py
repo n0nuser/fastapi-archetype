@@ -70,9 +70,9 @@ class Settings(BaseSettings):
 
     # Additional Project Settings
     BASE_API_PATH: str
+    API_VERSION: str
     PROJECT_NAME: str
     PROJECT_DESCRIPTION: str
-    PROJECT_VERSION: str
     CONTACT_NAME: str
     CONTACT_EMAIL: str
 

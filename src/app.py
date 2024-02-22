@@ -15,7 +15,7 @@ root_path = f"/api/{settings.BASE_API_PATH}"
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{root_path}/openapi.json",
-    version="1.0.0",
+    version=settings.API_VERSION,
     description=settings.PROJECT_DESCRIPTION,
     contact={
         "name": settings.CONTACT_NAME,
