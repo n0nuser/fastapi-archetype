@@ -129,7 +129,9 @@ disable=R,
         wrong-import-order,
         xrange-builtin,
         zip-builtin-not-iterating,
-
+        unsupported-binary-operation,
+        unsubscriptable-object,
+        logging-fstring-interpolation,
 
 [REPORTS]
 
