@@ -10,15 +10,19 @@ You can install Poetry using pip:
 pip install poetry
 ```
 
-## Creating a new project
+## Changing the Python version
 
-To create a new project with Poetry, run:
+Check the [official documentation](poetry config virtualenvs.create false --local) for more information.
+
+To change the Python version used by Poetry, run:
 
 ```txt
-poetry new my-project
+poetry env use /full/path/to/python
+poetry env use python3.11
+poetry env use 3.7
 ```
 
-This will create a new project directory called my-project with the necessary files and directories.
+After that, run `poetry update` to update the dependencies. This will update the `pyproject.toml` and `poetry.lock` files with the new versions and also install the environment.
 
 ## Adding dependencies
 
@@ -28,23 +32,18 @@ To add a dependency, run:
 poetry add package-name
 ```
 
-This will install the latest version of the package and add it to your pyproject.toml file.
-
-If you want to install a specific version of a package, you can run:
-
-```txt
-poetry add package-name==1.0.0
-```
+This will install the latest version of the package and add it to your pyproject.toml file taking in account the other dependencies so it doesn't break anything.
 
 ## Updating dependencies
 
 To update a dependency, run:
 
 ```txt
+poetry update
 poetry update package-name
 ```
 
-This will update the package to the latest version and update the pyproject.toml file.
+This will update the package(s) to the latest version and update the pyproject.toml file.
 
 ## Installing dependencies
 
@@ -55,7 +54,8 @@ poetry install
 ```
 
 This will install all the dependencies listed in the pyproject.toml file.
-Running scripts
+
+## Running scripts
 
 You can define scripts in the pyproject.toml file and run them with Poetry. For example, to run a script called test:
 
