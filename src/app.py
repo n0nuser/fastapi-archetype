@@ -26,7 +26,6 @@ app = FastAPI(
     on_shutdown=[],
 )
 
-app.include_router(router, prefix=root_path)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
@@ -35,5 +34,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
+
+app.include_router(router, prefix=root_path)
+
+
+@app.get("/health")
+async def health_check() -> dict[str, str]:
+    """Health check endpoint.
+
+    Returns:
+        dict[str, str]: A dictionary with the status of the application.
+    """
+    return {"status": "ok"}
+
+
 manage_api_exceptions(app=app)
 logger.debug(app.routes)
