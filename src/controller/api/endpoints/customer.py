@@ -26,7 +26,7 @@ CommonDeps = Annotated[dict[str, Any], Depends(common_query_parameters)]
 
 
 @router.delete(
-    "/customers/{customer_id}",
+    "/v1/customers/{customer_id}",
     responses={
         204: {"description": "No Content."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -61,7 +61,7 @@ async def delete_customer_id(
 
 
 @router.get(
-    "/customers",
+    "/v1/customers",
     responses={
         200: {"model": CustomerListResponse, "description": "OK."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -136,7 +136,7 @@ async def get_customers(
 
 
 @router.get(
-    "/customers/{customer_id}",
+    "v/customers/{customer_id}",
     responses={
         200: {"model": CustomerDetailResponse, "description": "OK."},
         401: {"model": ErrorMessage, "description": "Unauthorized."},
@@ -172,7 +172,7 @@ async def get_customer_id(
 
 
 @router.post(
-    "/customers",
+    "/v1/customers",
     responses={
         201: {"description": "Created."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -212,7 +212,7 @@ async def post_customer(
 
 
 @router.put(
-    "/customers/{customer_id}",
+    "/v1/customers/{customer_id}",
     responses={
         204: {"description": "No Content."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -249,7 +249,7 @@ async def put_customers_customer_id(
 
 
 @router.post(
-    "/customers/{customer_id}/addresses/",
+    "/v1/customers/{customer_id}/addresses/",
     responses={
         201: {"description": "Created."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -291,7 +291,7 @@ async def post_address(
 
 
 @router.put(
-    "/customers/{customer_id}/addresses/{address_id}",
+    "/v1/customers/{customer_id}/addresses/{address_id}",
     responses={
         204: {"description": "No Content."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -334,7 +334,7 @@ async def put_addresses_customer_id(
 
 
 @router.delete(
-    "/customers/{customer_id}/addresses/{address_id}",
+    "/v1/customers/{customer_id}/addresses/{address_id}",
     responses={
         204: {"description": "No Content."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
