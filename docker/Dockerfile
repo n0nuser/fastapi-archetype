@@ -1,39 +1,21 @@
-###########
-# BUILDER #
-###########
-FROM python:3.11 AS builder
-
-WORKDIR /opt
-COPY ../requirements.txt .
-
-# Install build dependencies and Python dependencies
-RUN apt-get update && \
-    rm -rf /var/lib/apt/lists/* && \
-    pip install --upgrade pip && \
-    pip install -r requirements.txt
-
-#########
-# FINAL #
-#########
+# Start from a slim version of Python 3.11
 FROM python:3.11-slim
 
 # Set Python Envs
-ENV HOME=/opt
-ENV APP_HOME=/opt
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV HOME=/opt APP_HOME=/opt PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR $APP_HOME
 
-# Copy Python dependencies and binaries
-COPY --from=builder /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
-COPY --from=builder /usr/local/bin/ /usr/local/bin/
+# Copy Python dependencies
+COPY ../requirements.txt .
 
-# Install runtime dependencies and creates user
-RUN apt-get update && \
-    apt-get install -y libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
+# Install in a single layer, and clean up in the same layer to minimize image size
+RUN apt-get update && apt-get install -y --no-install-recommends libpq-dev \
+    && pip install --prefer-binary --no-cache-dir --upgrade pip \
+    && pip install --prefer-binary --no-cache-dir -r requirements.txt \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy app code
-WORKDIR $APP_HOME
 COPY ../src ./src
 
 # Run app - exec form (doesn’t start a shell on its own)
