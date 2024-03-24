@@ -1,4 +1,5 @@
 """This module contains the data models for error messages."""
+
 from pydantic import BaseModel, Field
 
 

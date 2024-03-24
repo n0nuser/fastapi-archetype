@@ -1,4 +1,5 @@
-from typing import Generic, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
+from uuid import UUID
 
 from pydantic import UUID4, BaseModel, Field
 from sqlalchemy import func, select
@@ -7,8 +8,11 @@ from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session
 
 from src.core.logger import logger
-from src.repository.exceptions import ElementNotFound
+from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.base import Base
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 ModelType = TypeVar("ModelType", bound=Base)
 
@@ -21,7 +25,7 @@ class Filter(BaseModel):
         ...,
         examples=["eq"],
     )
-    value: str | int | float | bool = Field(..., examples=["John Doe"])
+    value: str | int | float | bool | UUID = Field(..., examples=["John Doe"])
 
 
 class CRUDBase(Generic[ModelType]):
@@ -37,17 +41,47 @@ class CRUDBase(Generic[ModelType]):
         """
         self.model = model
 
-    def _get_filters(self: "CRUDBase[ModelType]", items: list[Filter]) -> list[SQLQuery]:
-        """Get the filters to be applied to a query.
+    def _get_filter_expression(self, filter_field: Any, operator: str, value: any) -> SQLQuery:
+        """
+        Return the filter expression based on the operator and value.
 
         Args:
-            items (list[Filter]): List of filters to be applied.
+            filter_field: The SQLAlchemy model field to apply the filter on.
+            operator: The filter operation to perform (e.g., "eq", "neq").
+            value: The value to compare the field against.
+
+        Returns:
+            An SQLAlchemy query object representing the filter expression.
 
         Raises:
             ValueError: If the operator is not supported.
+        """
+        operators: dict[str, Callable[[any], SQLQuery]] = {
+            "eq": lambda f: f == value,
+            "neq": lambda f: f != value,
+            "contains": lambda f: f.contains(value),
+            "not_contains": lambda f: ~f.contains(value),
+            "gt": lambda f: f > value,
+            "gte": lambda f: f >= value,
+            "lt": lambda f: f < value,
+            "lte": lambda f: f <= value,
+        }
+
+        if operator not in operators:
+            msg = f"Operator {operator} not supported."
+            raise ValueError(msg)
+
+        return operators[operator](filter_field)
+
+    def _get_filters(self, items: list["Filter"]) -> list[SQLQuery]:
+        """
+        Get the filters to be applied to a query.
+
+        Args:
+            items: A list of Filter objects specifying the filters to apply.
 
         Returns:
-            list[SQLQuery]: List of filters to be applied.
+            A list of SQLAlchemy query objects representing the filters to be applied.
         """
         filter_clauses = []
         for filter_obj in items:
@@ -57,25 +91,9 @@ class CRUDBase(Generic[ModelType]):
             for part in field_parts[1:]:
                 filter_field = getattr(filter_field.property.mapper.class_, part)
 
-            if filter_obj.operator == "eq":
-                filter_clauses.append(filter_field == filter_obj.value)
-            elif filter_obj.operator == "neq":
-                filter_clauses.append(filter_field != filter_obj.value)
-            elif filter_obj.operator == "contains":
-                filter_clauses.append(filter_field.contains(filter_obj.value))
-            elif filter_obj.operator == "not_contains":
-                filter_clauses.append(~filter_field.contains(filter_obj.value))
-            elif filter_obj.operator == "gt":
-                filter_clauses.append(filter_field > filter_obj.value)
-            elif filter_obj.operator == "gte":
-                filter_clauses.append(filter_field >= filter_obj.value)
-            elif filter_obj.operator == "lt":
-                filter_clauses.append(filter_field < filter_obj.value)
-            elif filter_obj.operator == "lte":
-                filter_clauses.append(filter_field <= filter_obj.value)
-            else:
-                error_message = f"Operator {filter_obj.operator} not supported."
-                raise ValueError(error_message)
+            filter_clauses.append(
+                self._get_filter_expression(filter_field, filter_obj.operator, filter_obj.value)
+            )
         return filter_clauses
 
     def get_by_id(
@@ -93,11 +111,11 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            ElementNotFound: If the element is not found.
+            : If the element is not found.
         """
         if data := db.query(self.model).filter(self.model.id == row_id).first():
             return data
-        raise ElementNotFound
+        raise ElementNotFoundError
 
     def get_one_by_field(
         self: "CRUDBase[ModelType]",
@@ -116,11 +134,11 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            ElementNotFound: If the element is not found.
+            : If the element is not found.
         """
         if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
             return data
-        raise ElementNotFound
+        raise ElementNotFoundError
 
     def get_one_by_fields(
         self: "CRUDBase[ModelType]",
@@ -138,12 +156,12 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            ElementNotFound: If the element is not found.
+            : If the element is not found.
         """
         filter_clauses = self._get_filters(filters)
         if data := db.query(self.model).filter(*filter_clauses).first():
             return data
-        raise ElementNotFound
+        raise ElementNotFoundError
 
     def get_list(
         self: "CRUDBase[ModelType]",
@@ -170,7 +188,7 @@ class CRUDBase(Generic[ModelType]):
             list[ModelType]: Result with the Data.
 
         Raises:
-            ElementNotFound: If the element is not found.
+            : If the element is not found.
         """
         query = select(self.model)
         if join_fields:
@@ -189,7 +207,7 @@ class CRUDBase(Generic[ModelType]):
         logger.debug(string_query)
         if data := db.scalars(query).all():
             return data  # type: ignore
-        raise ElementNotFound
+        raise ElementNotFoundError
 
     def count(
         self: "CRUDBase[ModelType]",
@@ -207,7 +225,7 @@ class CRUDBase(Generic[ModelType]):
             int: Number of elements that match the query.
 
         Raises:
-            ElementNotFound: If the element is not found.
+            : If the element is not found.
         """
         count_query = select(func.count()).select_from(self.model)
         if filters:
@@ -215,7 +233,7 @@ class CRUDBase(Generic[ModelType]):
             count_query = count_query.where(*filter_clauses)
         if data := db.scalar(count_query):
             return data  # type: ignore
-        raise ElementNotFound
+        raise ElementNotFoundError
 
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.

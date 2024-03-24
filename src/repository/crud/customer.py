@@ -3,7 +3,7 @@ from src.repository.models.customer import Customer
 
 
 class CRUDCustomer(CRUDBase[Customer]):
-    pass
+    """CRUD operations for the Customer model."""
 
 
 customer_crud = CRUDCustomer(Customer)

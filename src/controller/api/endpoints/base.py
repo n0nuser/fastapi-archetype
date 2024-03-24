@@ -1,3 +1,5 @@
+"""Common query parameters."""
+
 from typing import Annotated, Any
 
 from fastapi import Header
@@ -17,4 +19,14 @@ async def common_query_parameters(
         ),
     ] = None,
 ) -> dict[str, Any]:
+    """Common query parameters.
+
+    Args:
+        x_request_id (Annotated[UUID4, Header, optional): Request ID)].
+        accept_language (_type_, optional): ISO code of the language that the
+            client accepts in response from the server.
+
+    Returns:
+        dict[str, Any]: A dictionary with the common query parameters.
+    """
     return {"x_request_id": x_request_id, "accept_language": accept_language}

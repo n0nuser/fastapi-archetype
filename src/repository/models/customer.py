@@ -6,6 +6,8 @@ from src.repository.models.base import BaseTimestamps
 
 
 class Customer(BaseTimestamps):
+    """Represents a customer entity in the database."""
+
     name: Mapped[str] = mapped_column(String, nullable=False)
     addresses: Mapped[list["Address"]] = relationship(
         back_populates="customer",
@@ -15,6 +17,8 @@ class Customer(BaseTimestamps):
 
 
 class Address(BaseTimestamps):
+    """Represents an address entity in the database."""
+
     customer_id: Mapped[UUID] = mapped_column(ForeignKey("customer.id"))
     customer: Mapped["Customer"] = relationship(back_populates="addresses")
     street: Mapped[str] = mapped_column(String, nullable=False)

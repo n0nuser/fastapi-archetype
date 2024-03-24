@@ -132,6 +132,7 @@ disable=R,
         unsupported-binary-operation,
         unsubscriptable-object,
         logging-fstring-interpolation,
+        broad-exception-caught,
 
 [REPORTS]
 

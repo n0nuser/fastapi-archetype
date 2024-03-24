@@ -3,7 +3,7 @@ from src.repository.models.customer import Address
 
 
 class CRUDAddress(CRUDBase[Address]):
-    pass
+    """CRUD operations for the Address model."""
 
 
 address_crud = CRUDAddress(Address)

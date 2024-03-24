@@ -26,6 +26,7 @@ from typing import Any, Literal
 
 from dotenv import load_dotenv
 from pydantic import PostgresDsn, validator
+from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings
 
 from src.core.logger import logger
@@ -57,7 +58,18 @@ class Settings(BaseSettings):
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     @classmethod
-    def assemble_db_connection(cls: type["Settings"], v: str | None, values: dict[str, Any]) -> Any:
+    def assemble_db_connection(
+        cls: type["Settings"], v: str | None, values: dict[str, Any]
+    ) -> MultiHostUrl:
+        """Builds the database connection URI.
+
+        Args:
+            v (str | None): Value of the database connection URI.
+            values (dict[str, Any]): Values of the database connection URI.
+
+        Returns:
+            MultiHostUrl: The database connection URI.
+        """
         if isinstance(v, str):
             return v
         return PostgresDsn.build(
@@ -77,6 +89,8 @@ class Settings(BaseSettings):
     CONTACT_EMAIL: str
 
     class Config:
+        """Configuration for the settings class."""
+
         env_file = ".env"
         case_sensitive = True
 
