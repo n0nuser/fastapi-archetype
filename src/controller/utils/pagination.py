@@ -1,4 +1,5 @@
 """Defines data models for representing hyperlinks and pagination configuration."""
+
 import math
 
 from pydantic import AnyHttpUrl, BaseModel, Field, HttpUrl, field_validator
@@ -13,11 +14,12 @@ def calculate_page_number(offset: int, limit: int, total_elements: int) -> int:
         total_elements (int): The total number of elements across all pages.
 
     Raises:
-        ValueError: If the limit is not a positive integer, or if the total elements is not a non-negative integer.
+        ValueError: If the limit is not a positive integer, or if the
+            total elements is not a non-negative integer.
 
     Returns:
         int: The page number (1-based).
-    """  # noqa: E501
+    """
     if limit <= 0:
         error_message = "Limit must be a positive integer."
         raise ValueError(error_message)
@@ -37,11 +39,12 @@ def calculate_total_pages(limit: int, total_elements: int) -> int:
         total_elements (int): The total number of elements across all pages.
 
     Raises:
-        ValueError: If the limit is not a positive integer, or if the total elements is not a non-negative integer.
+        ValueError: If the limit is not a positive integer,
+            or if the total elements is not a non-negative integer.
 
     Returns:
         int: The total number of pages.
-    """  # noqa: E501
+    """
     if limit <= 0:
         error_message = "Limit must be a positive integer."
         raise ValueError(error_message)
@@ -98,7 +101,7 @@ class PaginationLinks(BaseModel):
     )
 
     @classmethod
-    def generate_pagination_links(  # noqa: PLR0913
+    def generate_pagination_links(
         cls: type["PaginationLinks"],
         url: HttpUrl,
         total_pages: int,
@@ -116,9 +119,10 @@ class PaginationLinks(BaseModel):
             no_elements (int): The total number of elements.
 
         Returns:
-            PaginationLinks: An object containing HyperLink instances for first, actual, prev, next, and last pages.
-            The actual page link is based on the provided offset.
-        """  # noqa: E501
+            PaginationLinks: An object containing HyperLink instances for
+                first, actual, prev, next, and last pages.
+                The actual page link is based on the provided offset.
+        """
         base_href = f"{url}&" if "?" in str(url) else f"{url}?"
         base_href = f"{base_href}limit={limit}"
         self_href = f"{base_href}&offset={offset}"
@@ -134,24 +138,25 @@ class PaginationLinks(BaseModel):
         next_href = f"{base_href}&offset={min(last_page * limit, offset + limit)}"
         last_href = f"{base_href}&offset={max(0, (last_page - 1) * limit)}"
 
-        first = HyperLink(href=str(AnyHttpUrl(first_href)))
-        prev = (
+        first_page = HyperLink(href=str(AnyHttpUrl(first_href)))
+        prev_page = (
             HyperLink(href=str(AnyHttpUrl(prev_href)))
             if offset > 0
             else HyperLink(href=str(AnyHttpUrl(self_href)))
         )
-        next = (  # noqa: A001
+        next_page = (
             HyperLink(href=str(AnyHttpUrl(next_href)))
             if offset < last_page * limit
             else HyperLink(href=str(AnyHttpUrl(self_href)))
         )
-        last = HyperLink(href=str(AnyHttpUrl(last_href)))
+        last_page = HyperLink(href=str(AnyHttpUrl(last_href)))
 
-        return cls(first=first, actual=actual, prev=prev, next=next, last=last)
+        return cls(first=first_page, actual=actual, prev=prev_page, next=next_page, last=last_page)
 
 
 class Pagination(BaseModel):
-    """Represents a pagination configuration for handling offsets, limits, page numbers, total pages, total elements, and pagination links.
+    """Represents a pagination configuration for handling offsets,
+    limits, page numbers, total pages, total elements, and pagination links.
 
     Attributes:
     - offset (int | None): The offset for pagination.
@@ -166,7 +171,7 @@ class Pagination(BaseModel):
         Validates the offset value based on specified constraints.
 
     Note: The offset value must be within the range [0, 255].
-    """  # noqa: E501
+    """
 
     offset: int | None = Field(default=None)
     limit: int | None = Field(default=None)
@@ -203,7 +208,7 @@ class Pagination(BaseModel):
         offset: int,
         limit: int,
         no_elements: int,
-        url: HttpUrl,
+        url: str,
     ) -> "Pagination":
         """Generate pagination information based on the provided parameters.
 
@@ -211,7 +216,7 @@ class Pagination(BaseModel):
         - offset (int): The starting index of the current page.
         - limit (int): The maximum number of elements per page.
         - no_elements (int): The total number of elements to be paginated.
-        - url (HttpUrl): The base URL used for generating pagination links.
+        - url (str): The base URL used for generating pagination links.
 
         Returns:
         Pagination: An object containing pagination information, including offset,

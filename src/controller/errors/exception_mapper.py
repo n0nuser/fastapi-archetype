@@ -1,4 +1,5 @@
 """Maps HTTP status codes to their corresponding exception classes."""
+
 from src.controller.errors import exceptions
 
 EXCEPTION_MAPPER = {

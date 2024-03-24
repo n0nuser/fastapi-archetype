@@ -1,8 +1,10 @@
+"""Module to keep track of loggings in the app."""
+
 import logging
 import os
 import shutil
 import tempfile
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
@@ -56,18 +58,22 @@ logger.addHandler(stream_handler)
 
 
 # Clean up old log files in the temporary directory
-threshold = datetime.now() - timedelta(days=7)  # Remove log files older than 7 days
+threshold = datetime.now(timezone.utc) - timedelta(days=7)  # Remove log files older than 7 days
 
-for old_log_file in temp_dir.glob("*.log"):
-    try:
-        file_time = datetime.fromtimestamp(old_log_file.stat().st_mtime)
+log_file = ""
+try:
+    for old_log_file in temp_dir.glob("*.log"):
+        log_file = old_log_file
+        file_time = datetime.fromtimestamp(old_log_file.stat().st_mtime, tz=timezone.utc)
         if file_time < threshold:
             old_log_file.unlink()
-    except Exception as error:
-        logger.error(f"Failed to delete old log file {old_log_file}: {error}")
+except OSError as error:
+    error_msg = f"Failed to delete old log file {log_file}: {error}"
+    logger.exception(error_msg)
 
 # Remove the temporary directory
 try:
     temp_dir.rmdir()
-except Exception as error:
-    logger.error(f"Failed to remove temporary directory {temp_dir}: {error}")
+except OSError as error:
+    error_msg = f"Failed to remove temporary directory {temp_dir}: {error}"
+    logger.exception(error_msg)

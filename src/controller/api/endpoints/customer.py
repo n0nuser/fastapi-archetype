@@ -1,3 +1,5 @@
+"""Module with the endpoints for the customer entity."""
+
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
@@ -16,7 +18,7 @@ from src.controller.api.schemas.customer import (
 from src.controller.api.schemas.error_message import ErrorMessage
 from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
 from src.controller.utils.pagination import Pagination
-from src.repository.exceptions import ElementNotFound
+from src.repository.exceptions import ElementNotFoundError
 from src.repository.session import get_db_session
 from src.service.customer.service import CustomerApplicationService
 
@@ -52,7 +54,7 @@ async def delete_customer_id(
     """Delete the information of the customer with the matching Id."""
     try:
         CustomerApplicationService.delete_customer(db_connection, customer_id)
-    except ElementNotFound as error:
+    except ElementNotFoundError as error:
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
@@ -128,7 +130,7 @@ async def get_customers(
         offset=offset,
         limit=limit,
         no_elements=db_count,
-        url=request.url,
+        url=str(request.url),
     )
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     response = CustomerListResponse(data=response_data, pagination=pagination)
@@ -163,7 +165,7 @@ async def get_customer_id(
     """Retrieve the information of the customer with the matching code."""
     try:
         api_data = CustomerApplicationService.get_customer_id(db_connection, customer_id)
-    except ElementNotFound as error:
+    except ElementNotFoundError as error:
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
@@ -240,7 +242,7 @@ async def put_customers_customer_id(
     """Update of the information of a customer with the matching Id."""
     try:
         CustomerApplicationService.put_customers(db_connection, customer_id, post_customers_request)
-    except ElementNotFound as error:
+    except ElementNotFoundError as error:
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error
@@ -325,7 +327,7 @@ async def put_addresses_customer_id(
             address_id,
             post_address_request,
         )
-    except ElementNotFound as error:
+    except ElementNotFoundError as error:
         raise HTTP404NotFoundError from error
     except Exception as error:
         raise HTTP500InternalServerError from error

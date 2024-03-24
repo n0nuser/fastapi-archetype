@@ -7,6 +7,7 @@ Functions:
     manage_api_exceptions(app: FastAPI) -> None:
         Add Exception listeners so raising errors is easier.
 """
+
 import contextlib
 import json
 import os
@@ -18,19 +19,19 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.exc import IntegrityError, NoResultFound, OperationalError, ProgrammingError
 
-if TYPE_CHECKING:
-    from src.controller.api.schemas.error_message import ErrorMessage
-
 from src.controller.errors import exceptions
 from src.controller.errors.error_responses import ERROR_RESPONSES
 from src.core.logger import logger
+
+if TYPE_CHECKING:
+    from src.controller.api.schemas.error_message import ErrorMessage
 
 
 def _log_exception(request: Request, exc: Exception) -> None:
     exc_str = None
     try:
         exc_str = f"{exc}".replace("\n", " ").replace("   ", " ")
-    except:  # noqa: E722
+    except Exception:
         exc_str = traceback.format_exc().replace("\n", " ").replace("   ", " ")
     logger.error("%s: %s", request, exc_str)
 
@@ -58,9 +59,11 @@ def _manage_exception(request: Request, exc: Exception, code: int) -> JSONRespon
 
     if os.getenv("ENVIRONMENT") in ["PYTEST", "DEV", "PREPROD"]:
         with contextlib.suppress(TypeError):
-            if error is not None and error.messages is not None and len(error.messages) > 0:
+            if error and error.messages and len(error.messages) > 0:
                 error.messages[0].description = json.loads(json.dumps(str(exc)))
-    return JSONResponse(status_code=code, content=error.dict() if error else None, headers=headers)
+    return JSONResponse(
+        status_code=code, content=error.model_dump() if error else None, headers=headers
+    )
 
 
 def manage_api_exceptions(app: FastAPI) -> None:  # noqa: C901

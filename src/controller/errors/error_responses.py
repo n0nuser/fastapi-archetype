@@ -4,6 +4,7 @@ It provides a dictionary `ERROR_RESPONSES` that maps HTTP status codes to `Error
 Each `ErrorMessage` object contains a list of `ErrorMessageData`
 objects that provide details about the error.
 """
+
 from src.controller.api.schemas.error_message import ErrorMessage, ErrorMessageData
 
 ERROR_RESPONSES = {

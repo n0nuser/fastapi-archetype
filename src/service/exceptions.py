@@ -1,4 +1,6 @@
-class BaseException(Exception):
+class BaseExceptionError(Exception):
+    """Base class for exceptions in this module."""
+
     def __init__(self, message: str = "An error occurred."):
         self.message = message
 
@@ -6,5 +8,5 @@ class BaseException(Exception):
         return repr(self.message)
 
 
-class CustomerServiceException(BaseException):
-    pass
+class CustomerServiceError(BaseExceptionError):
+    """Base class for exceptions in the Customer service."""

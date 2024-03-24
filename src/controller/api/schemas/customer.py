@@ -6,6 +6,8 @@ from src.controller.utils.pagination import Pagination
 
 
 class AddressBase(BaseModel):
+    """Model for the address of a customer."""
+
     street: str = Field(..., examples=["123 Main St"])
     city: str = Field(..., examples=["Anytown"])
     country: str = Field(..., examples=["USA"])
@@ -13,15 +15,21 @@ class AddressBase(BaseModel):
 
 
 class AddressResponse(AddressBase):
+    """Model for the response of an address API endpoint."""
+
     address_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
 
 
 class CustomerListDataResponse(BaseModel):
+    """Model for the data returned by an customer API endpoint."""
+
     customer_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
     name: str = Field(..., examples=["John Doe"])
 
 
 class CustomerDetailResponse(CustomerListDataResponse):
+    """Model for the response of an customer API endpoint."""
+
     addresses: list[AddressResponse] = Field(
         examples=[
             [
@@ -38,6 +46,8 @@ class CustomerDetailResponse(CustomerListDataResponse):
 
 
 class CustomerCreate(BaseModel):
+    """Model for creating a new customer."""
+
     name: str = Field(..., examples=["John Doe"])
     addresses: list[AddressBase] = Field(
         default=[],
@@ -55,6 +65,8 @@ class CustomerCreate(BaseModel):
 
 
 class CustomerUpdate(BaseModel):
+    """Model for updating a customer."""
+
     name: str | None = Field(default=None, examples=["John Doe"])
 
 

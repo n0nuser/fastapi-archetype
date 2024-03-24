@@ -38,7 +38,13 @@ app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
 app.include_router(router, prefix=root_path)
 
 
-@app.get("/health")
+@app.get(
+    "/health-check",
+    tags=["Health Check"],
+    response_model=dict[str, str],
+    summary="Health Check Endpoint",
+    description="Endpoint to check the status of the application.",
+)
 async def health_check() -> dict[str, str]:
     """Health check endpoint.
 

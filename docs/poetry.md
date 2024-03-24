@@ -18,7 +18,7 @@ To change the Python version used by Poetry, run:
 
 ```txt
 poetry env use /full/path/to/python
-poetry env use python3.11
+poetry env use python3.10
 poetry env use 3.7
 ```
 
