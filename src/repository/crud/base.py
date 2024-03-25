@@ -166,8 +166,8 @@ class CRUDBase(Generic[ModelType]):
     def get_list(
         self: "CRUDBase[ModelType]",
         db: Session,
-        offset: int = 0,
-        limit: int = 20,
+        offset: int | None = None,
+        limit: int | None = None,
         filters: list[Filter] | None = None,
         join_fields: list[str] | None = None,
     ) -> list[ModelType]:
@@ -177,8 +177,10 @@ class CRUDBase(Generic[ModelType]):
 
         Args:
             db (Session): Database session.
-            offset (int): Omit a specified number of rows before the beginning of the result set.
-            limit (int): Limit the number of rows returned from a query.
+            offset (int | None = None): Omit a specified number of rows before
+                the beginning of the result set. Defaults to None.
+            limit (int | None = None): Limit the number of rows returned from a query.
+                Defaults to None.
             filters (dict[str, Tuple[str, object]], optional): Filters to apply, where each filter
                 is a tuple of (operator, value). Defaults to None.
             join_fields (list[str], optional): List of foreign key fields to perform
@@ -188,7 +190,7 @@ class CRUDBase(Generic[ModelType]):
             list[ModelType]: Result with the Data.
 
         Raises:
-            : If the element is not found.
+            ElementNotFoundError: If the element is not found.
         """
         query = select(self.model)
         if join_fields:
@@ -202,11 +204,19 @@ class CRUDBase(Generic[ModelType]):
             # AND
             query = query.where(*filter_clauses)
 
-        query = query.order_by(self.model.id).offset(offset).limit(limit)
+        # Order by ID to ensure consistent ordering
+        query = query.order_by(self.model.id)
+
+        # Apply offset and limit - Pagination
+        if offset:
+            query = query.offset(offset)
+        if limit:
+            query = query.limit(limit)
+
         string_query = str(query)
         logger.debug(string_query)
         if data := db.scalars(query).all():
-            return data  # type: ignore
+            return data
         raise ElementNotFoundError
 
     def count(
