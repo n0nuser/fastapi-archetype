@@ -14,7 +14,7 @@ from src.controller.api.schemas.customer import (
 from src.repository.crud.address import address_crud
 from src.repository.crud.base import Filter
 from src.repository.crud.customer import customer_crud
-from src.repository.exceptions import ElementNotFound
+from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.customer import Address, Customer
 from src.service.exceptions import CustomerServiceError
 
@@ -36,7 +36,7 @@ class CustomerApplicationService:
         try:
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
             customer_crud.delete_row(db_connection, db_customer)
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
@@ -100,7 +100,7 @@ class CustomerApplicationService:
                 for row in db_data
             ]
             db_count = customer_crud.count(db_connection, filters)
-        except ElementNotFound:
+        except ElementNotFoundError:
             return [], 0
         except Exception as error:
             raise CustomerServiceError from error
@@ -137,7 +137,7 @@ class CustomerApplicationService:
                     for address in db_data.addresses
                 ],
             )
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
@@ -192,7 +192,7 @@ class CustomerApplicationService:
             if customer.name:
                 db_customer.name = customer.name
                 customer_crud.update(db_connection, db_customer)
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
@@ -224,7 +224,7 @@ class CustomerApplicationService:
                 postal_code=address.postal_code,
             )
             db_address = address_crud.create(db_connection, db_address)
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
@@ -260,7 +260,7 @@ class CustomerApplicationService:
             db_address.country = address.country
             db_address.postal_code = address.postal_code
             address_crud.update(db_connection, db_address)
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
@@ -284,7 +284,7 @@ class CustomerApplicationService:
             ]
             db_address = address_crud.get_one_by_fields(db_connection, filters)
             address_crud.delete_row(db_connection, db_address)
-        except ElementNotFound:
+        except ElementNotFoundError:
             raise
         except Exception as error:
             raise CustomerServiceError from error
