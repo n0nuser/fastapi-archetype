@@ -178,13 +178,13 @@ def manage_api_exceptions(app: FastAPI) -> None:  # noqa: C901
 
     @app.exception_handler(AttributeError)
     @app.exception_handler(ValueError)
-    @app.exception_handler(exceptions.HTTP429TooManyRequestsError)
+    @app.exception_handler(exceptions.HTTP500InternalServerError)
     @app.exception_handler(OperationalError)
     @app.exception_handler(ProgrammingError)
     @app.exception_handler(IntegrityError)
     async def internal_server_error_handler(
         request: Request,
-        exc: exceptions.HTTP429TooManyRequestsError,
+        exc: exceptions.HTTP500InternalServerError,
     ) -> JSONResponse:
         code = status.HTTP_500_INTERNAL_SERVER_ERROR
         return _manage_exception(request, exc, code)
