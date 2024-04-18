@@ -28,6 +28,7 @@ app = FastAPI(
         "email": settings.CONTACT_EMAIL,
     },
     docs_url=f"{root_path}/swagger",
+    redoc_url=f"{root_path}/redoc",
     on_startup=[init_db],
     on_shutdown=[],
 )
