@@ -10,6 +10,7 @@ Functions:
 
 import contextlib
 import json
+import logging
 import os
 import traceback
 from typing import TYPE_CHECKING
@@ -21,7 +22,8 @@ from sqlalchemy.exc import IntegrityError, NoResultFound, OperationalError, Prog
 
 from src.controller.errors import exceptions
 from src.controller.errors.error_responses import ERROR_RESPONSES
-from src.core.logger import logger
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from src.controller.api.schemas.error_message import ErrorMessage

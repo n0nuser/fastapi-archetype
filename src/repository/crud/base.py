@@ -1,3 +1,7 @@
+"""CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
+
+import logging
+from collections.abc import Sequence
 from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
 from uuid import UUID
 
@@ -7,9 +11,10 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session
 
-from src.core.logger import logger
 from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.base import Base
+
+logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -113,8 +118,11 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             : If the element is not found.
         """
+        logger.debug("Getting %s with ID: %s", self.model.__name__, row_id)
         if data := db.query(self.model).filter(self.model.id == row_id).first():
+            logger.debug("Found %s with ID: %s", self.model.__name__, row_id)
             return data
+        logger.error("%s with ID: %s not found.", self.model.__name__, row_id)
         raise ElementNotFoundError
 
     def get_one_by_field(
@@ -136,8 +144,11 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             : If the element is not found.
         """
+        logger.debug("Getting %s with %s: %s", self.model.__name__, field, value)
         if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
+            logger.debug("Found %s with %s: %s", self.model.__name__, field, value)
             return data
+        logger.error("%s with %s: %s not found.", self.model.__name__, field, value)
         raise ElementNotFoundError
 
     def get_one_by_fields(
@@ -158,9 +169,12 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             : If the element is not found.
         """
+        logger.debug("Getting %s with filters: %s", self.model.__name__, filters)
         filter_clauses = self._get_filters(filters)
         if data := db.query(self.model).filter(*filter_clauses).first():
+            logger.debug("Found %s with filters: %s", self.model.__name__, filters)
             return data
+        logger.error("%s with filters: %s not found.", self.model.__name__, filters)
         raise ElementNotFoundError
 
     def get_list(
@@ -170,7 +184,7 @@ class CRUDBase(Generic[ModelType]):
         limit: int | None = None,
         filters: list[Filter] | None = None,
         join_fields: list[str] | None = None,
-    ) -> list[ModelType]:
+    ) -> Sequence[ModelType]:
         """Get a list of elements that can be filtered.
 
         Result requires mapping the objects to the desired response.
@@ -192,6 +206,7 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             ElementNotFoundError: If the element is not found.
         """
+        logger.debug("Getting list of %s", self.model.__name__)
         query = select(self.model)
         if join_fields:
             for join_field in join_fields:
@@ -203,20 +218,26 @@ class CRUDBase(Generic[ModelType]):
             # query = query.filter(sqlalchemy.or_(*filter_clauses))
             # AND
             query = query.where(*filter_clauses)
+            logger.debug("Filters applied: %s", filters)
 
         # Order by ID to ensure consistent ordering
         query = query.order_by(self.model.id)
+        logger.debug("Order by ID")
 
         # Apply offset and limit - Pagination
         if offset:
             query = query.offset(offset)
+            logger.debug("Offset: %s", offset)
         if limit:
             query = query.limit(limit)
+            logger.debug("Limit: %s", limit)
 
         string_query = str(query)
-        logger.debug(string_query)
+        logger.debug("Query: %s", string_query)
         if data := db.scalars(query).all():
+            logger.debug("Found list of %s", self.model.__name__)
             return data
+        logger.error("List of %s not found", self.model.__name__)
         raise ElementNotFoundError
 
     def count(
@@ -237,12 +258,16 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             : If the element is not found.
         """
+        logger.debug("Counting %s", self.model.__name__)
         count_query = select(func.count()).select_from(self.model)
         if filters:
             filter_clauses = self._get_filters(filters)
             count_query = count_query.where(*filter_clauses)
+        logger.debug("Filters applied: %s", filters)
         if data := db.scalar(count_query):
-            return data  # type: ignore
+            logger.debug("Counted %s", self.model.__name__)
+            return data
+        logger.error("Count of %s not found", self.model.__name__)
         raise ElementNotFoundError
 
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
@@ -255,12 +280,15 @@ class CRUDBase(Generic[ModelType]):
         Returns:
             ModelType: The created data.
         """
+        logger.debug("Creating %s", self.model.__name__)
         try:
             db.add(data)
             db.commit()
             db.refresh(data)
+            logger.debug("Created %s", self.model.__name__)
         except OperationalError:
             db.rollback()
+            logger.exception("Failed to create %s", self.model.__name__)
             raise
         else:
             return data
@@ -286,12 +314,15 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             OperationalError: If an error occurs during the operation.
         """
+        logger.debug("Updating %s", self.model.__name__)
         try:
             db.merge(data)
             db.commit()
             db.refresh(data)
+            logger.debug("Updated %s", self.model.__name__)
         except OperationalError:
             db.rollback()
+            logger.exception("Failed to update %s", self.model.__name__)
             raise
         else:
             return data
@@ -317,11 +348,14 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             OperationalError: If an error occurs during the operation.
         """
+        logger.debug("Deleting %s", self.model.__name__)
         try:
             db.delete(model_obj)
             db.commit()
+            logger.debug("Deleted %s", self.model.__name__)
         except OperationalError:
             db.rollback()
+            logger.exception("Failed to delete %s", self.model.__name__)
             raise
         else:
             return model_obj
@@ -350,11 +384,15 @@ class CRUDBase(Generic[ModelType]):
             OperationalError: If an error occurs during the operation.
             ValueError: If the model does not support soft delete.
         """
+        logger.debug("Soft deleting %s", self.model.__name__)
         try:
             if not hasattr(model_obj, "deleted_on") or not hasattr(model_obj, "soft_delete"):
+                logger.error("Model does not support soft delete.")
                 error_message = "Model does not support soft delete."
                 raise ValueError(error_message)
+            logger.debug("Soft deleting %s by updating its values", self.model.__name__)
             return self.update(db, model_obj.soft_delete())
         except OperationalError:
             db.rollback()
+            logger.exception("Failed to soft delete %s", self.model.__name__)
             raise

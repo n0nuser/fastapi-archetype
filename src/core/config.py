@@ -20,19 +20,15 @@ See https://pydantic-docs.helpmanual.io/usage/settings/
 Note, complex types like lists are read as json-encoded strings.
 """
 
-import os
 import pathlib
-from typing import Any, Literal
+from typing import Literal
 
 from dotenv import load_dotenv
-from pydantic import PostgresDsn, validator
+from pydantic import PostgresDsn, ValidationInfo, field_validator
 from pydantic_core import MultiHostUrl
 from pydantic_settings import BaseSettings
 
-from src.core.logger import logger
-
 IS_ENV_FOUND = load_dotenv(dotenv_path=pathlib.Path(__file__).parent.parent / ".env")
-logger.debug(os.environ)
 
 
 class Settings(BaseSettings):
@@ -56,28 +52,29 @@ class Settings(BaseSettings):
     POSTGRES_DB: str = "app-db"
     SQLALCHEMY_DATABASE_URI: PostgresDsn | None = None
 
-    @validator("SQLALCHEMY_DATABASE_URI", pre=True)
+    @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     @classmethod
     def assemble_db_connection(
-        cls: type["Settings"], v: str | None, values: dict[str, Any]
-    ) -> MultiHostUrl:
+        cls: type["Settings"], v: str | None, info: ValidationInfo
+    ) -> PostgresDsn:
         """Builds the database connection URI.
 
         Args:
             v (str | None): Value of the database connection URI.
             values (dict[str, Any]): Values of the database connection URI.
+            info (ValidationInfo): Validation information.
 
         Returns:
             MultiHostUrl: The database connection URI.
         """
         if isinstance(v, str):
-            return v
+            return MultiHostUrl(v)
         return PostgresDsn.build(
             scheme="postgresql",
-            username=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWORD"),
-            host=values.get("POSTGRES_SERVER"),
-            path=values.get("POSTGRES_DB", "") or "",
+            username=info.data["POSTGRES_USER"],
+            password=info.data["POSTGRES_PASSWORD"],
+            host=info.data["POSTGRES_SERVER"],
+            path=info.data["POSTGRES_DB"] or "",
         )
 
     # Additional Project Settings
