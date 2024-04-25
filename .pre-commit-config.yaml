@@ -25,7 +25,7 @@ repos:
           [
             "--fix",
             "--select=ALL",
-            "--ignore=BLE001,COM812,ISC001,D100,D104,D105,D107,D205,D211,D212,E203,E266,ANN101,ANN102,ANN204,ANN401,S602,ERA001,PGH003,PLR0913",
+            "--ignore=BLE001,COM812,ISC001,D100,D104,D105,D107,D205,D211,D212,E203,E266,ANN101,ANN102,ANN204,ANN401,S602,ERA001,PGH003,PLR0913,TRY400",
             "--line-length=100",
           ]
       # Run the formatter.
