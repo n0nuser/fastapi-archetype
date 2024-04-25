@@ -1,5 +1,7 @@
 """Main FastAPI app instance declaration."""
 
+import logging
+import os
 from typing import Annotated
 
 from fastapi import Depends, FastAPI
@@ -12,9 +14,19 @@ from sqlalchemy.sql import text
 from src.controller import router
 from src.controller.errors.exception_manager import manage_api_exceptions
 from src.core.config import settings
-from src.core.logger import logger
+from src.core.logger import setup_logging
 from src.repository.create_db import init_db
 from src.repository.session import get_db_session
+
+
+def startup_event() -> None:
+    """Logs benefitial information."""
+    setup_logging()
+    logger = logging.getLogger(__name__)
+    logger.info("Logging is configured.")
+    logger.info(os.environ)
+    logger.info(app.routes)
+
 
 root_path = f"/api/{settings.BASE_API_PATH}"
 
@@ -29,7 +41,7 @@ app = FastAPI(
     },
     docs_url=f"{root_path}/swagger",
     redoc_url=f"{root_path}/redoc",
-    on_startup=[init_db],
+    on_startup=[startup_event, init_db],
     on_shutdown=[],
 )
 
@@ -41,8 +53,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
-
-app.include_router(router, prefix=root_path)
 
 
 @app.get(
@@ -74,5 +84,6 @@ async def health_check(
         return {"status": "ok", "database": "connected"}
 
 
+app.include_router(router, prefix=root_path)
+
 manage_api_exceptions(app=app)
-logger.debug(app.routes)

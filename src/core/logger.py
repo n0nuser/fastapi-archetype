@@ -8,6 +8,8 @@ from enum import Enum
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
+from src.core.config import settings
+
 
 class LogLevelColor(Enum):
     """Mapping of log levels to ANSI escape codes for colored output."""
@@ -20,27 +22,74 @@ class LogLevelColor(Enum):
 
 
 class ColoredConsoleFormatter(logging.Formatter):
-    """A logging formatter that adds color to console log messages based on level."""
+    """A logging formatter that adds color to console log messages based on the level of severity.
+
+    This formatter allows for both colorization of the log header and formatting of the
+    message content, making it easier to distinguish logs based on their importance at
+    a glance.
+
+    Attributes:
+        default_fmt (logging.Formatter): Formatter for the message part of the
+            log without any color.
+        header_fmt (logging.Formatter): Formatter for the header part of the log,
+            including timestamps, logger name, function name, and log level.
+
+    Args:
+        fmt (str, optional): The log format string to use. Defaults to None.
+        datefmt (str, optional): The date format string to use. Defaults to None.
+        style (str, optional): The style specifier for formatting. Defaults to '%'.
+    """
+
+    def __init__(
+        self,
+        fmt: str | None = None,
+        datefmt: str | None = None,
+        style: logging._FormatStyle = "%",
+    ):
+        """Initializes the formatter with optional format, date format, and style.
+
+        The constructor sets up the formatters for the message and header with or without custom
+        formatting specifications.
+
+        Args:
+            fmt (str, optional): The log format string to use. Defaults to None.
+            datefmt (str, optional): The date format string to use. Defaults to None.
+            style (str, optional): The style specifier for formatting. Defaults to '%'.
+        """
+        super().__init__(fmt=fmt, datefmt=datefmt, style=style)
+        # Define the basic uncolored format for the message part
+        self.default_fmt = logging.Formatter("%(message)s", datefmt=datefmt)
+        self.header_fmt = logging.Formatter(
+            "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s",
+            datefmt=datefmt,
+        )
 
     def format(self, record: logging.LogRecord) -> str:
-        """Format the console log message with color based on the level."""
-        log_message = super().format(record)
+        """Formats the log record into a color-coded string.
+
+        This method applies color to the log header based on the log level, and combines it with the
+        uncolored message part of the log record.
+
+        Args:
+            record (logging.LogRecord): The log record to format.
+
+        Returns:
+            str: The formatted log record with a color-coded header.
+        """
+        header = self.header_fmt.format(record)
+        message = self.default_fmt.format(record)
         if record.levelname in LogLevelColor.__members__:
             color = LogLevelColor[record.levelname].value
-            log_message = f"{color}{log_message}\033[0m"  # Reset to default color at the end
-        return log_message
+            header = f"{color}{header}\033[0m"  # Apply color to header and reset to default after
+        return f"{header} - {message}"  # Combine colored header with default message
 
 
-def setup_logging() -> logging.Logger:
-    """Configure logging for the application."""
-    # Create a logger object
-    logger = logging.getLogger(__name__)
-
-    # Set the logger level
-    logger.setLevel(logging.DEBUG)
+def setup_logging() -> None:
+    """Configure the root logger for the application."""
+    log_format = "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s"
+    level = logging.DEBUG if settings.ENVIRONMENT in ["DEV", "PYTEST"] else logging.INFO
 
     # Create a formatter object
-    log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     file_formatter = logging.Formatter(log_format)
     console_formatter = ColoredConsoleFormatter(log_format)
 
@@ -66,16 +115,24 @@ def setup_logging() -> logging.Logger:
         backupCount=10,
     )
     file_handler.setFormatter(file_formatter)
-    logger.addHandler(file_handler)
 
     # Setup console handler with color
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(console_formatter)
-    logger.addHandler(console_handler)
 
-    logging.info("Logging setup complete.")
+    # Clear existing handlers
+    root_logger = logging.getLogger()
+    if root_logger.hasHandlers():
+        root_logger.handlers.clear()
 
-    return logger
+    # Add Handlers
+    root_logger.setLevel(level)
+    logging.getLogger().addHandler(console_handler)
+    logging.getLogger().addHandler(file_handler)
+
+    # Suppress specific library logs
+    library_logger = logging.getLogger("pytds")
+    library_logger.setLevel(logging.ERROR)  # Set to ERROR to suppress DEBUG and INFO logs
 
 
 def cleanup_old_logs(log_directory: Path, retention_days: int = 7) -> None:
@@ -113,8 +170,6 @@ def cleanup_temp_log_dir(temp_dir: Path) -> None:
             error,  # noqa: TRY401
         )
 
-
-logger = setup_logging()
 
 if __name__ == "__main__":
     setup_logging()

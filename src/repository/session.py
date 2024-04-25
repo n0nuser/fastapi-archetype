@@ -1,11 +1,14 @@
 """Database session management."""
 
+import logging
 from collections.abc import Iterator
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from src.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 # Create a new engine
 engine = create_engine(str(settings.SQLALCHEMY_DATABASE_URI), pool_pre_ping=True)
@@ -31,8 +34,11 @@ def get_db_session() -> Iterator[Session]:
         ```
     """
     # Create a new session
+    logger.debug("Creating a new session.")
     session = session_local()
     try:
+        logger.debug("Yielding the session.")
         yield session
     finally:
+        logger.debug("Closing the session.")
         session.close()

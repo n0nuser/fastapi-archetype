@@ -1,3 +1,4 @@
+import logging
 from uuid import UUID
 
 from pydantic import UUID4
@@ -18,6 +19,8 @@ from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.customer import Address, Customer
 from src.service.exceptions import CustomerServiceError
 
+logger = logging.getLogger(__name__)
+
 
 class CustomerApplicationService:
     """Defines the application service for the customer domain."""
@@ -34,11 +37,14 @@ class CustomerApplicationService:
             CustomerServiceException: If an error occurs while deleting the customer.
         """
         try:
+            logger.info("Deleting customer.")
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
             customer_crud.delete_row(db_connection, db_customer)
         except ElementNotFoundError:
+            logger.error("Customer not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while deleting the customer.")
             raise CustomerServiceError from error
 
     @staticmethod
@@ -69,6 +75,7 @@ class CustomerApplicationService:
             tuple[list[CustomerListDataResponse], int]: A tuple containing the list of customers
                 and the total count.
         """
+        logger.info("Retrieving customers.")
         try:
             filters = []
             if street:
@@ -84,6 +91,7 @@ class CustomerApplicationService:
                     Filter(field="addresses.postal_code", operator="eq", value=postal_code),
                 )
             relationships = ["addresses"]
+            logger.debug("Filters: %s", filters)
 
             db_data = customer_crud.get_list(
                 db_connection,
@@ -92,6 +100,7 @@ class CustomerApplicationService:
                 filters,
                 join_fields=relationships,
             )
+            logger.debug("Data retrieved: %s", db_data)
             response_data = [
                 CustomerListDataResponse(
                     customer_id=str(row.id),
@@ -99,10 +108,14 @@ class CustomerApplicationService:
                 )
                 for row in db_data
             ]
+            logger.debug("Response data: %s", response_data)
             db_count = customer_crud.count(db_connection, filters)
+            logger.debug("Total count: %s", db_count)
         except ElementNotFoundError:
+            logger.error("No customers found.")
             return [], 0
         except Exception as error:
+            logger.exception("An error occurred while retrieving the customers.")
             raise CustomerServiceError from error
         else:
             return response_data, db_count
@@ -121,8 +134,11 @@ class CustomerApplicationService:
         Returns:
             CustomerDetailResponse: Response data of the customer.
         """
+        logger.info("Retrieving customer.")
         try:
+            logger.debug("Customer ID: %s", customer_id)
             db_data = customer_crud.get_by_id(db_connection, customer_id)
+            logger.debug("Data retrieved: %s", db_data)
             api_data = CustomerDetailResponse(
                 customer_id=str(db_data.id),
                 name=db_data.name,
@@ -137,9 +153,12 @@ class CustomerApplicationService:
                     for address in db_data.addresses
                 ],
             )
+            logger.debug("Response data: %s", api_data)
         except ElementNotFoundError:
+            logger.error("Customer not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while retrieving the customer.")
             raise CustomerServiceError from error
         else:
             return api_data
@@ -158,9 +177,11 @@ class CustomerApplicationService:
         Returns:
             UUID: Customer ID.
         """
+        logger.info("Creating customer.")
         try:
             db_customer = Customer(name=customer.name)
             customer_crud.create(db_connection, db_customer)
+            logger.debug("Customer created: %s", db_customer)
             for address in customer.addresses:
                 db_address = Address(
                     customer_id=db_customer.id,
@@ -170,7 +191,9 @@ class CustomerApplicationService:
                     postal_code=address.postal_code,
                 )
                 address_crud.create(db_connection, db_address)
+                logger.debug("Address created: %s", db_address)
         except Exception as error:
+            logger.exception("An error occurred while creating the customer.")
             raise CustomerServiceError from error
         else:
             return UUID(str(db_customer.id))
@@ -187,14 +210,19 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while updating the customer.
         """
+        logger.info("Updating customer.")
         try:
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
+            logger.debug("Customer retrieved: %s", db_customer)
             if customer.name:
                 db_customer.name = customer.name
                 customer_crud.update(db_connection, db_customer)
+                logger.debug("Customer updated: %s", db_customer)
         except ElementNotFoundError:
+            logger.error("Customer not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while updating the customer.")
             raise CustomerServiceError from error
 
     @staticmethod
@@ -212,9 +240,11 @@ class CustomerApplicationService:
         Returns:
             UUID: Address ID.
         """
+        logger.info("Creating address.")
         try:
             # Check if Customer Exists
             customer_crud.get_by_id(db_connection, customer_id)
+            logger.debug("Customer ID: %s", customer_id)
 
             db_address = Address(
                 customer_id=customer_id,
@@ -224,15 +254,18 @@ class CustomerApplicationService:
                 postal_code=address.postal_code,
             )
             db_address = address_crud.create(db_connection, db_address)
+            logger.debug("Address created: %s", db_address)
         except ElementNotFoundError:
+            logger.error("Customer not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while creating the address.")
             raise CustomerServiceError from error
         else:
             return UUID(str(db_address.id))
 
     @staticmethod
-    def put_adress(
+    def put_address(
         db_connection: Session,
         customer_id: UUID4,
         address_id: UUID4,
@@ -249,20 +282,26 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while updating the address.
         """
+        logger.info("Updating address.")
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
                 Filter(field="id", operator="eq", value=str(address_id)),
             ]
+            logger.debug("Filters: %s", filters)
             db_address = address_crud.get_one_by_fields(db_connection, filters)
+            logger.debug("Address retrieved: %s", db_address)
             db_address.street = address.street
             db_address.city = address.city
             db_address.country = address.country
             db_address.postal_code = address.postal_code
             address_crud.update(db_connection, db_address)
+            logger.debug("Address updated: %s", db_address)
         except ElementNotFoundError:
+            logger.error("Address not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while updating the address.")
             raise CustomerServiceError from error
 
     @staticmethod
@@ -277,14 +316,20 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while deleting the address.
         """
+        logger.info("Deleting address.")
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
                 Filter(field="id", operator="eq", value=str(address_id)),
             ]
+            logger.debug("Filters: %s", filters)
             db_address = address_crud.get_one_by_fields(db_connection, filters)
+            logger.debug("Address retrieved: %s", db_address)
             address_crud.delete_row(db_connection, db_address)
+            logger.debug("Address deleted: %s", db_address)
         except ElementNotFoundError:
+            logger.error("Address not found.")
             raise
         except Exception as error:
+            logger.exception("An error occurred while deleting the address.")
             raise CustomerServiceError from error
