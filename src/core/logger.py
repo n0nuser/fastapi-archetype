@@ -7,9 +7,9 @@ from datetime import datetime, timedelta, timezone
 from enum import Enum
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
+from typing import Literal
 
 from src.core.config import settings
-
 
 class LogLevelColor(Enum):
     """Mapping of log levels to ANSI escape codes for colored output."""
@@ -44,7 +44,7 @@ class ColoredConsoleFormatter(logging.Formatter):
         self,
         fmt: str | None = None,
         datefmt: str | None = None,
-        style: logging._FormatStyle = "%",
+        style: Literal["%", "{", "$"] = "%",
     ):
         """Initializes the formatter with optional format, date format, and style.
 
