@@ -123,7 +123,10 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Found %s with ID: %s", self.model.__name__, row_id)
             return data
         logger.error("%s with ID: %s not found.", self.model.__name__, row_id)
-        raise ElementNotFoundError
+        raise ElementNotFoundError(
+            message=f"Element with ID {row_id} was not found "  # noqa: ISC003
+            + f"in the DB table related with {self.model.__name__}"
+        )
 
     def get_one_by_field(
         self: "CRUDBase[ModelType]",
@@ -149,7 +152,10 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Found %s with %s: %s", self.model.__name__, field, value)
             return data
         logger.error("%s with %s: %s not found.", self.model.__name__, field, value)
-        raise ElementNotFoundError
+        raise ElementNotFoundError(
+            message=f"Element with field {field} and value {value} was not found "  # noqa: ISC003
+            + f"in the DB table related with {self.model.__name__}"
+        )
 
     def get_one_by_fields(
         self: "CRUDBase[ModelType]",
