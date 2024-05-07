@@ -116,7 +116,7 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            : If the element is not found.
+            ElementNotFoundError: If the element is not found.
         """
         logger.debug("Getting %s with ID: %s", self.model.__name__, row_id)
         if data := db.query(self.model).filter(self.model.id == row_id).first():
@@ -142,7 +142,7 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            : If the element is not found.
+            ElementNotFoundError: If the element is not found.
         """
         logger.debug("Getting %s with %s: %s", self.model.__name__, field, value)
         if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
@@ -167,7 +167,7 @@ class CRUDBase(Generic[ModelType]):
             ModelType: Element.
 
         Raises:
-            : If the element is not found.
+            ElementNotFoundError: If the element is not found.
         """
         logger.debug("Getting %s with filters: %s", self.model.__name__, filters)
         filter_clauses = self._get_filters(filters)
@@ -184,7 +184,7 @@ class CRUDBase(Generic[ModelType]):
         limit: int | None = None,
         filters: list[Filter] | None = None,
         join_fields: list[str] | None = None,
-    ) -> Sequence[ModelType]:
+    ) -> Sequence[ModelType | None]:
         """Get a list of elements that can be filtered.
 
         Result requires mapping the objects to the desired response.
@@ -201,10 +201,7 @@ class CRUDBase(Generic[ModelType]):
                 joined loading on. Defaults to None.
 
         Returns:
-            list[ModelType]: Result with the Data.
-
-        Raises:
-            ElementNotFoundError: If the element is not found.
+            list[ModelType | None]: Result with the Data.
         """
         logger.debug("Getting list of %s", self.model.__name__)
         query = select(self.model)
@@ -238,7 +235,7 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Found list of %s", self.model.__name__)
             return data
         logger.error("List of %s not found", self.model.__name__)
-        raise ElementNotFoundError
+        return []
 
     def count(
         self: "CRUDBase[ModelType]",
@@ -254,9 +251,6 @@ class CRUDBase(Generic[ModelType]):
 
         Returns:
             int: Number of elements that match the query.
-
-        Raises:
-            : If the element is not found.
         """
         logger.debug("Counting %s", self.model.__name__)
         count_query = select(func.count()).select_from(self.model)
@@ -268,7 +262,7 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Counted %s", self.model.__name__)
             return data
         logger.error("Count of %s not found", self.model.__name__)
-        raise ElementNotFoundError
+        raise 0
 
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.
