@@ -268,7 +268,7 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Counted %s", self.model.__name__)
             return data
         logger.error("Count of %s not found", self.model.__name__)
-        raise 0
+        return 0
 
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.
