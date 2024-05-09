@@ -9,7 +9,6 @@ Functions:
 """
 
 import contextlib
-import json
 import logging
 import os
 import traceback
@@ -62,7 +61,7 @@ def _manage_exception(request: Request, exc: Exception, code: int) -> JSONRespon
     if os.getenv("ENVIRONMENT") in ["PYTEST", "DEV", "PREPROD"]:
         with contextlib.suppress(TypeError):
             if error and error.messages and len(error.messages) > 0:
-                error.messages[0].description = json.loads(json.dumps(str(exc)))
+                error.messages[0].description = str(exc)
     return JSONResponse(
         status_code=code, content=error.model_dump() if error else None, headers=headers
     )
