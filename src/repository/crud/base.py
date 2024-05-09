@@ -122,11 +122,9 @@ class CRUDBase(Generic[ModelType]):
         if data := db.query(self.model).filter(self.model.id == row_id).first():
             logger.debug("Found %s with ID: %s", self.model.__name__, row_id)
             return data
-        logger.error("%s with ID: %s not found.", self.model.__name__, row_id)
-        raise ElementNotFoundError(
-            message=f"Element with ID {row_id} was not found "  # noqa: ISC003
-            + f"in the DB table related with {self.model.__name__}"
-        )
+        error_msg = f"{self.model.__name__} with ID: {row_id} not found."
+        logger.error(error_msg)
+        raise ElementNotFoundError(error_msg)
 
     def get_one_by_field(
         self: "CRUDBase[ModelType]",
@@ -151,11 +149,9 @@ class CRUDBase(Generic[ModelType]):
         if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
             logger.debug("Found %s with %s: %s", self.model.__name__, field, value)
             return data
-        logger.error("%s with %s: %s not found.", self.model.__name__, field, value)
-        raise ElementNotFoundError(
-            message=f"Element with field {field} and value {value} was not found "  # noqa: ISC003
-            + f"in the DB table related with {self.model.__name__}"
-        )
+        error_msg = f"{self.model.__name__} with {field}: {value} not found."
+        logger.error(error_msg)
+        raise ElementNotFoundError(error_msg)
 
     def get_one_by_fields(
         self: "CRUDBase[ModelType]",
@@ -180,8 +176,9 @@ class CRUDBase(Generic[ModelType]):
         if data := db.query(self.model).filter(*filter_clauses).first():
             logger.debug("Found %s with filters: %s", self.model.__name__, filters)
             return data
-        logger.error("%s with filters: %s not found.", self.model.__name__, filters)
-        raise ElementNotFoundError
+        error_msg = f"{self.model.__name__} with filters: {filters} not found."
+        logger.error(error_msg)
+        raise ElementNotFoundError(error_msg)
 
     def get_list(
         self: "CRUDBase[ModelType]",
@@ -263,9 +260,9 @@ class CRUDBase(Generic[ModelType]):
         if filters:
             filter_clauses = self._get_filters(filters)
             count_query = count_query.where(*filter_clauses)
-        logger.debug("Filters applied: %s", filters)
+            logger.debug("Filters applied: %s", filters)
         if data := db.scalar(count_query):
-            logger.debug("Counted %s", self.model.__name__)
+            logger.debug("Counted %s: %s", self.model.__name__, data)
             return data
         logger.error("Count of %s not found", self.model.__name__)
         return 0
@@ -280,15 +277,15 @@ class CRUDBase(Generic[ModelType]):
         Returns:
             ModelType: The created data.
         """
-        logger.debug("Creating %s", self.model.__name__)
+        logger.debug("Creating %s object %s", self.model.__name__, data)
         try:
             db.add(data)
             db.commit()
             db.refresh(data)
-            logger.debug("Created %s", self.model.__name__)
+            logger.debug("Created %s object %s", self.model.__name__, data)
         except OperationalError:
             db.rollback()
-            logger.exception("Failed to create %s", self.model.__name__)
+            logger.exception("Failed to create %s object %s", self.model.__name__, data)
             raise
         else:
             return data
@@ -314,15 +311,15 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             OperationalError: If an error occurs during the operation.
         """
-        logger.debug("Updating %s", self.model.__name__)
+        logger.debug("Updating %s with object %s", self.model.__name__, data)
         try:
             db.merge(data)
             db.commit()
             db.refresh(data)
-            logger.debug("Updated %s", self.model.__name__)
+            logger.debug("Updated %s with object %s", self.model.__name__, data)
         except OperationalError:
             db.rollback()
-            logger.exception("Failed to update %s", self.model.__name__)
+            logger.exception("Failed to update %s object %s", self.model.__name__, data)
             raise
         else:
             return data
@@ -348,14 +345,14 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             OperationalError: If an error occurs during the operation.
         """
-        logger.debug("Deleting %s", self.model.__name__)
+        logger.debug("Deleting %s object %s", self.model.__name__, model_obj)
         try:
             db.delete(model_obj)
             db.commit()
-            logger.debug("Deleted %s", self.model.__name__)
+            logger.debug("Deleted %s object %s", self.model.__name__, model_obj)
         except OperationalError:
             db.rollback()
-            logger.exception("Failed to delete %s", self.model.__name__)
+            logger.exception("Failed to delete %s object %s", self.model.__name__, model_obj)
             raise
         else:
             return model_obj
@@ -384,7 +381,7 @@ class CRUDBase(Generic[ModelType]):
             OperationalError: If an error occurs during the operation.
             ValueError: If the model does not support soft delete.
         """
-        logger.debug("Soft deleting %s", self.model.__name__)
+        logger.debug("Soft deleting %s object %s", self.model.__name__, model_obj)
         try:
             if not hasattr(model_obj, "deleted_on") or not hasattr(model_obj, "soft_delete"):
                 logger.error("Model does not support soft delete.")
@@ -394,5 +391,5 @@ class CRUDBase(Generic[ModelType]):
             return self.update(db, model_obj.soft_delete())
         except OperationalError:
             db.rollback()
-            logger.exception("Failed to soft delete %s", self.model.__name__)
+            logger.exception("Failed to soft delete %sobject %s", self.model.__name__, model_obj)
             raise
