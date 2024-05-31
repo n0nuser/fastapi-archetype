@@ -198,6 +198,8 @@ class CRUDBase(Generic[ModelType]):
         offset: int | None = None,
         limit: int | None = None,
         filters: list[Filter] | None = None,
+        order_by: str = "id",
+        order_direction: Literal["asc", "desc"] = "asc",
         join_fields: list[str] | None = None,
     ) -> Sequence[ModelType | None]:
         """Get a list of elements that can be filtered.
@@ -212,6 +214,8 @@ class CRUDBase(Generic[ModelType]):
                 Defaults to None.
             filters (dict[str, Tuple[str, object]], optional): Filters to apply, where each filter
                 is a tuple of (operator, value). Defaults to None.
+            order_by (str, optional): Field to order the results by. Defaults to "id".
+            order_direction (Literal["asc", "desc"], optional): Order direction for the results.
             join_fields (list[str], optional): List of foreign key fields to perform
                 joined loading on. Defaults to None.
 
@@ -234,8 +238,11 @@ class CRUDBase(Generic[ModelType]):
             logger.debug("Filters applied: %s", filters)
 
         # Order by ID to ensure consistent ordering
-        query = query.order_by(self.model.id)
-        logger.debug("Order by ID")
+        if order_direction == "desc":
+            query = query.order_by(getattr(self.model, order_by).desc())
+        else:
+            query = query.order_by(getattr(self.model, order_by))
+        logger.debug("Order by: %s", order_by)
 
         # Apply offset and limit - Pagination
         if offset:
