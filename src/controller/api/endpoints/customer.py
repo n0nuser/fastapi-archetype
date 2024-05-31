@@ -3,7 +3,6 @@
 import logging
 from typing import Annotated, Any
 
-from asgi_correlation_id import correlation_id
 from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 from pydantic import UUID4
@@ -67,9 +66,8 @@ async def delete_customer_id(
     except Exception as error:
         logger.exception("Error deleting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
 
 
 @router.get(
@@ -146,9 +144,10 @@ async def get_customers(
         url=str(request.url),
     )
     response = CustomerListResponse(data=response_data, pagination=pagination)
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
+    return JSONResponse(
+        content=response.model_dump(), status_code=status.HTTP_200_OK, headers=http_request_info
+    )
 
 
 @router.get(
@@ -188,9 +187,10 @@ async def get_customer_id(
     except Exception as error:
         logger.exception("Error getting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return JSONResponse(content=api_data.model_dump(), status_code=200, headers=headers)
+    return JSONResponse(
+        content=api_data.model_dump(), status_code=status.HTTP_200_OK, headers=http_request_info
+    )
 
 
 @router.post(
@@ -229,8 +229,7 @@ async def post_customer(
         logger.exception("Error creating customer")
         raise HTTP500InternalServerError from error
     url = request.url
-    headers = {
-        "X-Request-ID": str(http_request_info["x_request_id"]),
+    headers = http_request_info | {
         "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
     }
     logger.info("Exiting...")
@@ -275,9 +274,8 @@ async def put_customers_customer_id(
     except Exception as error:
         logger.exception("Error updating customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
 
 
 @router.post(
@@ -318,8 +316,7 @@ async def post_address(
         logger.exception("Error creating address")
         raise HTTP500InternalServerError from error
     url = request.url
-    headers = {
-        "X-Request-ID": str(http_request_info["x_request_id"]),
+    headers = http_request_info | {
         "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}/addresses/{address_id}",
     }
     logger.info("Exiting...")
@@ -370,9 +367,8 @@ async def put_addresses_customer_id(
     except Exception as error:
         logger.exception("Error updating address with id %s", address_id)
         raise HTTP500InternalServerError from error
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
 
 
 @router.delete(
@@ -409,6 +405,5 @@ async def delete_address_id(
     except Exception as error:
         logger.exception("Error deleting address with id %s", address_id)
         raise HTTP500InternalServerError from error
-    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
-    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
