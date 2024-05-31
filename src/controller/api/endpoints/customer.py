@@ -3,6 +3,7 @@
 import logging
 from typing import Annotated, Any
 
+from asgi_correlation_id import correlation_id
 from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 from pydantic import UUID4
@@ -66,7 +67,7 @@ async def delete_customer_id(
     except Exception as error:
         logger.exception("Error deleting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
@@ -144,8 +145,8 @@ async def get_customers(
         no_elements=db_count,
         url=str(request.url),
     )
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     response = CustomerListResponse(data=response_data, pagination=pagination)
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
 
@@ -187,7 +188,7 @@ async def get_customer_id(
     except Exception as error:
         logger.exception("Error getting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return JSONResponse(content=api_data.model_dump(), status_code=200, headers=headers)
 
@@ -274,7 +275,7 @@ async def put_customers_customer_id(
     except Exception as error:
         logger.exception("Error updating customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
@@ -369,7 +370,7 @@ async def put_addresses_customer_id(
     except Exception as error:
         logger.exception("Error updating address with id %s", address_id)
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
@@ -408,6 +409,6 @@ async def delete_address_id(
     except Exception as error:
         logger.exception("Error deleting address with id %s", address_id)
         raise HTTP500InternalServerError from error
-    headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    headers = http_request_info | {"X-Request-ID": correlation_id.get() or ""}
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
