@@ -14,6 +14,7 @@ import os
 import traceback
 from typing import TYPE_CHECKING
 
+from asgi_correlation_id import correlation_id
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
@@ -49,12 +50,8 @@ def _manage_exception(request: Request, exc: Exception, code: int) -> JSONRespon
         JSONResponse: Exception response
     """
     _log_exception(request, exc)
-    if x_request_id := request.headers.get("x-request-id"):
-        headers = {"X-Request-ID": str(x_request_id)}
-    else:
-        headers = None
-
     error: ErrorMessage | None = ERROR_RESPONSES.get(code)
+    headers = {"X-Request-ID": correlation_id.get() or ""}
     if not error:
         return JSONResponse(status_code=code, content=None, headers=headers)
 
@@ -63,7 +60,9 @@ def _manage_exception(request: Request, exc: Exception, code: int) -> JSONRespon
             if error and error.messages and len(error.messages) > 0:
                 error.messages[0].description = str(exc)
     return JSONResponse(
-        status_code=code, content=error.model_dump() if error else None, headers=headers
+        status_code=code,
+        content=error.model_dump() if error else None,
+        headers=headers,
     )
 
 

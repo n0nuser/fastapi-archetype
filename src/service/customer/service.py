@@ -36,6 +36,7 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while deleting the customer.
         """
+        logger.info("Entering...")
         try:
             logger.info("Deleting customer.")
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
@@ -46,6 +47,8 @@ class CustomerApplicationService:
         except Exception as error:
             logger.exception("An error occurred while deleting the customer.")
             raise CustomerServiceError from error
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def get_customers(
@@ -75,7 +78,7 @@ class CustomerApplicationService:
             tuple[list[CustomerListDataResponse], int]: A tuple containing the list of customers
                 and the total count.
         """
-        logger.info("Retrieving customers.")
+        logger.info("Entering...")
         try:
             filters = []
             if street:
@@ -119,6 +122,8 @@ class CustomerApplicationService:
             raise CustomerServiceError from error
         else:
             return response_data, db_count
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def get_customer_id(db_connection: Session, customer_id: UUID4) -> CustomerDetailResponse:
@@ -134,7 +139,7 @@ class CustomerApplicationService:
         Returns:
             CustomerDetailResponse: Response data of the customer.
         """
-        logger.info("Retrieving customer.")
+        logger.info("Entering...")
         try:
             logger.debug("Customer ID: %s", customer_id)
             db_data = customer_crud.get_by_id(db_connection, customer_id)
@@ -162,6 +167,8 @@ class CustomerApplicationService:
             raise CustomerServiceError from error
         else:
             return api_data
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def post_customer(db_connection: Session, customer: CustomerCreate) -> UUID:
@@ -177,7 +184,7 @@ class CustomerApplicationService:
         Returns:
             UUID: Customer ID.
         """
-        logger.info("Creating customer.")
+        logger.info("Entering...")
         try:
             db_customer = Customer(name=customer.name)
             customer_crud.create(db_connection, db_customer)
@@ -197,6 +204,8 @@ class CustomerApplicationService:
             raise CustomerServiceError from error
         else:
             return UUID(str(db_customer.id))
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def put_customers(db_connection: Session, customer_id: UUID4, customer: CustomerUpdate) -> None:
@@ -210,7 +219,7 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while updating the customer.
         """
-        logger.info("Updating customer.")
+        logger.info("Entering...")
         try:
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
             logger.debug("Customer retrieved: %s", db_customer)
@@ -224,6 +233,8 @@ class CustomerApplicationService:
         except Exception as error:
             logger.exception("An error occurred while updating the customer.")
             raise CustomerServiceError from error
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def post_address(db_connection: Session, customer_id: UUID4, address: AddressBase) -> UUID:
@@ -240,7 +251,7 @@ class CustomerApplicationService:
         Returns:
             UUID: Address ID.
         """
-        logger.info("Creating address.")
+        logger.info("Entering...")
         try:
             # Check if Customer Exists
             customer_crud.get_by_id(db_connection, customer_id)
@@ -263,6 +274,8 @@ class CustomerApplicationService:
             raise CustomerServiceError from error
         else:
             return UUID(str(db_address.id))
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def put_address(
@@ -282,7 +295,7 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while updating the address.
         """
-        logger.info("Updating address.")
+        logger.info("Entering...")
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
@@ -303,6 +316,8 @@ class CustomerApplicationService:
         except Exception as error:
             logger.exception("An error occurred while updating the address.")
             raise CustomerServiceError from error
+        finally:
+            logger.info("Exiting...")
 
     @staticmethod
     def delete_address(db_connection: Session, customer_id: UUID4, address_id: UUID4) -> None:
@@ -316,7 +331,7 @@ class CustomerApplicationService:
         Raises:
             CustomerServiceException: If an error occurs while deleting the address.
         """
-        logger.info("Deleting address.")
+        logger.info("Entering...")
         try:
             filters = [
                 Filter(field="customer_id", operator="eq", value=str(customer_id)),
@@ -333,3 +348,5 @@ class CustomerApplicationService:
         except Exception as error:
             logger.exception("An error occurred while deleting the address.")
             raise CustomerServiceError from error
+        finally:
+            logger.info("Exiting...")

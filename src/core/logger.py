@@ -9,7 +9,10 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from typing import Literal
 
+from asgi_correlation_id import CorrelationIdFilter
+
 from src.core.config import settings
+
 
 class LogLevelColor(Enum):
     """Mapping of log levels to ANSI escape codes for colored output."""
@@ -86,7 +89,10 @@ class ColoredConsoleFormatter(logging.Formatter):
 
 def setup_logging() -> None:
     """Configure the root logger for the application."""
-    log_format = "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s - %(message)s"
+    cid_filter = CorrelationIdFilter(uuid_length=32)
+    log_format = (
+        "%(asctime)s - [%(correlation_id)s] - %(name)s - %(funcName)s - %(levelname)s - %(message)s"
+    )
     level = logging.DEBUG if settings.ENVIRONMENT in ["DEV", "PYTEST"] else logging.INFO
 
     # Create a formatter object
@@ -115,10 +121,12 @@ def setup_logging() -> None:
         backupCount=10,
     )
     file_handler.setFormatter(file_formatter)
+    file_handler.addFilter(cid_filter)
 
     # Setup console handler with color
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(console_formatter)
+    console_handler.addFilter(cid_filter)
 
     # Clear existing handlers
     root_logger = logging.getLogger()

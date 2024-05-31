@@ -55,10 +55,11 @@ async def delete_customer_id(
     db_connection: Annotated[Session, Depends(get_db_session)],
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
-    logger.info("Deleting customer with id %s", customer_id)
+    logger.info("Entering...")
+    logger.debug("Deleting customer with id %s", customer_id)
     try:
         CustomerApplicationService.delete_customer(db_connection, customer_id)
-        logger.info("Customer with id %s deleted", customer_id)
+        logger.debug("Customer with id %s deleted", customer_id)
     except ElementNotFoundError as error:
         logger.error("Customer with id %s not found", customer_id)
         raise HTTP404NotFoundError from error
@@ -66,6 +67,7 @@ async def delete_customer_id(
         logger.exception("Error deleting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -119,7 +121,7 @@ async def get_customers(
     postal_code: Annotated[str | None, Query(description="")] = None,
 ) -> JSONResponse:
     """List of customers."""
-    logger.info("Getting customers")
+    logger.info("Entering...")
     try:
         response_data, db_count = CustomerApplicationService.get_customers(
             db_connection,
@@ -130,7 +132,7 @@ async def get_customers(
             country,
             postal_code,
         )
-        logger.info("Customers retrieved")
+        logger.debug("Customers retrieved")
     except Exception as error:
         logger.error("Error getting customers")
         raise HTTP500InternalServerError from error
@@ -144,6 +146,7 @@ async def get_customers(
     )
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
     response = CustomerListResponse(data=response_data, pagination=pagination)
+    logger.info("Exiting...")
     return JSONResponse(content=response.model_dump(), status_code=200, headers=headers)
 
 
@@ -173,10 +176,11 @@ async def get_customer_id(
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
 ) -> JSONResponse:
     """Retrieve the information of the customer with the matching code."""
-    logger.info("Getting customer with id %s", customer_id)
+    logger.info("Entering...")
+    logger.debug("Getting customer with id %s", customer_id)
     try:
         api_data = CustomerApplicationService.get_customer_id(db_connection, customer_id)
-        logger.info("Customer with id %s retrieved", customer_id)
+        logger.debug("Customer with id %s retrieved", customer_id)
     except ElementNotFoundError as error:
         logger.error("Customer with id %s not found", customer_id)
         raise HTTP404NotFoundError from error
@@ -184,6 +188,7 @@ async def get_customer_id(
         logger.exception("Error getting customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    logger.info("Exiting...")
     return JSONResponse(content=api_data.model_dump(), status_code=200, headers=headers)
 
 
@@ -212,13 +217,13 @@ async def post_customer(
     post_customers_request: Annotated[CustomerCreate, Body(description="")],
 ) -> Response:
     """Add a new customer into the list."""
-    logger.info("Creating a new customer")
+    logger.info("Entering...")
     try:
         customer_id = CustomerApplicationService.post_customer(
             db_connection,
             post_customers_request,
         )
-        logger.info("Customer created")
+        logger.debug("Customer created")
     except Exception as error:
         logger.exception("Error creating customer")
         raise HTTP500InternalServerError from error
@@ -227,6 +232,7 @@ async def post_customer(
         "X-Request-ID": str(http_request_info["x_request_id"]),
         "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
     }
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_201_CREATED, headers=headers)
 
 
@@ -257,10 +263,11 @@ async def put_customers_customer_id(
     post_customers_request: Annotated[CustomerUpdate, Body(description="")],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
-    logger.info("Updating customer with id %s", customer_id)
+    logger.info("Entering...")
+    logger.debug("Updating customer with id %s", customer_id)
     try:
         CustomerApplicationService.put_customers(db_connection, customer_id, post_customers_request)
-        logger.info("Customer with id %s updated", customer_id)
+        logger.debug("Customer with id %s updated", customer_id)
     except ElementNotFoundError as error:
         logger.error("Customer with id %s not found", customer_id)
         raise HTTP404NotFoundError from error
@@ -268,6 +275,7 @@ async def put_customers_customer_id(
         logger.exception("Error updating customer with id %s", customer_id)
         raise HTTP500InternalServerError from error
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -297,14 +305,14 @@ async def post_address(
     post_address_request: Annotated[AddressBase, Body(description="")],
 ) -> Response:
     """Add a new address into the list."""
-    logger.info("Creating a new address")
+    logger.info("Entering...")
     try:
         address_id = CustomerApplicationService.post_address(
             db_connection,
             customer_id,
             post_address_request,
         )
-        logger.info("Address created")
+        logger.debug("Address created")
     except Exception as error:
         logger.exception("Error creating address")
         raise HTTP500InternalServerError from error
@@ -313,6 +321,7 @@ async def post_address(
         "X-Request-ID": str(http_request_info["x_request_id"]),
         "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}/addresses/{address_id}",
     }
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_201_CREATED, headers=headers)
 
 
@@ -344,7 +353,8 @@ async def put_addresses_customer_id(
     post_address_request: Annotated[AddressBase, Body(description="")],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
-    logger.info("Updating address with id %s", address_id)
+    logger.info("Entering...")
+    logger.debug("Updating address with id %s", address_id)
     try:
         CustomerApplicationService.put_address(
             db_connection,
@@ -352,7 +362,7 @@ async def put_addresses_customer_id(
             address_id,
             post_address_request,
         )
-        logger.info("Address with id %s updated", address_id)
+        logger.debug("Address with id %s updated", address_id)
     except ElementNotFoundError as error:
         logger.error("Address with id %s not found", address_id)
         raise HTTP404NotFoundError from error
@@ -360,6 +370,7 @@ async def put_addresses_customer_id(
         logger.exception("Error updating address with id %s", address_id)
         raise HTTP500InternalServerError from error
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
 
 
@@ -389,12 +400,14 @@ async def delete_address_id(
     db_connection: Annotated[Session, Depends(get_db_session)],
 ) -> Response:
     """Delete the information of the customer with the matching Id."""
-    logger.info("Deleting address with id %s", address_id)
+    logger.info("Entering...")
+    logger.debug("Deleting address with id %s", address_id)
     try:
         CustomerApplicationService.delete_address(db_connection, customer_id, address_id)
-        logger.info("Address with id %s deleted", address_id)
+        logger.debug("Address with id %s deleted", address_id)
     except Exception as error:
         logger.exception("Error deleting address with id %s", address_id)
         raise HTTP500InternalServerError from error
     headers = {"X-Request-ID": str(http_request_info["x_request_id"])}
+    logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=headers)
