@@ -61,7 +61,6 @@ class CRUDBase(Generic[ModelType]):
         Raises:
             ValueError: If the operator is not supported.
         """
-        logger.info("Entering...")
         operators: dict[str, Callable[[any], SQLQuery]] = {
             "eq": lambda f: f == value,
             "neq": lambda f: f != value,
@@ -76,7 +75,6 @@ class CRUDBase(Generic[ModelType]):
         if operator not in operators:
             msg = f"Operator {operator} not supported."
             raise ValueError(msg)
-        logger.info("Exiting...")
         return operators[operator](filter_field)
 
     def _get_filters(self, items: list["Filter"]) -> list[SQLQuery]:
@@ -89,7 +87,6 @@ class CRUDBase(Generic[ModelType]):
         Returns:
             A list of SQLAlchemy query objects representing the filters to be applied.
         """
-        logger.info("Entering...")
         filter_clauses = []
         for filter_obj in items:
             field_parts = filter_obj.field.split(".")
@@ -101,7 +98,6 @@ class CRUDBase(Generic[ModelType]):
             filter_clauses.append(
                 self._get_filter_expression(filter_field, filter_obj.operator, filter_obj.value)
             )
-        logger.info("Exiting...")
         return filter_clauses
 
     def get_by_id(
