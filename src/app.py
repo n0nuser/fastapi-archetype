@@ -4,6 +4,7 @@ import logging
 import os
 from typing import Annotated
 
+from asgi_correlation_id import CorrelationIdMiddleware
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -50,9 +51,11 @@ app.add_middleware(
     allow_origins=[str(origin) for origin in settings.BACKEND_CORS_ORIGINS],
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["X-Requested-With", "X-Request-ID", "Content-Type"],
+    expose_headers=["X-Request-ID"],
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
+app.add_middleware(CorrelationIdMiddleware, header_name="X-Request-ID")
 
 
 @app.get(
