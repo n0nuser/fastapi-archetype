@@ -2,9 +2,11 @@
 
 import logging
 import os
+import uuid
 from typing import Annotated
 
 from asgi_correlation_id import CorrelationIdMiddleware
+from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -55,7 +57,12 @@ app.add_middleware(
     expose_headers=["X-Request-ID"],
 )
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
-app.add_middleware(CorrelationIdMiddleware, header_name="X-Request-ID")
+app.add_middleware(
+    CorrelationIdMiddleware,
+    header_name="X-Request-ID",
+    generator=lambda: str(uuid.uuid4()),
+    validator=is_valid_uuid4,
+)
 
 
 @app.get(
