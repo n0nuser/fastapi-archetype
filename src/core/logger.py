@@ -63,7 +63,7 @@ class ColoredConsoleFormatter(logging.Formatter):
         # Define the basic uncolored format for the message part
         self.default_fmt = logging.Formatter("%(message)s", datefmt=datefmt)
         self.header_fmt = logging.Formatter(
-            "%(asctime)s - %(name)s - %(funcName)s - %(levelname)s",
+            "%(asctime)s - [%(correlation_id)s] - %(name)s - %(funcName)s - %(levelname)s",
             datefmt=datefmt,
         )
 
