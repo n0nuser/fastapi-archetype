@@ -1,5 +1,5 @@
 {
-    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.typeCheckingMode": "off",
     "python.analysis.autoFormatStrings": true,
     "python.analysis.autoSearchPaths": true,
     "python.analysis.diagnosticMode": "workspace",
