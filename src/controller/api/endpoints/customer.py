@@ -230,7 +230,7 @@ async def post_customer(
         raise HTTP500InternalServerError from error
     url = request.url
     headers = http_request_info | {
-        "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
+        "location": f"{url.scheme}://{url.netloc}/customers/{customer_id}",
     }
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_201_CREATED, headers=headers)
@@ -317,7 +317,7 @@ async def post_address(
         raise HTTP500InternalServerError from error
     url = request.url
     headers = http_request_info | {
-        "Location": f"{url.scheme}://{url.netloc}/customers/{customer_id}/addresses/{address_id}",
+        "location": f"{url.scheme}://{url.netloc}/customers/{customer_id}/addresses/{address_id}",
     }
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_201_CREATED, headers=headers)
