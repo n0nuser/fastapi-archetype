@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
 from uuid import UUID
 
 from pydantic import UUID4, BaseModel, Field
-from sqlalchemy import func, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session
@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-ModelType = TypeVar("ModelType", bound=Base)
+ModelType = TypeVar("ModelType", bound=Base)  # pylint: disable=invalid-name
 
 
 class Filter(BaseModel):
@@ -194,6 +194,7 @@ class CRUDBase(Generic[ModelType]):
         offset: int | None = None,
         limit: int | None = None,
         filters: list[Filter] | None = None,
+        filter_is_logic_and: bool = True,  # noqa: FBT001, FBT002
         order_by: str = "id",
         order_direction: Literal["asc", "desc"] = "asc",
         join_fields: list[str] | None = None,
@@ -210,6 +211,8 @@ class CRUDBase(Generic[ModelType]):
                 Defaults to None.
             filters (dict[str, Tuple[str, object]], optional): Filters to apply, where each filter
                 is a tuple of (operator, value). Defaults to None.
+            filter_is_logic_and (bool, optional): If True, the filters are applied with AND logic,
+                otherwise with OR logic. Defaults to True.
             order_by (str, optional): Field to order the results by. Defaults to "id".
             order_direction (Literal["asc", "desc"], optional): Order direction for the results.
             join_fields (list[str], optional): List of foreign key fields to perform
@@ -227,10 +230,10 @@ class CRUDBase(Generic[ModelType]):
 
         if filters:
             filter_clauses = self._get_filters(filters)
-            # OR
-            # query = query.filter(sqlalchemy.or_(*filter_clauses))
-            # AND
-            query = query.where(*filter_clauses)
+            if filter_is_logic_and:
+                query = query.where(*filter_clauses)
+            else:
+                query = query.filter(or_(*filter_clauses))
             logger.debug("Filters applied: %s", filters)
 
         # Order by ID to ensure consistent ordering
@@ -275,7 +278,7 @@ class CRUDBase(Generic[ModelType]):
         """
         logger.info("Entering...")
         logger.debug("Counting %s", self.model.__name__)
-        count_query = select(func.count()).select_from(self.model)
+        count_query = select(func.count()).select_from(self.model)  # pylint: disable=not-callable
         if filters:
             filter_clauses = self._get_filters(filters)
             count_query = count_query.where(*filter_clauses)

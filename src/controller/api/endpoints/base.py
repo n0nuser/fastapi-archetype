@@ -7,7 +7,7 @@ from fastapi import Header
 
 async def common_query_parameters(
     accept_language: Annotated[
-        str | None,
+        str,
         Header(
             ...,
             description="ISO code of the language that the"  # noqa: ISC003
@@ -15,7 +15,7 @@ async def common_query_parameters(
             regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
-    ] = None,
+    ] = "en-US",
 ) -> dict[str, Any]:
     """Common query parameters.
 
@@ -26,4 +26,4 @@ async def common_query_parameters(
     Returns:
         dict[str, Any]: A dictionary with the common query parameters.
     """
-    return {"accept_language": accept_language}
+    return {"accept-language": accept_language}
