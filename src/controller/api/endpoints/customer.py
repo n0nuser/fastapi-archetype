@@ -30,46 +30,6 @@ router = APIRouter()
 CommonDeps = Annotated[dict[str, Any], Depends(common_query_parameters)]
 
 
-@router.delete(
-    "/v1/customers/{customer_id}",
-    responses={
-        204: {"description": "No Content."},
-        400: {"model": ErrorMessage, "description": "Bad Request."},
-        401: {"model": ErrorMessage, "description": "Unauthorized."},
-        403: {"model": ErrorMessage, "description": "Forbidden."},
-        404: {"model": ErrorMessage, "description": "Not Found."},
-        405: {"model": ErrorMessage, "description": "Method Not Allowed."},
-        422: {"model": ErrorMessage, "description": "Unprocessable Entity."},
-        500: {"model": ErrorMessage, "description": "Internal Server Error."},
-        502: {"model": ErrorMessage, "description": "Bad Gateway."},
-        503: {"model": ErrorMessage, "description": "Service Unavailable."},
-        504: {"model": ErrorMessage, "description": "Gateway Timeout."},
-    },
-    tags=["Customers"],
-    summary="Delete specific customer.",
-    response_model=None,
-)
-async def delete_customer_id(
-    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
-    http_request_info: CommonDeps,
-    db_connection: Annotated[Session, Depends(get_db_session)],
-) -> Response:
-    """Delete the information of the customer with the matching Id."""
-    logger.info("Entering...")
-    logger.debug("Deleting customer with id %s", customer_id)
-    try:
-        CustomerApplicationService.delete_customer(db_connection, customer_id)
-        logger.debug("Customer with id %s deleted", customer_id)
-    except ElementNotFoundError as error:
-        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
-        raise HTTP404NotFoundError from error
-    except Exception as error:
-        logger.exception("Error deleting customer with id %s", customer_id)
-        raise HTTP500InternalServerError from error
-    logger.info("Exiting...")
-    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
-
-
 @router.get(
     "/v1/customers",
     responses={
@@ -147,49 +107,6 @@ async def get_customers(
     logger.info("Exiting...")
     return JSONResponse(
         content=response.model_dump(), status_code=status.HTTP_200_OK, headers=http_request_info
-    )
-
-
-@router.get(
-    "/v1/customers/{customer_id}",
-    responses={
-        200: {"model": CustomerDetailResponse, "description": "OK."},
-        401: {"model": ErrorMessage, "description": "Unauthorized."},
-        403: {"model": ErrorMessage, "description": "Forbidden."},
-        404: {"model": ErrorMessage, "description": "Not Found."},
-        422: {"model": ErrorMessage, "description": "Unprocessable Entity."},
-        423: {"model": ErrorMessage, "description": "Locked."},
-        500: {"model": ErrorMessage, "description": "Internal Server Error."},
-        501: {"model": ErrorMessage, "description": "Not Implemented."},
-        502: {"model": ErrorMessage, "description": "Bad Gateway."},
-        503: {"model": ErrorMessage, "description": "Service Unavailable."},
-        504: {"model": ErrorMessage, "description": "Gateway Timeout."},
-    },
-    tags=["Customers"],
-    summary="Customer information.",
-    response_model_by_alias=True,
-    response_model=CustomerDetailResponse,
-)
-async def get_customer_id(
-    http_request_info: CommonDeps,
-    db_connection: Annotated[Session, Depends(get_db_session)],
-    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
-) -> JSONResponse:
-    """Retrieve the information of the customer with the matching code."""
-    logger.info("Entering...")
-    logger.debug("Getting customer with id %s", customer_id)
-    try:
-        api_data = CustomerApplicationService.get_customer_id(db_connection, customer_id)
-        logger.debug("Customer with id %s retrieved", customer_id)
-    except ElementNotFoundError as error:
-        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
-        raise HTTP404NotFoundError from error
-    except Exception as error:
-        logger.exception("Error getting customer with id %s", customer_id)
-        raise HTTP500InternalServerError from error
-    logger.info("Exiting...")
-    return JSONResponse(
-        content=api_data.model_dump(), status_code=status.HTTP_200_OK, headers=http_request_info
     )
 
 
@@ -276,6 +193,89 @@ async def put_customers_customer_id(
         raise HTTP500InternalServerError from error
     logger.info("Exiting...")
     return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
+
+
+@router.delete(
+    "/v1/customers/{customer_id}",
+    responses={
+        204: {"description": "No Content."},
+        400: {"model": ErrorMessage, "description": "Bad Request."},
+        401: {"model": ErrorMessage, "description": "Unauthorized."},
+        403: {"model": ErrorMessage, "description": "Forbidden."},
+        404: {"model": ErrorMessage, "description": "Not Found."},
+        405: {"model": ErrorMessage, "description": "Method Not Allowed."},
+        422: {"model": ErrorMessage, "description": "Unprocessable Entity."},
+        500: {"model": ErrorMessage, "description": "Internal Server Error."},
+        502: {"model": ErrorMessage, "description": "Bad Gateway."},
+        503: {"model": ErrorMessage, "description": "Service Unavailable."},
+        504: {"model": ErrorMessage, "description": "Gateway Timeout."},
+    },
+    tags=["Customers"],
+    summary="Delete specific customer.",
+    response_model=None,
+)
+async def delete_customer_id(
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
+    http_request_info: CommonDeps,
+    db_connection: Annotated[Session, Depends(get_db_session)],
+) -> Response:
+    """Delete the information of the customer with the matching Id."""
+    logger.info("Entering...")
+    logger.debug("Deleting customer with id %s", customer_id)
+    try:
+        CustomerApplicationService.delete_customer(db_connection, customer_id)
+        logger.debug("Customer with id %s deleted", customer_id)
+    except ElementNotFoundError as error:
+        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
+        raise HTTP404NotFoundError from error
+    except Exception as error:
+        logger.exception("Error deleting customer with id %s", customer_id)
+        raise HTTP500InternalServerError from error
+    logger.info("Exiting...")
+    return Response(status_code=status.HTTP_204_NO_CONTENT, headers=http_request_info)
+
+
+@router.get(
+    "/v1/customers/{customer_id}",
+    responses={
+        200: {"model": CustomerDetailResponse, "description": "OK."},
+        401: {"model": ErrorMessage, "description": "Unauthorized."},
+        403: {"model": ErrorMessage, "description": "Forbidden."},
+        404: {"model": ErrorMessage, "description": "Not Found."},
+        422: {"model": ErrorMessage, "description": "Unprocessable Entity."},
+        423: {"model": ErrorMessage, "description": "Locked."},
+        500: {"model": ErrorMessage, "description": "Internal Server Error."},
+        501: {"model": ErrorMessage, "description": "Not Implemented."},
+        502: {"model": ErrorMessage, "description": "Bad Gateway."},
+        503: {"model": ErrorMessage, "description": "Service Unavailable."},
+        504: {"model": ErrorMessage, "description": "Gateway Timeout."},
+    },
+    tags=["Customers"],
+    summary="Customer information.",
+    response_model_by_alias=True,
+    response_model=CustomerDetailResponse,
+)
+async def get_customer_id(
+    http_request_info: CommonDeps,
+    db_connection: Annotated[Session, Depends(get_db_session)],
+    customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
+) -> JSONResponse:
+    """Retrieve the information of the customer with the matching code."""
+    logger.info("Entering...")
+    logger.debug("Getting customer with id %s", customer_id)
+    try:
+        api_data = CustomerApplicationService.get_customer_id(db_connection, customer_id)
+        logger.debug("Customer with id %s retrieved", customer_id)
+    except ElementNotFoundError as error:
+        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
+        raise HTTP404NotFoundError from error
+    except Exception as error:
+        logger.exception("Error getting customer with id %s", customer_id)
+        raise HTTP500InternalServerError from error
+    logger.info("Exiting...")
+    return JSONResponse(
+        content=api_data.model_dump(), status_code=status.HTTP_200_OK, headers=http_request_info
+    )
 
 
 @router.post(
