@@ -89,9 +89,9 @@ async def health_check(
         db_connection.execute(text("SELECT 1"))
     except OperationalError:
         # If database connection fails, catch the error and return an appropriate response
-        return {"status": "error", "database": "disconnected"}
+        return {"status": "ok", "database": "ko"}
     else:
-        return {"status": "ok", "database": "connected"}
+        return {"status": "ok", "database": "ok"}
 
 
 app.include_router(router, prefix=root_path)
