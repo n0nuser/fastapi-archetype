@@ -6,17 +6,16 @@ version = "0.1.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.*"
-fastapi = "^0.108.0"
-httpx = "^0.25.2"
-psycopg2-binary = "^2.9.5"
-pydantic = { extras = ["email"], version = "^2.5.2" }
-pydantic-settings = "^2.1.0"
-python-multipart = "^0.0.6"
-sqlalchemy = "^2.0.23"
-sqlalchemy-utils = "^0.41.1"
-uvicorn = "^0.24.0"
-asgi-correlation-id = "^4.3.1"
+python = ">=3.10,<4.0"
+fastapi = "^0.109"
+httpx = "^0.25"
+psycopg2-binary = "^2.9"
+pydantic-settings = "^2.1"
+python-multipart = "^0.0"
+sqlalchemy = "^2.0"
+sqlalchemy-utils = "^0.41"
+uvicorn = "^0.24"
+asgi-correlation-id = "^4.3"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.3.4"
