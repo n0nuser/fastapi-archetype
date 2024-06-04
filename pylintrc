@@ -133,6 +133,11 @@ disable=R,
         unsubscriptable-object,
         logging-fstring-interpolation,
         broad-exception-caught,
+        invalid-name,
+
+# invalid-name is disabled because many API names are not snake_case,
+# they are kebab-case and camelCase
+
 
 [REPORTS]
 

@@ -17,7 +17,7 @@ repos:
         args: [--pytest-test-first]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.3.3
+    rev: v0.4.7
     hooks:
       # Run the linter.
       - id: ruff
@@ -25,13 +25,13 @@ repos:
           [
             "--fix",
             "--select=ALL",
-            "--ignore=BLE001,COM812,ISC001,D100,D104,D105,D107,D205,D211,D212,E203,E266,ANN101,ANN102,ANN204,ANN401,S602,ERA001,PGH003,PLR0913,TRY400",
+            "--ignore=RUF100,BLE001,COM812,ISC001,D100,D104,D105,D107,D205,D211,D212,E203,E266,ANN101,ANN102,ANN204,ANN401,S602,ERA001,PGH003,PLR0913,TRY400,N803,N815",
             "--line-length=100",
           ]
       # Run the formatter.
       - id: ruff-format
   - repo: https://github.com/PyCQA/pylint
-    rev: v3.0.3
+    rev: v3.2.2
     hooks:
       - id: pylint
         args:

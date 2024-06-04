@@ -1,3 +1,6 @@
+"""This module contains the exceptions for the service layer."""
+
+
 class BaseExceptionError(Exception):
     """Base class for exceptions in this module."""
 

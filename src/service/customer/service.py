@@ -42,7 +42,7 @@ class CustomerApplicationService:
             db_customer = customer_crud.get_by_id(db_connection, customer_id)
             customer_crud.delete_row(db_connection, db_customer)
         except ElementNotFoundError:
-            logger.error("Customer not found.")
+            logger.error("Customer not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while deleting the customer.")
@@ -106,7 +106,7 @@ class CustomerApplicationService:
             logger.debug("Data retrieved: %s", db_data)
             response_data = [
                 CustomerListDataResponse(
-                    customer_id=str(row.id),
+                    customerId=str(row.id),
                     name=row.name,
                 )
                 for row in db_data
@@ -115,7 +115,7 @@ class CustomerApplicationService:
             db_count = customer_crud.count(db_connection, filters)
             logger.debug("Total count: %s", db_count)
         except ElementNotFoundError:
-            logger.error("No customers found.")
+            logger.error("No customers found.")  # noqa: TRY400
             return [], 0
         except Exception as error:
             logger.exception("An error occurred while retrieving the customers.")
@@ -145,22 +145,22 @@ class CustomerApplicationService:
             db_data = customer_crud.get_by_id(db_connection, customer_id)
             logger.debug("Data retrieved: %s", db_data)
             api_data = CustomerDetailResponse(
-                customer_id=str(db_data.id),
+                customerId=str(db_data.id),
                 name=db_data.name,
                 addresses=[
                     AddressResponse(
-                        address_id=str(address.id),
+                        addressId=str(address.id),
                         street=address.street,
                         city=address.city,
                         country=address.country,
-                        postal_code=address.postal_code,
+                        postalCode=address.postal_code,
                     )
                     for address in db_data.addresses
                 ],
             )
             logger.debug("Response data: %s", api_data)
         except ElementNotFoundError:
-            logger.error("Customer not found.")
+            logger.error("Customer not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while retrieving the customer.")
@@ -195,7 +195,7 @@ class CustomerApplicationService:
                     street=address.street,
                     city=address.city,
                     country=address.country,
-                    postal_code=address.postal_code,
+                    postal_code=address.postalCode,
                 )
                 address_crud.create(db_connection, db_address)
                 logger.debug("Address created: %s", db_address)
@@ -228,7 +228,7 @@ class CustomerApplicationService:
                 customer_crud.update(db_connection, db_customer)
                 logger.debug("Customer updated: %s", db_customer)
         except ElementNotFoundError:
-            logger.error("Customer not found.")
+            logger.error("Customer not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while updating the customer.")
@@ -262,12 +262,12 @@ class CustomerApplicationService:
                 street=address.street,
                 city=address.city,
                 country=address.country,
-                postal_code=address.postal_code,
+                postal_code=address.postalCode,
             )
             db_address = address_crud.create(db_connection, db_address)
             logger.debug("Address created: %s", db_address)
         except ElementNotFoundError:
-            logger.error("Customer not found.")
+            logger.error("Customer not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while creating the address.")
@@ -307,11 +307,11 @@ class CustomerApplicationService:
             db_address.street = address.street
             db_address.city = address.city
             db_address.country = address.country
-            db_address.postal_code = address.postal_code
+            db_address.postal_code = address.postalCode
             address_crud.update(db_connection, db_address)
             logger.debug("Address updated: %s", db_address)
         except ElementNotFoundError:
-            logger.error("Address not found.")
+            logger.error("Address not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while updating the address.")
@@ -343,7 +343,7 @@ class CustomerApplicationService:
             address_crud.delete_row(db_connection, db_address)
             logger.debug("Address deleted: %s", db_address)
         except ElementNotFoundError:
-            logger.error("Address not found.")
+            logger.error("Address not found.")  # noqa: TRY400
             raise
         except Exception as error:
             logger.exception("An error occurred while deleting the address.")
