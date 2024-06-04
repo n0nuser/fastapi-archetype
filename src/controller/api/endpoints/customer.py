@@ -61,7 +61,7 @@ async def delete_customer_id(
         CustomerApplicationService.delete_customer(db_connection, customer_id)
         logger.debug("Customer with id %s deleted", customer_id)
     except ElementNotFoundError as error:
-        logger.error("Customer with id %s not found", customer_id)
+        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
         raise HTTP404NotFoundError from error
     except Exception as error:
         logger.exception("Error deleting customer with id %s", customer_id)
@@ -114,10 +114,10 @@ async def get_customers(
             le=100,
         ),
     ] = 0,
-    street: Annotated[str | None, Query(description="")] = None,
-    city: Annotated[str | None, Query(description="")] = None,
-    country: Annotated[str | None, Query(description="")] = None,
-    postal_code: Annotated[str | None, Query(description="")] = None,
+    street: Annotated[str | None, Query(description="Filter customer by street")] = None,
+    city: Annotated[str | None, Query(description="Filter customer by city")] = None,
+    country: Annotated[str | None, Query(description="Filter customer by country")] = None,
+    postalCode: Annotated[str | None, Query(description="Filter customer by postal code")] = None,
 ) -> JSONResponse:
     """List of customers."""
     logger.info("Entering...")
@@ -129,11 +129,11 @@ async def get_customers(
             street,
             city,
             country,
-            postal_code,
+            postalCode,
         )
         logger.debug("Customers retrieved")
     except Exception as error:
-        logger.error("Error getting customers")
+        logger.error("Error getting customers")  # noqa: TRY400
         raise HTTP500InternalServerError from error
 
     # url = f"{request.url.scheme}://{request.url.netloc}{request.scope.get('path', '')}"
@@ -182,7 +182,7 @@ async def get_customer_id(
         api_data = CustomerApplicationService.get_customer_id(db_connection, customer_id)
         logger.debug("Customer with id %s retrieved", customer_id)
     except ElementNotFoundError as error:
-        logger.error("Customer with id %s not found", customer_id)
+        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
         raise HTTP404NotFoundError from error
     except Exception as error:
         logger.exception("Error getting customer with id %s", customer_id)
@@ -215,7 +215,7 @@ async def post_customer(
     request: Request,
     http_request_info: CommonDeps,
     db_connection: Annotated[Session, Depends(get_db_session)],
-    post_customers_request: Annotated[CustomerCreate, Body(description="")],
+    post_customers_request: Annotated[CustomerCreate, Body()],
 ) -> Response:
     """Add a new customer into the list."""
     logger.info("Entering...")
@@ -260,7 +260,7 @@ async def put_customers_customer_id(
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     http_request_info: CommonDeps,
     db_connection: Annotated[Session, Depends(get_db_session)],
-    post_customers_request: Annotated[CustomerUpdate, Body(description="")],
+    post_customers_request: Annotated[CustomerUpdate, Body()],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     logger.info("Entering...")
@@ -269,7 +269,7 @@ async def put_customers_customer_id(
         CustomerApplicationService.put_customers(db_connection, customer_id, post_customers_request)
         logger.debug("Customer with id %s updated", customer_id)
     except ElementNotFoundError as error:
-        logger.error("Customer with id %s not found", customer_id)
+        logger.error("Customer with id %s not found", customer_id)  # noqa: TRY400
         raise HTTP404NotFoundError from error
     except Exception as error:
         logger.exception("Error updating customer with id %s", customer_id)
@@ -279,7 +279,7 @@ async def put_customers_customer_id(
 
 
 @router.post(
-    "/v1/customers/{customer_id}/addresses/",
+    "/v1/customers/{customer_id}/addresses",
     responses={
         201: {"description": "Created."},
         400: {"model": ErrorMessage, "description": "Bad Request."},
@@ -301,7 +301,7 @@ async def post_address(
     http_request_info: CommonDeps,
     customer_id: Annotated[UUID4, Path(description="Id of a specific customer.")],
     db_connection: Annotated[Session, Depends(get_db_session)],
-    post_address_request: Annotated[AddressBase, Body(description="")],
+    post_address_request: Annotated[AddressBase, Body()],
 ) -> Response:
     """Add a new address into the list."""
     logger.info("Entering...")
@@ -348,7 +348,7 @@ async def put_addresses_customer_id(
     address_id: Annotated[UUID4, Path(description="Id of a specific address.")],
     http_request_info: CommonDeps,
     db_connection: Annotated[Session, Depends(get_db_session)],
-    post_address_request: Annotated[AddressBase, Body(description="")],
+    post_address_request: Annotated[AddressBase, Body()],
 ) -> Response:
     """Update of the information of a customer with the matching Id."""
     logger.info("Entering...")
@@ -362,7 +362,7 @@ async def put_addresses_customer_id(
         )
         logger.debug("Address with id %s updated", address_id)
     except ElementNotFoundError as error:
-        logger.error("Address with id %s not found", address_id)
+        logger.error("Address with id %s not found", address_id)  # noqa: TRY400
         raise HTTP404NotFoundError from error
     except Exception as error:
         logger.exception("Error updating address with id %s", address_id)

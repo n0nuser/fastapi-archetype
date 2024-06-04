@@ -11,19 +11,19 @@ class AddressBase(BaseModel):
     street: str = Field(..., examples=["123 Main St"])
     city: str = Field(..., examples=["Anytown"])
     country: str = Field(..., examples=["USA"])
-    postal_code: str = Field(..., examples=["12345"])
+    postalCode: str = Field(..., examples=["12345"])
 
 
 class AddressResponse(AddressBase):
     """Model for the response of an address API endpoint."""
 
-    address_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
+    addressId: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
 
 
 class CustomerListDataResponse(BaseModel):
     """Model for the data returned by an customer API endpoint."""
 
-    customer_id: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
+    customerId: str = Field(..., examples=["a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"])
     name: str = Field(..., examples=["John Doe"])
 
 

@@ -46,7 +46,7 @@ class CRUDBase(Generic[ModelType]):
         """
         self.model = model
 
-    def _get_filter_expression(self, filter_field: Any, operator: str, value: any) -> SQLQuery:
+    def _get_filter_expression(self, filter_field: Any, operator: str, value: any) -> SQLQuery:  # noqa: ANN401
         """
         Return the filter expression based on the operator and value.
 

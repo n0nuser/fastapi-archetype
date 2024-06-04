@@ -1,3 +1,5 @@
+"""This module contains the database models for the customer entity."""
+
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
