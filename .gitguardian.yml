@@ -1,0 +1,5 @@
+incident:
+  ignore:
+    - name: "Ignore example secrets"
+      match: "src/core/config.py"
+      reason: "Example credentials that are not used in production."
