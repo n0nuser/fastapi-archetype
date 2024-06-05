@@ -35,7 +35,6 @@ class Settings(BaseSettings):
     """Represents the configuration settings for the application."""
 
     # CORE SETTINGS
-    ## Could be improved by using a secret manager like AWS Secrets Manager or Hashicorp Vault
     SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"
     ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "DEV"
     ## BACKEND_CORS_ORIGINS and ALLOWED_HOSTS are a JSON-formatted list of origins
@@ -45,12 +44,22 @@ class Settings(BaseSettings):
     APP_LOG_FILE_PATH: str = "logs/app.log"
 
     # POSTGRESQL DATABASE
-    POSTGRES_SERVER: str = "db"
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "postgres"
-    POSTGRES_PORT: int = 5432
-    POSTGRES_DB: str = "app-db"
+    POSTGRES_SERVER: str = "db"  # The name of the service in the docker-compose file
+    POSTGRES_USER: str = "postgres"  # The default username for the PostgreSQL database
+    POSTGRES_PASSWORD: str = "postgres"  # The default password for the PostgreSQL database
+    POSTGRES_PORT: int = 5432  # The default port for the PostgreSQL database
+    POSTGRES_DB: str = "app-db"  # The default database name for the PostgreSQL database
     SQLALCHEMY_DATABASE_URI: PostgresDsn | None = None
+
+    # CONNECTION POOL SETTINGS
+    # The size of the pool to be maintained, defaults to 5
+    POOL_SIZE: int = 10
+    # Controls the number of connections that can be created after the pool reached its size
+    MAX_OVERFLOW: int = 20
+    # Number of seconds to wait before giving up on getting a connection from the pool
+    POOL_TIMEOUT: int = 30
+    # Number of seconds after which a connection is recycled (preventing stale connections)
+    POOL_RECYCLE: int = 1800
 
     @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     @classmethod
