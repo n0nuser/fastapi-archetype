@@ -12,6 +12,7 @@ This is a FastAPI project archetype for production-ready applications. It provid
   - [Contributing](#contributing)
   - [Generate a New Project](#generate-a-new-project)
   - [Security and User Management](#security-and-user-management)
+  - [Background Tasks](#background-tasks)
   - [Getting Started](#getting-started)
     - [Built With](#built-with)
     - [Prerequisites](#prerequisites)
@@ -40,6 +41,10 @@ You will be prompted for a project name, description, author and versions; every
 
 Registration, JWT authentication, password reset and role-based access control ship by default via [fastapi-users](https://fastapi-users.github.io/fastapi-users/). See [docs/security.md](docs/security.md) for endpoints, configuration and how to protect your own endpoints with `current_user` / `current_superuser`.
 
+## Background Tasks
+
+Heavy work is offloaded to Celery workers over a Redis broker, with Flower monitoring at port 5555. See [docs/celery.md](docs/celery.md).
+
 ## Getting Started
 
 ### Built With
@@ -59,6 +64,15 @@ Development:
 - [FastAPI](https://fastapi.tiangolo.com/): A modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 - [Pydantic](https://pydantic-docs.helpmanual.io/): Data validation and settings management using Python type annotations.
 - [HTTPX](https://www.python-httpx.org/): A fully featured HTTP client for Python 3, which provides sync and async APIs, and support for both HTTP/1.1 and HTTP/2.
+
+Security:
+
+- [fastapi-users](https://fastapi-users.github.io/fastapi-users/): Registration, JWT authentication and user management. See [docs/security.md](docs/security.md).
+
+Background Tasks:
+
+- [Celery](https://docs.celeryq.dev/): Distributed task queue for heavy workloads.
+- [Flower](https://flower.readthedocs.io/): Web UI for monitoring Celery. See [docs/celery.md](docs/celery.md).
 
 Development Tools:
 
@@ -84,7 +98,9 @@ Deployment:
 Testing:
 
 - [Pytest](https://docs.pytest.org/en/stable/): A framework that makes it easy to write simple and scalable tests.
-- [Pytest-Mock](https://pytest-mock.readthedocs.io/en/latest/): A thin-wrapper around the mock package for easier use with py.test.
+- [Pytest-Cov](https://pytest-cov.readthedocs.io/): Coverage reporting with a configurable CI floor.
+- [Spectral](https://meta.stoplight.io/docs/spectral/): OpenAPI specification linting in CI and pre-commit.
+- [Cookiecutter](https://cookiecutter.readthedocs.io/): This repository doubles as a project template (see [Generate a New Project](#generate-a-new-project)).
 
 ### Prerequisites
 

@@ -10,10 +10,12 @@ requires-python = ">=3.12"
 dependencies = [
     "alembic>=1.19.1",
     "asgi-correlation-id>=4.3",
+    "celery[redis]>=5.5",
     "fastapi>=0.141",
     "fastapi-cache2[redis]>=0.2.2",
     "fastapi-crud-base>=0.1.0",
     "fastapi-users[sqlalchemy]>=15.0",
+    "flower>=2.0",
     "httpx>=0.28",
     "jinja2>=3.1.6",
     "opentelemetry-exporter-otlp-proto-grpc>=1.44.0",
@@ -61,6 +63,11 @@ testpaths = ["tests", "libs/fastapi-crud-base/tests"]
 markers = [
     "integration: tests that require a real database (docker compose -f docker/docker-compose.test.yml up -d)",
 ]
+
+[tool.coverage.report]
+# Ratchet upward as coverage improves; CI fails below this floor.
+fail_under = 75
+show_missing = true
 
 [tool.ruff]
 # Alembic generates migrations in its own house style; do not lint them.

@@ -46,6 +46,7 @@ jobs:
       - run: uv sync --all-groups
       - run: cp src/.env.example src/.env
       # Application suite (needs Postgres) plus the CRUD library unit suite.
+      # The coverage floor lives in [tool.coverage.report] of pyproject.toml.
       - run: >-
           uv run pytest tests libs/fastapi-crud-base/tests
           --cov=src --cov=libs/fastapi-crud-base/src --cov-report=term-missing

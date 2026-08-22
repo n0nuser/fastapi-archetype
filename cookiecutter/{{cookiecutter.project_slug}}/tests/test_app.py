@@ -23,23 +23,25 @@ def test_prometheus_metrics_are_exposed() -> None:
 
 def test_openapi_spec_is_served() -> None:
     client = TestClient(app, base_url="http://localhost")
-    response = client.get("/api/{{ cookiecutter.base_api_path }}/openapi.json")
+    response = client.get("/api/customer-system/openapi.json")
 
     assert response.status_code == 200
     # /metrics is scraped by Prometheus and intentionally kept out of the contract.
     assert sorted(response.json()["paths"]) == [
-        "/api/{{ cookiecutter.base_api_path }}/auth/forgot-password",
-        "/api/{{ cookiecutter.base_api_path }}/auth/jwt/login",
-        "/api/{{ cookiecutter.base_api_path }}/auth/jwt/logout",
-        "/api/{{ cookiecutter.base_api_path }}/auth/register",
-        "/api/{{ cookiecutter.base_api_path }}/auth/request-verify-token",
-        "/api/{{ cookiecutter.base_api_path }}/auth/reset-password",
-        "/api/{{ cookiecutter.base_api_path }}/auth/verify",
-        "/api/{{ cookiecutter.base_api_path }}/users/me",
-        "/api/{{ cookiecutter.base_api_path }}/users/{id}",
-        "/api/{{ cookiecutter.base_api_path }}/v1/customers",
-        "/api/{{ cookiecutter.base_api_path }}/v1/customers/{customerId}",
-        "/api/{{ cookiecutter.base_api_path }}/v1/customers/{customerId}/addresses",
-        "/api/{{ cookiecutter.base_api_path }}/v1/customers/{customerId}/addresses/{addressId}",
+        "/api/customer-system/auth/forgot-password",
+        "/api/customer-system/auth/jwt/login",
+        "/api/customer-system/auth/jwt/logout",
+        "/api/customer-system/auth/register",
+        "/api/customer-system/auth/request-verify-token",
+        "/api/customer-system/auth/reset-password",
+        "/api/customer-system/auth/verify",
+        "/api/customer-system/heavy-tasks",
+        "/api/customer-system/heavy-tasks/{task_id}",
+        "/api/customer-system/users/me",
+        "/api/customer-system/users/{id}",
+        "/api/customer-system/v1/customers",
+        "/api/customer-system/v1/customers/{customerId}",
+        "/api/customer-system/v1/customers/{customerId}/addresses",
+        "/api/customer-system/v1/customers/{customerId}/addresses/{addressId}",
         "/health-check",
     ]

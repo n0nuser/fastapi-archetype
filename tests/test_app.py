@@ -35,6 +35,8 @@ def test_openapi_spec_is_served() -> None:
         "/api/customer-system/auth/request-verify-token",
         "/api/customer-system/auth/reset-password",
         "/api/customer-system/auth/verify",
+        "/api/customer-system/heavy-tasks",
+        "/api/customer-system/heavy-tasks/{task_id}",
         "/api/customer-system/users/me",
         "/api/customer-system/users/{id}",
         "/api/customer-system/v1/customers",

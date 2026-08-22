@@ -17,6 +17,40 @@ services:
     volumes:
       - ./logs:/opt/logs/
 
+  worker:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: app-worker
+    restart: unless-stopped
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; celery -A src.core.celery_app.celery_app worker --loglevel=INFO'
+    env_file:
+      - ../src/.env
+    depends_on:
+      - db
+      - redis
+    networks:
+      - app-network
+    volumes:
+      - ./logs:/opt/logs/
+
+  flower:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: app-flower
+    restart: unless-stopped
+    command: bash -c 'while !</dev/tcp/redis/6379; do sleep 1; done; celery -A src.core.celery_app.celery_app flower --port=5555'
+    env_file:
+      - ../src/.env
+    depends_on:
+      - redis
+      - worker
+    networks:
+      - app-network
+    ports:
+      - "5555:5555"
+
   db:
     image: postgres:15
     container_name: app-db

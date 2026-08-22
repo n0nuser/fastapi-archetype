@@ -5,6 +5,11 @@ Integration fixtures require a real Postgres instance:
 """
 
 import os
+
+# Celery must resolve to non-network transports during tests; these are read
+# by pydantic-settings when src.core.config is first imported.
+os.environ.setdefault("CELERY_BROKER_URL", "memory://")
+os.environ.setdefault("CELERY_RESULT_BACKEND", "cache+memory://")
 from collections.abc import Iterator
 
 import pytest

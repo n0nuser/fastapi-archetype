@@ -81,6 +81,12 @@ class Settings(BaseSettings):
     CACHE_EXPIRE_SECONDS: int = 60
     REDIS_URL: str = "redis://localhost:6379/0"
 
+    # CELERY SETTINGS
+    # Separate Redis logical databases so queue traffic never collides
+    # with the HTTP response cache.
+    CELERY_BROKER_URL: str = "redis://redis:6379/1"
+    CELERY_RESULT_BACKEND: str = "redis://redis:6379/2"
+
     @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     @classmethod
     def assemble_db_connection(

@@ -88,6 +88,10 @@ app = FastAPI(
             "name": "Users",
             "description": "User profile and administration endpoints.",
         },
+        {
+            "name": "Tasks",
+            "description": "Enqueue and track Celery background jobs.",
+        },
     ],
     docs_url=f"{root_path}/swagger",
     redoc_url=f"{root_path}/redoc",
