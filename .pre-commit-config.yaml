@@ -2,7 +2,7 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-toml
@@ -14,29 +14,14 @@ repos:
         exclude: ^tests/.*data/.*$
       - id: check-json
       - id: name-tests-test
+        exclude: ^tests/factories\.py$
         args: [--pytest-test-first]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.4.8
+    rev: v0.16.4
     hooks:
-      # Run the linter.
+      # Run the linter (config lives in pyproject.toml).
       - id: ruff
-        args:
-          [
-            "--fix",
-            "--select=ALL",
-            "--ignore=RUF100,BLE001,COM812,ISC001,D100,D104,D105,D107,D205,D211,D212,E203,E266,ANN101,ANN102,ANN204,ANN401,S602,ERA001,PGH003,PLR0913,TRY400,N803,N815",
-            "--line-length=100",
-          ]
+        args: ["--fix"]
       # Run the formatter.
       - id: ruff-format
-  - repo: https://github.com/PyCQA/pylint
-    rev: v3.2.3
-    hooks:
-      - id: pylint
-        args:
-          - "--rcfile=pylintrc"
-          # run pylint across multiple cpu cores to speed it up-
-          # https://pylint.pycqa.org/en/latest/user_guide/run.html?#parallel-execution to know more
-          - "--jobs=0"
-          - "--fail-under=9.0" # minimum score to pass pylint

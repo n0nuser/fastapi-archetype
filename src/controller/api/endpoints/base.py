@@ -12,7 +12,7 @@ async def common_query_parameters(
             ...,
             description="ISO code of the language that the"  # noqa: ISC003
             + " client accepts in response from the server.",
-            regex=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
+            pattern=r"(\*)|(^[a-z]+(-[A-Z])*(,[a-z]*;(q=[0-9].[0.9])*)*)",
             min_length=1,
         ),
     ] = "en-US",

@@ -39,18 +39,15 @@ Change the tools to fit your project
 Development:
 
 - [Python 3](https://www.python.org/): The programming language used.
-- [Poetry](https://python-poetry.org/): A tool for dependency management and packaging in Python.
-- [FastAPI](https://fastapi.tiangolo.com/): A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+- [uv](https://docs.astral.sh/uv/): A fast tool for dependency management and packaging in Python.
+- [FastAPI](https://fastapi.tiangolo.com/): A modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
 - [Pydantic](https://pydantic-docs.helpmanual.io/): Data validation and settings management using Python type annotations.
 - [HTTPX](https://www.python-httpx.org/): A fully featured HTTP client for Python 3, which provides sync and async APIs, and support for both HTTP/1.1 and HTTP/2.
 
 Development Tools:
 
 - [Pre-Commit](https://pre-commit.com/): A framework for managing and maintaining multi-language pre-commit hooks.
-- [Ruff](https://docs.astral.sh/ruff/): A tool for managing Python environments.
-- [Flake8](https://flake8.pycqa.org/en/latest/): A tool that glues together pycodestyle, pyflakes, mccabe, and third-party plugins to check the style and quality of some Python code.
-- [Pylint](https://www.pylint.org/): A tool that checks for errors in Python code, tries to enforce a coding standard, looks for code smells, and can offer simple refactoring suggestions.
-- [Bandit](https://bandit.readthedocs.io/en/latest/): A tool designed to find common security issues in Python code.
+- [Ruff](https://docs.astral.sh/ruff/): An extremely fast linter and formatter (linting, style checks, and security rules) for Python.
 
 Databases:
 
@@ -70,13 +67,13 @@ Testing:
 
 ### Prerequisites
 
-- [Python 3.10 or higher](https://www.python.org/downloads/)
-- [Poetry](https://python-poetry.org/): Poetry is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you. For documentation refer to [Poetry](https://python-poetry.org/docs/) or to a little guide we made [here](docs/poetry.md).
+- [Python 3.12 or higher](https://www.python.org/downloads/)
+- [uv](https://docs.astral.sh/uv/): uv is a tool for dependency management and packaging in Python. It allows you to declare the libraries your project depends on and it will manage (install/update) them for you. For documentation refer to [uv](https://docs.astral.sh/uv/) or to a little guide we made [here](docs/uv.md).
 - [Docker](https://www.docker.com/): Docker is a set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers. For documentation refer to [Docker](https://docs.docker.com/get-started/).
 
 ### Running the App
 
-You need to have the environment set up with Poetry by using `poetry install` and the dependencies will be installed. After that, you can start the application.
+You need to have the environment set up with uv by using `uv sync` and the dependencies will be installed. After that, you can start the application.
 
 #### Terminal
 
@@ -113,6 +110,22 @@ If you don't know how to use Docker, you can check the [Docker documentation](ht
 > - Check the [recommended extensions documentation](docs/recommended-extensions.md) for more information.
 > - Check the [contributing documentation](.github/CONTRIBUTING.md) for more information.
 > - Check the [deployment documentation](docs/deployment.md) for more information.
+
+### Testing
+
+Most of the suite is marked as `integration` because it exercises real Postgres behaviour. Start the ephemeral test database first:
+
+```bash
+docker compose -f docker/docker-compose.test.yml up -d db-test
+```
+
+Then run everything with coverage:
+
+```bash
+uv run pytest --cov=src --cov-report=term-missing
+```
+
+The database connection is configured through `TEST_DATABASE_URL` (defaults to the compose instance on port 5433). CI spins up its own Postgres service container, so no extra setup is needed there.
 
 ## Roadmap
 

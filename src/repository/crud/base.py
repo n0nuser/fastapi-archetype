@@ -2,7 +2,7 @@
 
 import logging
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Literal
 from uuid import UUID
 
 from pydantic import UUID4, BaseModel, Field
@@ -19,8 +19,6 @@ logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-ModelType = TypeVar("ModelType", bound=Base)  # pylint: disable=invalid-name
-
 
 class Filter(BaseModel):
     """Filter to be applied to a query."""
@@ -33,7 +31,7 @@ class Filter(BaseModel):
     value: str | int | float | bool | UUID = Field(..., examples=["John Doe"])
 
 
-class CRUDBase(Generic[ModelType]):
+class CRUDBase[ModelType: Base]:
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
     def __init__(self: "CRUDBase[ModelType]", model: type[ModelType]) -> None:
@@ -77,6 +75,23 @@ class CRUDBase(Generic[ModelType]):
             raise ValueError(msg)
         return operators[operator](filter_field)
 
+    def _resolve_field(self, field_path: str) -> tuple[str | None, Any]:
+        """Resolve a dotted field path to its relationship name and final attribute.
+
+        Args:
+            field_path: Dotted path to a column, e.g. "name" or "addresses.street".
+
+        Returns:
+            Tuple with the relationship name (only when the path crosses one,
+            e.g. "addresses") and the resolved column attribute.
+        """
+        field_parts = field_path.split(".")
+        relationship_name = field_parts[0] if len(field_parts) > 1 else None
+        filter_field = getattr(self.model, field_parts[0])
+        for part in field_parts[1:]:
+            filter_field = getattr(filter_field.property.mapper.class_, part)
+        return relationship_name, filter_field
+
     def _get_filters(self, items: list["Filter"]) -> list[SQLQuery]:
         """
         Get the filters to be applied to a query.
@@ -89,12 +104,7 @@ class CRUDBase(Generic[ModelType]):
         """
         filter_clauses = []
         for filter_obj in items:
-            field_parts = filter_obj.field.split(".")
-            filter_field = getattr(self.model, field_parts[0])
-
-            for part in field_parts[1:]:
-                filter_field = getattr(filter_field.property.mapper.class_, part)
-
+            _, filter_field = self._resolve_field(filter_obj.field)
             filter_clauses.append(
                 self._get_filter_expression(filter_field, filter_obj.operator, filter_obj.value)
             )
@@ -278,11 +288,24 @@ class CRUDBase(Generic[ModelType]):
         """
         logger.info("Entering...")
         logger.debug("Counting %s", self.model.__name__)
-        count_query = select(func.count()).select_from(self.model)  # pylint: disable=not-callable
+        # Count distinct row ids instead of joined rows: filters that cross
+        # relationships need an explicit join, otherwise the WHERE clause would
+        # cross-join silently and inflate the total.
+        ids_query = select(self.model.id)
         if filters:
-            filter_clauses = self._get_filters(filters)
-            count_query = count_query.where(*filter_clauses)
+            joined_relationships: set[str] = set()
+            filter_clauses = []
+            for filter_obj in filters:
+                relationship_name, filter_field = self._resolve_field(filter_obj.field)
+                if relationship_name and relationship_name not in joined_relationships:
+                    ids_query = ids_query.join(getattr(self.model, relationship_name))
+                    joined_relationships.add(relationship_name)
+                filter_clauses.append(
+                    self._get_filter_expression(filter_field, filter_obj.operator, filter_obj.value)
+                )
+            ids_query = ids_query.where(*filter_clauses)
             logger.debug("Filters applied: %s", filters)
+        count_query = select(func.count()).select_from(ids_query.subquery())
         if data := db.scalar(count_query):
             logger.debug("Counted %s: %s", self.model.__name__, data)
             logger.info("Exiting...")

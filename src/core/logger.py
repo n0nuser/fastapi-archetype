@@ -3,7 +3,7 @@
 import logging
 import os
 import shutil
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from enum import Enum
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
@@ -12,6 +12,8 @@ from typing import Literal
 from asgi_correlation_id import CorrelationIdFilter
 
 from src.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 class LogLevelColor(Enum):
@@ -151,18 +153,16 @@ def cleanup_old_logs(log_directory: Path, retention_days: int = 7) -> None:
         retention_days: The number of days to retain log files.
             Files older than this will be deleted.
     """
-    threshold = datetime.now(timezone.utc) - timedelta(days=retention_days)
+    threshold = datetime.now(UTC) - timedelta(days=retention_days)
 
-    log_file = ""
-    error = ""
     try:
         for log_file in log_directory.glob("*.log"):
-            file_time = datetime.fromtimestamp(log_file.stat().st_mtime, tz=timezone.utc)
+            file_time = datetime.fromtimestamp(log_file.stat().st_mtime, tz=UTC)
             if file_time < threshold:
                 log_file.unlink()
-                logging.info("Deleted old log file: %s", log_file)
-    except OSError as error:
-        logging.exception("Failed to delete old log file %s: %s", log_file, error)  # noqa: TRY401
+                logger.info("Deleted old log file: %s", log_file)
+    except OSError:
+        logger.exception("Failed to delete old log files in %s", log_directory)
 
 
 # Optionally, for cleaning temporary directory specifically created for logs:
@@ -170,21 +170,17 @@ def cleanup_temp_log_dir(temp_dir: Path) -> None:
     """Remove a temporary directory used for holding log files, ensuring it's empty."""
     try:
         temp_dir.rmdir()  # Only succeeds if directory is empty
-        logging.info("Removed temporary log directory: %s", temp_dir)
-    except OSError as error:
-        logging.exception(
-            "Failed to remove temporary directory %s: %s",
-            temp_dir,
-            error,  # noqa: TRY401
-        )
+        logger.info("Removed temporary log directory: %s", temp_dir)
+    except OSError:
+        logger.exception("Failed to remove temporary directory %s", temp_dir)
 
 
 if __name__ == "__main__":
     setup_logging()
-    logging.debug("This is a debug message.")
-    logging.info("This is an info message.")
-    logging.warning("This is a warning message.")
-    logging.error("This is an error message.")
-    logging.critical("This is a critical message.")
+    logger.debug("This is a debug message.")
+    logger.info("This is an info message.")
+    logger.warning("This is a warning message.")
+    logger.error("This is an error message.")
+    logger.critical("This is a critical message.")
     log_dir = Path("logs")  # Assuming logs are stored here
     cleanup_old_logs(log_dir, retention_days=7)
