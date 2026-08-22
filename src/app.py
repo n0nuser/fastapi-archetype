@@ -10,6 +10,7 @@ from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import text
@@ -96,3 +97,6 @@ async def health_check(
 app.include_router(router, prefix=root_path)
 
 manage_api_exceptions(app=app)
+
+# Expose Prometheus metrics at /metrics for scraping.
+Instrumentator(excluded_handlers=["/metrics"]).instrument(app).expose(app)
