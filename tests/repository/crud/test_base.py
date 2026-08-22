@@ -303,3 +303,34 @@ def test_get_one_by_fields_case_insensitive_filter(db_session: Session) -> None:
     )
 
     assert found.name == "Bob"
+
+
+def test_bulk_create_persists_all_records(db_session: Session) -> None:
+    created = customer_crud.bulk_create(
+        db_session,
+        [build_customer(name="Alice"), build_customer(name="Bob")],
+    )
+
+    assert customer_crud.count(db_session) == 2
+    assert sorted(record.name for record in created) == ["Alice", "Bob"]
+    assert all(record.id is not None for record in created)
+
+
+@pytest.mark.usefixtures("alice", "bob")
+def test_bulk_update_updates_all_records(db_session: Session) -> None:
+    records = customer_crud.get_list(db_session)
+    for record in records:
+        record.name = f"{record.name} Jr"
+
+    updated = customer_crud.bulk_update(db_session, records)
+
+    names_after = {row.name for row in customer_crud.get_list(db_session)}
+    assert {record.name for record in updated} == {"Alice Jr", "Bob Jr"}
+    assert names_after == {"Alice Jr", "Bob Jr"}
+
+
+@pytest.mark.usefixtures("alice")
+def test_bulk_operations_accept_empty_sequences(db_session: Session) -> None:
+    assert customer_crud.bulk_create(db_session, []) == []
+    assert customer_crud.bulk_update(db_session, []) == []
+    assert customer_crud.count(db_session) == 1
