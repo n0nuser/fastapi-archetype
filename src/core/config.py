@@ -35,7 +35,9 @@ class Settings(BaseSettings):
     """Represents the configuration settings for the application."""
 
     # CORE SETTINGS
-    SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"
+    # Template defaults for local development only.
+    # Always override via environment in real deployments.
+    SECRET_KEY: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"  # noqa: S105
     ENVIRONMENT: Literal["DEV", "PYTEST", "PREPROD", "PROD"] = "DEV"
     ## BACKEND_CORS_ORIGINS and ALLOWED_HOSTS are a JSON-formatted list of origins
     ## For example: ["http://localhost:4200", "https://myfrontendapp.com"]
@@ -46,7 +48,7 @@ class Settings(BaseSettings):
     # POSTGRESQL DATABASE
     POSTGRES_SERVER: str = "db"  # The name of the service in the docker-compose file
     POSTGRES_USER: str = "postgres"  # The default username for the PostgreSQL database
-    POSTGRES_PASSWORD: str = "postgres"  # The default password for the PostgreSQL database
+    POSTGRES_PASSWORD: str = "postgres"  # noqa: S105 — default matching the docker-compose dev stack
     POSTGRES_PORT: int = 5432  # The default port for the PostgreSQL database
     POSTGRES_DB: str = "app-db"  # The default database name for the PostgreSQL database
     SQLALCHEMY_DATABASE_URI: PostgresDsn | None = None

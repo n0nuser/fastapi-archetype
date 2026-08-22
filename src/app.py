@@ -68,7 +68,6 @@ app.add_middleware(
 @app.get(
     "/health-check",
     tags=["Health Check"],
-    response_model=dict[str, str],
     summary="Health Check Endpoint",
     description="Endpoint to check the status of the application.",
 )
