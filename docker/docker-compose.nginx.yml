@@ -1,0 +1,29 @@
+# Nginx reverse proxy in front of the app.
+#
+# Overlay for the base stack:
+#   docker compose -f docker-compose.yml -f docker-compose.nginx.yml up -d
+#
+# TLS termination: mount certificates into the `nginx-certs` volume and enable
+# the commented 443 server block in nginx/nginx.conf. For automatic certificate
+# issuance prefer the Traefik overlay (docker-compose.traefik.yml), which ships
+# with a built-in Let's Encrypt resolver.
+services:
+  nginx:
+    image: nginx:1.29-alpine
+    container_name: app-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  app:
+    networks:
+      - app-network
+
+volumes:
+  nginx-certs:
