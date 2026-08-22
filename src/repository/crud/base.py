@@ -433,6 +433,78 @@ class CRUDBase[ModelType: Base]:
         finally:
             logger.info("Exiting...")
 
+    def bulk_create(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        data: Sequence[ModelType],
+    ) -> Sequence[ModelType]:
+        """Creates multiple records in a single transaction.
+
+        Args:
+            db (Session): The database session.
+            data (Sequence[ModelType]): The records to be created.
+
+        Returns:
+            Sequence[ModelType]: The created records, with their generated fields populated.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        logger.info("Entering...")
+        logger.debug("Creating %s %s objects", len(data), self.model.__name__)
+        try:
+            db.add_all(data)
+            db.commit()
+            for record in data:
+                db.refresh(record)
+            logger.debug("Created %s %s objects", len(data), self.model.__name__)
+        except OperationalError:
+            db.rollback()
+            logger.exception("Failed to create %s objects in bulk", self.model.__name__)
+            raise
+        else:
+            return data
+        finally:
+            logger.info("Exiting...")
+
+    def bulk_update(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        data: Sequence[ModelType],
+    ) -> Sequence[ModelType]:
+        """Updates multiple existing records in a single transaction.
+
+        Each record is merged by its primary key, so instances must already
+        exist in the database.
+
+        Args:
+            db (Session): The database session.
+            data (Sequence[ModelType]): The records to be updated.
+
+        Returns:
+            Sequence[ModelType]: The updated records.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        logger.info("Entering...")
+        logger.debug("Updating %s %s objects", len(data), self.model.__name__)
+        try:
+            for record in data:
+                db.merge(record)
+            db.commit()
+            for record in data:
+                db.refresh(record)
+            logger.debug("Updated %s %s objects", len(data), self.model.__name__)
+        except OperationalError:
+            db.rollback()
+            logger.exception("Failed to update %s objects in bulk", self.model.__name__)
+            raise
+        else:
+            return data
+        finally:
+            logger.info("Exiting...")
+
     def update(
         self: "CRUDBase[ModelType]",
         db: Session,
