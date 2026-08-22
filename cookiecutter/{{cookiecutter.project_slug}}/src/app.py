@@ -80,6 +80,14 @@ app = FastAPI(
             "name": "Health Check",
             "description": "Liveness of the application and its database.",
         },
+        {
+            "name": "Auth",
+            "description": "Registration, JWT login, verification and password reset.",
+        },
+        {
+            "name": "Users",
+            "description": "User profile and administration endpoints.",
+        },
     ],
     docs_url=f"{root_path}/swagger",
     redoc_url=f"{root_path}/redoc",

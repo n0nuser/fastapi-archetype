@@ -11,6 +11,7 @@ This is a FastAPI project archetype for production-ready applications. It provid
   - [Table of Contents](#table-of-contents)
   - [Contributing](#contributing)
   - [Generate a New Project](#generate-a-new-project)
+  - [Security and User Management](#security-and-user-management)
   - [Getting Started](#getting-started)
     - [Built With](#built-with)
     - [Prerequisites](#prerequisites)
@@ -34,6 +35,10 @@ uvx cookiecutter gh:n0nuser/fastapi-archetype --directory cookiecutter
 ```
 
 You will be prompted for a project name, description, author and versions; everything else (structure, CI, Docker, Spectral ruleset, migrations) comes ready out of the box.
+
+## Security and User Management
+
+Registration, JWT authentication, password reset and role-based access control ship by default via [fastapi-users](https://fastapi-users.github.io/fastapi-users/). See [docs/security.md](docs/security.md) for endpoints, configuration and how to protect your own endpoints with `current_user` / `current_superuser`.
 
 ## Getting Started
 

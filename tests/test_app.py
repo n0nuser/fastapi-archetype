@@ -28,6 +28,15 @@ def test_openapi_spec_is_served() -> None:
     assert response.status_code == 200
     # /metrics is scraped by Prometheus and intentionally kept out of the contract.
     assert sorted(response.json()["paths"]) == [
+        "/api/customer-system/auth/forgot-password",
+        "/api/customer-system/auth/jwt/login",
+        "/api/customer-system/auth/jwt/logout",
+        "/api/customer-system/auth/register",
+        "/api/customer-system/auth/request-verify-token",
+        "/api/customer-system/auth/reset-password",
+        "/api/customer-system/auth/verify",
+        "/api/customer-system/users/me",
+        "/api/customer-system/users/{id}",
         "/api/customer-system/v1/customers",
         "/api/customer-system/v1/customers/{customerId}",
         "/api/customer-system/v1/customers/{customerId}/addresses",
