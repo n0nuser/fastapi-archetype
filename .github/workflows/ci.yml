@@ -28,4 +28,5 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: uv sync --all-groups
+      - run: cp src/.env.example src/.env
       - run: uv run pytest
