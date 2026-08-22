@@ -13,6 +13,7 @@ dependencies = [
     "fastapi>=0.141",
     "fastapi-cache2[redis]>=0.2.2",
     "fastapi-crud-base>=0.1.0",
+    "fastapi-users[sqlalchemy]>=15.0",
     "httpx>=0.28",
     "jinja2>=3.1.6",
     "opentelemetry-exporter-otlp-proto-grpc>=1.44.0",
@@ -98,6 +99,6 @@ convention = "google"
 "src/controller/api/endpoints/customer.py" = ["N803", "B008"]
 "src/repository/models/__init__.py" = ["N818", "F401"]
 # pytest relies on bare asserts; docstrings and literal comparisons are noise in tests
-"tests/**" = ["INP001", "S101", "D103", "PLR2004"]
+"tests/**" = ["ANN001", "ANN201", "D101", "D102", "D103", "INP001", "PLR2004", "S101"]
 # CLI scripts: not a package, and stdout is the user-facing output channel
 "scripts/**" = ["INP001", "T201"]

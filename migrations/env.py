@@ -7,7 +7,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from src.core.config import settings
-from src.repository.models import base, customer  # noqa: F401 — model modules register tables
+from src.repository.models import base, customer, user  # noqa: F401 — model modules register tables
 from src.repository.models.base import Base
 
 config = context.config

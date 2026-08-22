@@ -47,6 +47,13 @@ class Settings(BaseSettings):
     # "text" for human-friendly local logs, "json" for shipping to ELK or similar.
     LOG_FORMAT: Literal["text", "json"] = "text"
 
+    # AUTH SETTINGS (fastapi-users)
+    # Template defaults for local development only.
+    # Always override via environment in real deployments.
+    RESET_PASSWORD_TOKEN_SECRET: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"  # noqa: S105
+    VERIFICATION_TOKEN_SECRET: str = "HDx09iYK97MzUqezQ8InThpcEBk791oi"  # noqa: S105
+    JWT_LIFETIME_SECONDS: int = 3600
+
     # POSTGRESQL DATABASE
     POSTGRES_SERVER: str = "db"  # The name of the service in the docker-compose file
     POSTGRES_USER: str = "postgres"  # The default username for the PostgreSQL database

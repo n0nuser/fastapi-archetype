@@ -15,6 +15,13 @@ Contains Docker-related configuration files.
 - `logs`: Directory to store application logs.
   - `app.log`: Log file for the application.
 
+### `cookiecutter`
+
+Cookiecutter template that generates a standalone project from this archetype.
+
+- `cookiecutter.json`: Template prompts (project name, description, author, versions).
+- `{{cookiecutter.project_slug}}/`: The project skeleton itself. It mirrors the archetype but consumes `fastapi-crud-base` from PyPI instead of the monorepo workspace.
+
 ### `docs`
 
 Contains documentation files.
@@ -23,6 +30,16 @@ Contains documentation files.
 - `uv.md`: Documentation related to uv, a dependency management tool.
 - `project-structure.md`: Documentation related to the project structure.
 - `deployment.md`: Documentation related to deployment.
+- `security.md`: Documentation related to security and user management.
+
+### `libs`
+
+Contains in-repo libraries packaged for reuse across projects.
+
+- `fastapi-crud-base`: The generic CRUD base for SQLAlchemy 2.0 models (`CRUDBase`, `Filter`, `ElementNotFoundError`), published as the `fastapi-crud-base` PyPI package. The application consumes it through a uv workspace dependency; see its own `README.md` for API details.
+  - `src/fastapi_crud_base/base.py`: `CRUDBase` and `Filter` implementation.
+  - `src/fastapi_crud_base/exceptions.py`: Library exceptions.
+  - `tests/`: Framework-independent unit tests (in-memory SQLite).
 
 ### `logs`
 
@@ -45,6 +62,8 @@ Contains controllers for handling HTTP requests.
   - `schemas`: Pydantic schemas for request/response validation.
     - `customer.py`: Customer-related schemas (example).
     - `error_message.py`: Error message schemas.
+    - `user.py`: User-related schemas for registration and profiles.
+  - `security.py`: JWT auth wiring, routers and RBAC guards (fastapi-users).
 - `errors`: Error handling utilities.
   - `error_responses.py`: Definitions for error responses.
   - `exception_manager.py`: Exception handling utilities.
@@ -72,12 +91,14 @@ Handles database operations.
 - `crud`: CRUD operations.
   - `address.py`: CRUD operations related to addresses (example).
   - `customer.py`: CRUD operations related to customers (example).
+  - `user.py`: Synchronous fastapi-users database adapter.
 
   The generic base lives in the `fastapi-crud-base` library (see `libs/`).
 - `exceptions.py`: Custom repository exceptions (re-exports `ElementNotFoundError` from the CRUD library).
 - `models`: Database models.
   - `base.py`: Base database model.
   - `customer.py`: Customer database model (example).
+  - `user.py`: User database model managed by fastapi-users.
 - `session.py`: Database session management.
 
 #### `service`
@@ -88,6 +109,8 @@ Contains business logic.
   - `mapper.py`: Mapping functions.
   - `service.py`: Customer service implementation.
 - `exceptions.py`: Custom service exceptions.
+- `user`: User management service (fastapi-users manager).
+  - `manager.py`: Registration/reset/verification hooks.
 
 #### `tests`
 
