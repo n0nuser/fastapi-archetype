@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Literal
 
 from asgi_correlation_id import CorrelationIdFilter
+from pythonjsonlogger.json import JsonFormatter
 
 from src.core.config import settings
 
@@ -98,8 +99,20 @@ def setup_logging() -> None:
     level = logging.DEBUG if settings.ENVIRONMENT in ["DEV", "PYTEST"] else logging.INFO
 
     # Create a formatter object
-    file_formatter = logging.Formatter(log_format)
-    console_formatter = ColoredConsoleFormatter(log_format)
+    if settings.LOG_FORMAT == "json":
+        json_formatter = JsonFormatter(
+            "%(asctime)s %(name)s %(funcName)s %(levelname)s %(correlation_id)s %(message)s",
+            rename_fields={
+                "asctime": "timestamp",
+                "levelname": "level",
+                "funcName": "function",
+            },
+        )
+        file_formatter = json_formatter
+        console_formatter = json_formatter
+    else:
+        file_formatter = logging.Formatter(log_format)
+        console_formatter = ColoredConsoleFormatter(log_format)
 
     # Determine log file path
     log_file_path_env = os.getenv("APP_LOG_FILE_PATH", "logs/app.log")
