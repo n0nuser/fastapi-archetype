@@ -1,6 +1,6 @@
 [project]
 name = "fastapi-archetype"
-version = "0.5.0"
+version = "0.6.0"
 description = "FastAPI Production Archetype"
 authors = [{ name = "Pablo Jesús González Rubio", email = "gonzrubio.pablo@gmail.com" }]
 readme = "README.md"
