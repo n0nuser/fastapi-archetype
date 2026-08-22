@@ -53,12 +53,17 @@ Databases:
 
 - [SQLAlchemy](https://www.sqlalchemy.org/): The Python SQL Toolkit and Object-Relational Mapping (ORM) library.
 - [PostgreSQL](https://www.postgresql.org/): A powerful, open-source object-relational database system.
+- [Alembic](https://alembic.sqlalchemy.org/en/latest/): A database migrations tool for SQLAlchemy. See our [Alembic documentation](docs/alembic.md).
 
 Deployment:
 
 - [Uvicorn](https://www.uvicorn.org/): A lightning-fast ASGI server implementation, using uvloop and httptools.
 - [Docker](https://www.docker.com/): A set of platform as a service (PaaS) products that use OS-level virtualization to deliver software in packages called containers.
 - [Docker-Compose](https://docs.docker.com/compose/): A tool for defining and running multi-container Docker applications.
+- [Traefik / Nginx](docs/deployment.md): Optional reverse proxy overlays with automatic HTTPS (Traefik).
+- [Prometheus](https://prometheus.io/): Metrics exposed at `/metrics` via prometheus-fastapi-instrumentator.
+- [OpenTelemetry](https://opentelemetry.io/): Opt-in distributed tracing (`OTEL_ENABLED=true`).
+- [Redis](https://redis.io/): Opt-in response caching (`CACHE_ENABLED=true`).
 
 Testing:
 
