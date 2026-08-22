@@ -29,6 +29,9 @@ dev = [
 [tool.uv]
 package = false
 
+[tool.pytest.ini_options]
+pythonpath = ["."]
+
 [tool.ruff]
 lint.select = ["ALL"]
 lint.ignore = [
@@ -62,3 +65,5 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "src/controller/api/endpoints/customer.py" = ["N803", "B008"]
 "src/repository/models/__init__.py" = ["N818", "F401"]
+# pytest relies on bare asserts; docstrings and literal comparisons are noise in tests
+"tests/**" = ["INP001", "S101", "D103", "PLR2004"]
