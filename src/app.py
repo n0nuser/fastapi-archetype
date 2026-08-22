@@ -11,6 +11,12 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from prometheus_fastapi_instrumentator import Instrumentator
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
@@ -101,5 +107,18 @@ app.include_router(router, prefix=root_path)
 
 manage_api_exceptions(app=app)
 
+
+def configure_tracing() -> None:
+    """Set up OpenTelemetry tracing with OTLP export and FastAPI instrumentation."""
+    provider = TracerProvider(resource=Resource.create({"service.name": settings.PROJECT_NAME}))
+    exporter = OTLPSpanExporter(endpoint=settings.OTEL_EXPORTER_OTLP_ENDPOINT, insecure=True)
+    provider.add_span_processor(BatchSpanProcessor(exporter))
+    trace.set_tracer_provider(provider)
+    FastAPIInstrumentor.instrument_app(app)
+
+
 # Expose Prometheus metrics at /metrics for scraping.
 Instrumentator(excluded_handlers=["/metrics"]).instrument(app).expose(app)
+
+if settings.OTEL_ENABLED:
+    configure_tracing()
