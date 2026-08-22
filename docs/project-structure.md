@@ -31,6 +31,7 @@ Contains documentation files.
 - `project-structure.md`: Documentation related to the project structure.
 - `deployment.md`: Documentation related to deployment.
 - `security.md`: Documentation related to security and user management.
+- `celery.md`: Documentation related to background tasks with Celery.
 
 ### `libs`
 
@@ -59,6 +60,7 @@ Contains controllers for handling HTTP requests.
   - `endpoints`: Endpoints for different resources.
     - `base.py`: Base endpoint definitions and common utilities.
     - `customer.py`: Endpoint definitions related to customers (example).
+    - `tasks.py`: Endpoints to enqueue and track background tasks.
   - `schemas`: Pydantic schemas for request/response validation.
     - `customer.py`: Customer-related schemas (example).
     - `error_message.py`: Error message schemas.
@@ -78,6 +80,7 @@ Contains core components of the application.
 
 - `config.py`: Configuration settings.
 - `logger.py`: Logging configuration.
+- `celery_app.py`: Celery application wired to the Redis broker/backend.
 
 #### `domain`
 
@@ -111,6 +114,7 @@ Contains business logic.
 - `exceptions.py`: Custom service exceptions.
 - `user`: User management service (fastapi-users manager).
   - `manager.py`: Registration/reset/verification hooks.
+- `tasks.py`: Celery task definitions.
 
 #### `tests`
 
