@@ -2,7 +2,17 @@
 
 from uuid import UUID
 
+from sqlalchemy import String
+from sqlalchemy.orm import Mapped, mapped_column
+
+from src.repository.models.base import BaseTimestamps
 from src.repository.models.customer import Address, Customer
+
+
+class Widget(BaseTimestamps):
+    """Minimal model with a nullable text column for exercising generic CRUD."""
+
+    label: Mapped[str | None] = mapped_column(String, nullable=True)
 
 
 def build_customer(name: str = "John Doe") -> Customer:
