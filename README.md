@@ -111,6 +111,22 @@ If you don't know how to use Docker, you can check the [Docker documentation](ht
 > - Check the [contributing documentation](.github/CONTRIBUTING.md) for more information.
 > - Check the [deployment documentation](docs/deployment.md) for more information.
 
+### Testing
+
+Most of the suite is marked as `integration` because it exercises real Postgres behaviour. Start the ephemeral test database first:
+
+```bash
+docker compose -f docker/docker-compose.test.yml up -d db-test
+```
+
+Then run everything with coverage:
+
+```bash
+uv run pytest --cov=src --cov-report=term-missing
+```
+
+The database connection is configured through `TEST_DATABASE_URL` (defaults to the compose instance on port 5433). CI spins up its own Postgres service container, so no extra setup is needed there.
+
 ## Roadmap
 
 See the open issues for a full list of proposed features (and known issues).
