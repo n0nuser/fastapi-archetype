@@ -71,6 +71,16 @@ app = FastAPI(
         "name": settings.CONTACT_NAME,
         "email": settings.CONTACT_EMAIL,
     },
+    openapi_tags=[
+        {
+            "name": "Customers",
+            "description": "Create, read, update and delete customers.",
+        },
+        {
+            "name": "Health Check",
+            "description": "Liveness of the application and its database.",
+        },
+    ],
     docs_url=f"{root_path}/swagger",
     redoc_url=f"{root_path}/redoc",
     lifespan=lifespan,
@@ -137,8 +147,9 @@ def configure_tracing() -> None:
     FastAPIInstrumentor.instrument_app(app)
 
 
-# Expose Prometheus metrics at /metrics for scraping.
-Instrumentator(excluded_handlers=["/metrics"]).instrument(app).expose(app)
+# Expose Prometheus metrics at /metrics for scraping. Not part of the public
+# API contract: Prometheus scrapes it programmatically.
+Instrumentator(excluded_handlers=["/metrics"]).instrument(app).expose(app, include_in_schema=False)
 
 if settings.OTEL_ENABLED:
     configure_tracing()

@@ -1,0 +1,11 @@
+{
+  "project_name": "Customer System",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_description": "A production-ready FastAPI service.",
+  "author_name": "Pablo Jesus Gonzalez Rubio",
+  "author_email": "gonzrubio.pablo@gmail.com",
+  "version": "0.1.0",
+  "api_version": "1.0.0",
+  "base_api_path": "{{ cookiecutter.project_slug.replace('_', '-') }}",
+  "year": "2026"
+}

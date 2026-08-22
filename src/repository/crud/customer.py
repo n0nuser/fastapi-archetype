@@ -1,6 +1,7 @@
 """CRUD operations for the Customer model."""
 
-from src.repository.crud.base import CRUDBase
+from fastapi_crud_base import CRUDBase
+
 from src.repository.models.customer import Customer
 
 

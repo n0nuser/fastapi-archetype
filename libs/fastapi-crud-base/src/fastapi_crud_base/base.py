@@ -8,11 +8,10 @@ from uuid import UUID
 from pydantic import UUID4, BaseModel, Field
 from sqlalchemy import String, func, or_, select
 from sqlalchemy.exc import OperationalError
+from sqlalchemy.orm import DeclarativeBase, Session
 from sqlalchemy.orm import Query as SQLQuery
-from sqlalchemy.orm import Session
 
-from src.repository.exceptions import ElementNotFoundError
-from src.repository.models.base import Base
+from fastapi_crud_base.exceptions import ElementNotFoundError
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +30,7 @@ class Filter(BaseModel):
     value: str | int | float | bool | UUID = Field(..., examples=["John Doe"])
 
 
-class CRUDBase[ModelType: Base]:
+class CRUDBase[ModelType: DeclarativeBase]:
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
     def __init__(self: "CRUDBase[ModelType]", model: type[ModelType]) -> None:
@@ -222,8 +221,25 @@ class CRUDBase[ModelType: Base]:
         """
         logger.info("Entering...")
         logger.debug("Getting %s with filters: %s", self.model.__name__, filters)
-        filter_clauses = self._get_filters(filters, case_insensitive)
-        if data := db.query(self.model).filter(*filter_clauses).first():
+        query = db.query(self.model)
+        joined_relationships: set[str] = set()
+        filter_clauses = []
+        for filter_obj in filters:
+            # Dotted filters cross relationships; join them explicitly to
+            # avoid an accidental cartesian product.
+            relationship_name, filter_field = self._resolve_field(filter_obj.field)
+            if relationship_name and relationship_name not in joined_relationships:
+                query = query.join(getattr(self.model, relationship_name))
+                joined_relationships.add(relationship_name)
+            filter_clauses.append(
+                self._get_filter_expression(
+                    filter_field,
+                    filter_obj.operator,
+                    filter_obj.value,
+                    case_insensitive,
+                )
+            )
+        if data := query.filter(*filter_clauses).first():
             logger.debug("Found %s with filters: %s", self.model.__name__, filters)
             logger.info("Exiting...")
             return data
@@ -271,12 +287,29 @@ class CRUDBase[ModelType: Base]:
         logger.info("Entering...")
         logger.debug("Getting list of %s", self.model.__name__)
         query = select(self.model)
+        joined_relationships: set[str] = set()
         if join_fields:
             for join_field in join_fields:
                 query = query.join(getattr(self.model, join_field))
+                joined_relationships.add(join_field)
 
         if filters:
-            filter_clauses = self._get_filters(filters, case_insensitive)
+            filter_clauses = []
+            for filter_obj in filters:
+                # Dotted filters cross relationships; join them explicitly to
+                # avoid an accidental cartesian product.
+                relationship_name, filter_field = self._resolve_field(filter_obj.field)
+                if relationship_name and relationship_name not in joined_relationships:
+                    query = query.join(getattr(self.model, relationship_name))
+                    joined_relationships.add(relationship_name)
+                filter_clauses.append(
+                    self._get_filter_expression(
+                        filter_field,
+                        filter_obj.operator,
+                        filter_obj.value,
+                        case_insensitive,
+                    )
+                )
             if filter_is_logic_and:
                 query = query.where(*filter_clauses)
             else:

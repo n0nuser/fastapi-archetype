@@ -6,6 +6,7 @@ from typing import Annotated, Any
 from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
 from fastapi_cache.decorator import cache
+from fastapi_crud_base import ElementNotFoundError
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
@@ -21,7 +22,6 @@ from src.controller.api.schemas.error_message import ErrorMessage
 from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
 from src.controller.utils.pagination import Pagination
 from src.core.config import settings
-from src.repository.exceptions import ElementNotFoundError
 from src.repository.session import get_db_session
 from src.service.customer.service import CustomerApplicationService
 

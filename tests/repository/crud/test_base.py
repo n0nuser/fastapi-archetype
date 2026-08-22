@@ -3,13 +3,12 @@
 from uuid import uuid4
 
 import pytest
+from fastapi_crud_base import CRUDBase, ElementNotFoundError, Filter
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from src.repository.crud.address import address_crud
-from src.repository.crud.base import CRUDBase, Filter
 from src.repository.crud.customer import customer_crud
-from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.customer import Customer
 from tests.factories import Widget, build_address, build_customer
 

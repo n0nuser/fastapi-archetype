@@ -6,7 +6,10 @@ repos:
     hooks:
       - id: check-added-large-files
       - id: check-toml
+        # Cookiecutter templates contain raw Jinja and cannot be parsed.
+        exclude: ^cookiecutter/
       - id: check-yaml
+        exclude: ^cookiecutter/
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: requirements-txt-fixer
@@ -23,5 +26,17 @@ repos:
       # Run the linter (config lives in pyproject.toml).
       - id: ruff
         args: ["--fix"]
+        exclude: ^cookiecutter/
       # Run the formatter.
       - id: ruff-format
+        exclude: ^cookiecutter/
+  # Export the OpenAPI schema from the codebase and lint it with Spectral.
+  # Requires Node.js on the PATH (Spectral is an npm tool).
+  - repo: local
+    hooks:
+      - id: openapi-spectral-lint
+        name: export OpenAPI schema and lint with Spectral
+        entry: bash -c 'uv run python scripts/export_openapi.py && npx --yes @stoplight/spectral-cli@6.16.3 lint --fail-severity=warn openapi.json'
+        language: system
+        pass_filenames: false
+        files: ^(src/.*\.py|scripts/export_openapi\.py|\.spectral\.yaml)$

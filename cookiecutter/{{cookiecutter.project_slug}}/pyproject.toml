@@ -1,0 +1,92 @@
+[project]
+name = "{{ cookiecutter.project_slug }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_description }}"
+authors = [{ name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}" }]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+
+dependencies = [
+    "alembic>=1.19.1",
+    "asgi-correlation-id>=4.3",
+    "fastapi>=0.141",
+    "fastapi-cache2[redis]>=0.2.2",
+    "fastapi-crud-base>=0.1.0",
+    "httpx>=0.28",
+    "jinja2>=3.1.6",
+    "opentelemetry-exporter-otlp-proto-grpc>=1.44.0",
+    "opentelemetry-instrumentation-fastapi>=0.65b0",
+    "opentelemetry-sdk>=1.44.0",
+    "prometheus-fastapi-instrumentator>=8.1.0",
+    "psycopg2-binary>=2.9",
+    "pydantic-settings>=2.6",
+    "python-json-logger>=4.2.0",
+    "python-multipart>=0.0.18",
+    "sqlalchemy>=2.0",
+    "sqlalchemy-utils>=0.41",
+    "uvicorn>=0.32",
+]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.14",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# The importable package is `src.*` throughout the codebase and Docker image
+# (`uvicorn src.app:app`), so ship that directory as-is.
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+markers = [
+    "integration: tests that require a real database (docker compose -f docker/docker-compose.test.yml up -d)",
+]
+
+[tool.ruff]
+# Alembic generates migrations in its own house style; do not lint them.
+extend-exclude = ["migrations"]
+lint.select = ["ALL"]
+lint.ignore = [
+    "ANN204",
+    "BLE001",
+    "COM812",
+    "CPY001",
+    "ISC001",
+    "D100",
+    "D104",
+    "D105",
+    "D107",
+    "D205",
+    "D211",
+    "D212",
+    "E203",
+    "E266",
+    "PLR0917",
+    "S602",
+    "ERA001",
+    "PLR0913",
+    "N803",
+    "N815",
+]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"src/controller/api/endpoints/customer.py" = ["N803", "B008"]
+"src/repository/models/__init__.py" = ["N818", "F401"]
+# pytest relies on bare asserts; docstrings and literal comparisons are noise in tests
+"tests/**" = ["INP001", "S101", "D103", "PLR2004"]
+# CLI scripts: not a package, and stdout is the user-facing output channel
+"scripts/**" = ["INP001", "T201"]

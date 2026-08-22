@@ -1,15 +1,12 @@
-class BaseExceptionError(Exception):
-    """Base class for exceptions in this module."""
+"""Repository exceptions.
 
-    def __init__(self, message: str = "An error occurred."):
-        self.message = message
+`ElementNotFoundError` is raised by the shared CRUD library and re-exported
+here for convenience; `DatabaseConnectionError` is application-specific.
+"""
 
-    def __str__(self):
-        return repr(self.message)
+from fastapi_crud_base.exceptions import BaseExceptionError, ElementNotFoundError
 
-
-class ElementNotFoundError(BaseExceptionError):
-    """Raised when an element is not found in the database."""
+__all__ = ["BaseExceptionError", "DatabaseConnectionError", "ElementNotFoundError"]
 
 
 class DatabaseConnectionError(BaseExceptionError):

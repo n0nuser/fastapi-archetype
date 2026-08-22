@@ -1,6 +1,7 @@
 import logging
 from uuid import UUID
 
+from fastapi_crud_base import ElementNotFoundError, Filter
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
@@ -13,9 +14,7 @@ from src.controller.api.schemas.customer import (
     CustomerUpdate,
 )
 from src.repository.crud.address import address_crud
-from src.repository.crud.base import Filter
 from src.repository.crud.customer import customer_crud
-from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.customer import Address, Customer
 from src.service.exceptions import CustomerServiceError
 

@@ -7,6 +7,12 @@ resolution-markers = [
     "python_full_version < '3.13'",
 ]
 
+[manifest]
+members = [
+    "fastapi-archetype",
+    "fastapi-crud-base",
+]
+
 [[package]]
 name = "alembic"
 version = "1.19.1"
@@ -238,13 +244,14 @@ wheels = [
 
 [[package]]
 name = "fastapi-archetype"
-version = "0.1.0"
-source = { virtual = "." }
+version = "0.3.0"
+source = { editable = "." }
 dependencies = [
     { name = "alembic" },
     { name = "asgi-correlation-id" },
     { name = "fastapi" },
     { name = "fastapi-cache2", extra = ["redis"] },
+    { name = "fastapi-crud-base" },
     { name = "httpx" },
     { name = "jinja2" },
     { name = "opentelemetry-exporter-otlp-proto-grpc" },
@@ -274,6 +281,7 @@ requires-dist = [
     { name = "asgi-correlation-id", specifier = ">=4.3" },
     { name = "fastapi", specifier = ">=0.141" },
     { name = "fastapi-cache2", extras = ["redis"], specifier = ">=0.2.2" },
+    { name = "fastapi-crud-base", editable = "libs/fastapi-crud-base" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "jinja2", specifier = ">=3.1.6" },
     { name = "opentelemetry-exporter-otlp-proto-grpc", specifier = ">=1.44.0" },
@@ -316,6 +324,29 @@ wheels = [
 redis = [
     { name = "redis" },
 ]
+
+[[package]]
+name = "fastapi-crud-base"
+version = "0.1.0"
+source = { editable = "libs/fastapi-crud-base" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "sqlalchemy" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "sqlalchemy", specifier = ">=2.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8.3" }]
 
 [[package]]
 name = "filelock"
