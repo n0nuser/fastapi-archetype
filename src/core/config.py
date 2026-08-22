@@ -44,6 +44,8 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: list[str] = []
     ALLOWED_HOSTS: list[str] = ["localhost", "127.0.0.1"]
     APP_LOG_FILE_PATH: str = "logs/app.log"
+    # "text" for human-friendly local logs, "json" for shipping to ELK or similar.
+    LOG_FORMAT: Literal["text", "json"] = "text"
 
     # POSTGRESQL DATABASE
     POSTGRES_SERVER: str = "db"  # The name of the service in the docker-compose file
