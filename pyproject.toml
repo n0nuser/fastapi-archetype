@@ -23,6 +23,7 @@ dependencies = [
 dev = [
     "pre-commit>=4.0",
     "pytest>=8.3",
+    "pytest-cov>=6.0",
     "ruff>=0.14",
 ]
 
@@ -31,6 +32,9 @@ package = false
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+markers = [
+    "integration: tests that require a real database (docker compose -f docker/docker-compose.test.yml up -d)",
+]
 
 [tool.ruff]
 lint.select = ["ALL"]
