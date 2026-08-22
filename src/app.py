@@ -9,6 +9,7 @@ from asgi_correlation_id import CorrelationIdMiddleware
 from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Session
@@ -56,6 +57,8 @@ app.add_middleware(
     allow_headers=["X-Requested-With", "X-Request-ID", "Content-Type"],
     expose_headers=["X-Request-ID"],
 )
+# Compress responses larger than 1 KiB when the client advertises gzip support.
+app.add_middleware(GZipMiddleware, minimum_size=1024)
 app.add_middleware(TrustedHostMiddleware, allowed_hosts=settings.ALLOWED_HOSTS)
 app.add_middleware(
     CorrelationIdMiddleware,

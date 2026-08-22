@@ -105,6 +105,15 @@ def test_post_customer_with_invalid_body_returns_400(client: TestClient) -> None
     assert response.json()["messages"]
 
 
+def test_large_responses_are_gzipped(client: TestClient) -> None:
+    create_customer(client, {**CUSTOMER_PAYLOAD, "name": "x" * 2000})
+
+    response = client.get(CUSTOMERS_URL, headers={"accept-encoding": "gzip"})
+
+    assert response.status_code == 200
+    assert response.headers.get("content-encoding") == "gzip"
+
+
 def test_address_lifecycle_through_api(client: TestClient) -> None:
     customer_id = create_customer(client)
     address_url = f"{CUSTOMERS_URL}/{customer_id}/addresses"
