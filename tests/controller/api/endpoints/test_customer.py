@@ -64,8 +64,8 @@ def test_get_customers_list_returns_data_and_pagination(client: TestClient) -> N
     body = response.json()
     # Default ordering is by UUID id, so compare without relying on row order.
     assert sorted(body["data"], key=lambda row: row["name"]) == [
-        {"customerId": first, "name": "John Doe"},
         {"customerId": second, "name": "Jane Roe"},
+        {"customerId": first, "name": "John Doe"},
     ]
     assert body["pagination"] is not None
 
