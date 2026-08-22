@@ -3,14 +3,19 @@
 import logging
 import os
 import uuid
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Annotated
 
+import redis.asyncio as redis
 from asgi_correlation_id import CorrelationIdMiddleware
 from asgi_correlation_id.middleware import is_valid_uuid4
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
 from opentelemetry import trace
 from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
@@ -39,6 +44,22 @@ def startup_event() -> None:
     logger.info(app.routes)
 
 
+async def configure_cache() -> None:
+    """Point the response cache at Redis."""
+    redis_client = redis.from_url(settings.REDIS_URL, encoding="utf8")
+    FastAPICache.init(RedisBackend(redis_client), prefix="fastapi-cache")
+
+
+@asynccontextmanager
+async def lifespan(_application: FastAPI) -> AsyncIterator[None]:
+    """Run startup/shutdown tasks: logging, schema init and optional cache."""
+    startup_event()
+    init_db()
+    if settings.CACHE_ENABLED:
+        await configure_cache()
+    yield
+
+
 root_path = f"/api/{settings.BASE_API_PATH}"
 
 app = FastAPI(
@@ -52,8 +73,7 @@ app = FastAPI(
     },
     docs_url=f"{root_path}/swagger",
     redoc_url=f"{root_path}/redoc",
-    on_startup=[startup_event, init_db],
-    on_shutdown=[],
+    lifespan=lifespan,
 )
 
 app.add_middleware(

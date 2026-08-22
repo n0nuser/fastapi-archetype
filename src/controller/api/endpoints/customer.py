@@ -5,6 +5,7 @@ from typing import Annotated, Any
 
 from fastapi import APIRouter, Body, Depends, Path, Query, Request, status
 from fastapi.responses import JSONResponse, Response
+from fastapi_cache.decorator import cache
 from pydantic import UUID4
 from sqlalchemy.orm import Session
 
@@ -19,6 +20,7 @@ from src.controller.api.schemas.customer import (
 from src.controller.api.schemas.error_message import ErrorMessage
 from src.controller.errors.exceptions import HTTP404NotFoundError, HTTP500InternalServerError
 from src.controller.utils.pagination import Pagination
+from src.core.config import settings
 from src.repository.exceptions import ElementNotFoundError
 from src.repository.session import get_db_session
 from src.service.customer.service import CustomerApplicationService
@@ -28,6 +30,13 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 CommonDeps = Annotated[dict[str, Any], Depends(common_query_parameters)]
+
+
+def cached(expire: int) -> Any:  # noqa: ANN401
+    """Apply response caching only when the Redis cache is enabled."""
+    if not settings.CACHE_ENABLED:
+        return lambda func: func
+    return cache(expire=expire)
 
 
 @router.get(
@@ -48,6 +57,7 @@ CommonDeps = Annotated[dict[str, Any], Depends(common_query_parameters)]
     response_model_by_alias=True,
     response_model=CustomerListResponse,
 )
+@cached(settings.CACHE_EXPIRE_SECONDS)
 async def get_customers(
     request: Request,
     http_request_info: CommonDeps,
@@ -255,6 +265,7 @@ async def delete_customer_id(
     response_model_by_alias=True,
     response_model=CustomerDetailResponse,
 )
+@cached(settings.CACHE_EXPIRE_SECONDS)
 async def get_customer_id(
     customerId: Annotated[UUID4, Path(description="Id of a specific customer.")],
     http_request_info: CommonDeps,
