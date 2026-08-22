@@ -65,6 +65,10 @@ class Settings(BaseSettings):
     # Number of seconds after which a connection is recycled (preventing stale connections)
     POOL_RECYCLE: int = 1800
 
+    # OPENTELEMETRY SETTINGS
+    OTEL_ENABLED: bool = False
+    OTEL_EXPORTER_OTLP_ENDPOINT: str = "http://localhost:4317"
+
     @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     @classmethod
     def assemble_db_connection(
