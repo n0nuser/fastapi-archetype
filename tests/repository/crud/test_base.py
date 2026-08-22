@@ -7,11 +7,11 @@ from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
 from src.repository.crud.address import address_crud
-from src.repository.crud.base import Filter
+from src.repository.crud.base import CRUDBase, Filter
 from src.repository.crud.customer import customer_crud
 from src.repository.exceptions import ElementNotFoundError
 from src.repository.models.customer import Customer
-from tests.factories import build_address, build_customer
+from tests.factories import Widget, build_address, build_customer
 
 pytestmark = pytest.mark.integration
 
@@ -206,3 +206,131 @@ def test_soft_delete_row_rejects_model_without_deleted_on(db_session: Session) -
 
     with pytest.raises(ValueError, match="soft delete"):
         customer_crud.soft_delete_row(db_session, target)
+
+
+@pytest.mark.usefixtures("alice", "bob")
+def test_get_unique_values_returns_distinct_values(db_session: Session) -> None:
+    customer_crud.create(db_session, build_customer(name="Alice"))
+
+    values = customer_crud.get_unique_values(db_session, "name")
+
+    assert sorted(values) == ["Alice", "Bob"]
+
+
+def test_get_unique_values_excludes_nulls_and_empty_strings_by_default(
+    db_session: Session,
+) -> None:
+    widget_crud = CRUDBase(Widget)
+    db_session.add_all(
+        [
+            Widget(label="alpha"),
+            Widget(label=""),
+            Widget(label=None),
+        ],
+    )
+    db_session.flush()
+
+    filtered = widget_crud.get_unique_values(db_session, "label")
+    everything = sorted(
+        widget_crud.get_unique_values(db_session, "label", include_nulls=True),
+        key=lambda value: (value is None, str(value)),
+    )
+
+    assert filtered == ["alpha"]
+    assert everything == ["", "alpha", None]
+
+
+def test_get_unique_values_skips_empty_string_filter_for_non_text_columns(
+    db_session: Session,
+) -> None:
+    widget_crud = CRUDBase(Widget)
+    db_session.add_all([Widget(label="a"), Widget(label="b")])
+    db_session.flush()
+
+    ids = widget_crud.get_unique_values(db_session, "id")
+
+    assert len(ids) == 2
+
+
+def test_get_unique_values_raises_for_unknown_column(db_session: Session) -> None:
+    with pytest.raises(AttributeError, match="does not exist"):
+        customer_crud.get_unique_values(db_session, "nonexistent")
+
+
+@pytest.mark.usefixtures("alice")
+def test_case_insensitive_lookup_finds_mixed_case_value(db_session: Session) -> None:
+    found = customer_crud.get_one_by_field(db_session, "name", "ALICE", case_insensitive=True)
+
+    assert found.name == "Alice"
+
+
+@pytest.mark.usefixtures("alice")
+def test_case_sensitive_lookup_misses_different_case_value(db_session: Session) -> None:
+    with pytest.raises(ElementNotFoundError):
+        customer_crud.get_one_by_field(db_session, "name", "ALICE")
+
+
+@pytest.mark.usefixtures("alice", "bob")
+@pytest.mark.parametrize(
+    ("operator", "value", "expected_names"),
+    [
+        ("eq", "alice", ["Alice"]),
+        ("contains", "LIC", ["Alice"]),
+        ("not_contains", "BOB", ["Alice"]),
+    ],
+)
+def test_get_list_case_insensitive_filters(
+    db_session: Session,
+    operator: str,
+    value: str,
+    expected_names: list[str],
+) -> None:
+    result = customer_crud.get_list(
+        db_session,
+        filters=[Filter(field="name", operator=operator, value=value)],
+        case_insensitive=True,
+    )
+
+    assert sorted(row.name for row in result) == expected_names
+
+
+@pytest.mark.usefixtures("bob")
+def test_get_one_by_fields_case_insensitive_filter(db_session: Session) -> None:
+    found = customer_crud.get_one_by_fields(
+        db_session,
+        filters=[Filter(field="name", operator="eq", value="BOB")],
+        case_insensitive=True,
+    )
+
+    assert found.name == "Bob"
+
+
+def test_bulk_create_persists_all_records(db_session: Session) -> None:
+    created = customer_crud.bulk_create(
+        db_session,
+        [build_customer(name="Alice"), build_customer(name="Bob")],
+    )
+
+    assert customer_crud.count(db_session) == 2
+    assert sorted(record.name for record in created) == ["Alice", "Bob"]
+    assert all(record.id is not None for record in created)
+
+
+@pytest.mark.usefixtures("alice", "bob")
+def test_bulk_update_updates_all_records(db_session: Session) -> None:
+    records = customer_crud.get_list(db_session)
+    for record in records:
+        record.name = f"{record.name} Jr"
+
+    updated = customer_crud.bulk_update(db_session, records)
+
+    names_after = {row.name for row in customer_crud.get_list(db_session)}
+    assert {record.name for record in updated} == {"Alice Jr", "Bob Jr"}
+    assert names_after == {"Alice Jr", "Bob Jr"}
+
+
+@pytest.mark.usefixtures("alice")
+def test_bulk_operations_accept_empty_sequences(db_session: Session) -> None:
+    assert customer_crud.bulk_create(db_session, []) == []
+    assert customer_crud.bulk_update(db_session, []) == []
+    assert customer_crud.count(db_session) == 1

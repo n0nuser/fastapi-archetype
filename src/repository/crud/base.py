@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any, Literal
 from uuid import UUID
 
 from pydantic import UUID4, BaseModel, Field
-from sqlalchemy import func, or_, select
+from sqlalchemy import String, func, or_, select
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.orm import Query as SQLQuery
 from sqlalchemy.orm import Session
@@ -44,7 +44,13 @@ class CRUDBase[ModelType: Base]:
         """
         self.model = model
 
-    def _get_filter_expression(self, filter_field: Any, operator: str, value: any) -> SQLQuery:  # noqa: ANN401
+    def _get_filter_expression(
+        self,
+        filter_field: Any,  # noqa: ANN401
+        operator: str,
+        value: any,
+        case_insensitive: bool = False,  # noqa: FBT001, FBT002
+    ) -> SQLQuery:
         """
         Return the filter expression based on the operator and value.
 
@@ -52,6 +58,10 @@ class CRUDBase[ModelType: Base]:
             filter_field: The SQLAlchemy model field to apply the filter on.
             operator: The filter operation to perform (e.g., "eq", "neq").
             value: The value to compare the field against.
+            case_insensitive: If True, string comparisons ignore letter case.
+                PostgreSQL compares strings case-sensitively by default, so
+                this flag is what enables insensitive matching there; on
+                MySQL with *_ci collations both modes behave the same.
 
         Returns:
             An SQLAlchemy query object representing the filter expression.
@@ -73,6 +83,9 @@ class CRUDBase[ModelType: Base]:
         if operator not in operators:
             msg = f"Operator {operator} not supported."
             raise ValueError(msg)
+        if case_insensitive and isinstance(value, str):
+            filter_field = func.lower(filter_field)
+            value = value.lower()
         return operators[operator](filter_field)
 
     def _resolve_field(self, field_path: str) -> tuple[str | None, Any]:
@@ -92,12 +105,17 @@ class CRUDBase[ModelType: Base]:
             filter_field = getattr(filter_field.property.mapper.class_, part)
         return relationship_name, filter_field
 
-    def _get_filters(self, items: list["Filter"]) -> list[SQLQuery]:
+    def _get_filters(
+        self,
+        items: list["Filter"],
+        case_insensitive: bool = False,  # noqa: FBT001, FBT002
+    ) -> list[SQLQuery]:
         """
         Get the filters to be applied to a query.
 
         Args:
             items: A list of Filter objects specifying the filters to apply.
+            case_insensitive: If True, string comparisons ignore letter case.
 
         Returns:
             A list of SQLAlchemy query objects representing the filters to be applied.
@@ -106,7 +124,12 @@ class CRUDBase[ModelType: Base]:
         for filter_obj in items:
             _, filter_field = self._resolve_field(filter_obj.field)
             filter_clauses.append(
-                self._get_filter_expression(filter_field, filter_obj.operator, filter_obj.value)
+                self._get_filter_expression(
+                    filter_field,
+                    filter_obj.operator,
+                    filter_obj.value,
+                    case_insensitive,
+                )
             )
         return filter_clauses
 
@@ -143,6 +166,7 @@ class CRUDBase[ModelType: Base]:
         db: Session,
         field: str,
         value: str,
+        case_insensitive: bool = False,  # noqa: FBT001, FBT002
     ) -> ModelType:
         """Returns an object of the model specified.
 
@@ -150,6 +174,8 @@ class CRUDBase[ModelType: Base]:
             db (Session): Database session.
             field (str): Field of the row in the DB.
             value (str): Value to compare the Field with.
+            case_insensitive (bool): If True, string comparisons ignore letter
+                case. Defaults to False.
 
         Returns:
             ModelType: Element.
@@ -159,7 +185,12 @@ class CRUDBase[ModelType: Base]:
         """
         logger.info("Entering...")
         logger.debug("Getting %s with %s: %s", self.model.__name__, field, value)
-        if data := db.query(self.model).filter(getattr(self.model, field) == value).first():
+        filter_field = getattr(self.model, field)
+        query_value = value
+        if case_insensitive and isinstance(value, str):
+            filter_field = func.lower(filter_field)
+            query_value = value.lower()
+        if data := db.query(self.model).filter(filter_field == query_value).first():
             logger.debug("Found %s with %s: %s", self.model.__name__, field, value)
             logger.info("Exiting...")
             return data
@@ -172,6 +203,7 @@ class CRUDBase[ModelType: Base]:
         self: "CRUDBase[ModelType]",
         db: Session,
         filters: list[Filter],
+        case_insensitive: bool = False,  # noqa: FBT001, FBT002
     ) -> ModelType:
         """Returns an object of the model specified.
 
@@ -179,6 +211,8 @@ class CRUDBase[ModelType: Base]:
             db (Session): Database session.
             filters (dict[str, Tuple[str, object]]): Filters to apply, where each filter
                 is a tuple of (operator, value).
+            case_insensitive (bool): If True, string comparisons ignore letter
+                case. Defaults to False.
 
         Returns:
             ModelType: Element.
@@ -188,7 +222,7 @@ class CRUDBase[ModelType: Base]:
         """
         logger.info("Entering...")
         logger.debug("Getting %s with filters: %s", self.model.__name__, filters)
-        filter_clauses = self._get_filters(filters)
+        filter_clauses = self._get_filters(filters, case_insensitive)
         if data := db.query(self.model).filter(*filter_clauses).first():
             logger.debug("Found %s with filters: %s", self.model.__name__, filters)
             logger.info("Exiting...")
@@ -208,6 +242,7 @@ class CRUDBase[ModelType: Base]:
         order_by: str = "id",
         order_direction: Literal["asc", "desc"] = "asc",
         join_fields: list[str] | None = None,
+        case_insensitive: bool = False,  # noqa: FBT001, FBT002
     ) -> Sequence[ModelType | None]:
         """Get a list of elements that can be filtered.
 
@@ -227,6 +262,8 @@ class CRUDBase[ModelType: Base]:
             order_direction (Literal["asc", "desc"], optional): Order direction for the results.
             join_fields (list[str], optional): List of foreign key fields to perform
                 joined loading on. Defaults to None.
+            case_insensitive (bool): If True, string comparisons ignore letter
+                case. Defaults to False.
 
         Returns:
             list[ModelType | None]: Result with the Data.
@@ -239,7 +276,7 @@ class CRUDBase[ModelType: Base]:
                 query = query.join(getattr(self.model, join_field))
 
         if filters:
-            filter_clauses = self._get_filters(filters)
+            filter_clauses = self._get_filters(filters, case_insensitive)
             if filter_is_logic_and:
                 query = query.where(*filter_clauses)
             else:
@@ -314,6 +351,62 @@ class CRUDBase[ModelType: Base]:
         logger.info("Exiting...")
         return 0
 
+    def get_unique_values(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        column_name: str,
+        include_nulls: bool = False,  # noqa: FBT001, FBT002
+    ) -> list[Any]:
+        """Get the unique values of a column, optionally excluding NULLs and empty strings.
+
+        Args:
+            db (Session): Database session.
+            column_name (str): Name of the column to retrieve unique values from.
+            include_nulls (bool): If False, excludes NULL values and, for string
+                columns, empty strings. Defaults to False.
+
+        Returns:
+            list[Any]: Unique values of the specified column. Empty list when no rows match.
+
+        Raises:
+            AttributeError: If the column does not exist in the model.
+            OperationalError: If an error occurs during the database operation.
+        """
+        logger.info("Entering...")
+        logger.debug(
+            "Retrieving unique values from column '%s' in %s",
+            column_name,
+            self.model.__name__,
+        )
+        if not hasattr(self.model, column_name):
+            error_message = f"Column '{column_name}' does not exist in {self.model.__name__}."
+            logger.error(error_message)
+            raise AttributeError(error_message)
+
+        try:
+            _, column = self._resolve_field(column_name)
+            query = select(column).distinct()
+            # Excluding '' only makes sense for text columns; comparing other types
+            # against an empty string would fail at the database level.
+            if not include_nulls:
+                query = query.where(column.isnot(None))
+                if isinstance(column.type, String):
+                    query = query.where(column != "")
+            unique_values = list(db.scalars(query).all())
+            logger.debug("Unique values found: %s", unique_values)
+        except OperationalError:
+            db.rollback()
+            logger.exception(
+                "Failed to retrieve unique values from column '%s' in %s",
+                column_name,
+                self.model.__name__,
+            )
+            raise
+        else:
+            return unique_values
+        finally:
+            logger.info("Exiting...")
+
     def create(self: "CRUDBase[ModelType]", db: Session, data: ModelType) -> ModelType:
         """Creates a new record in the database.
 
@@ -334,6 +427,78 @@ class CRUDBase[ModelType: Base]:
         except OperationalError:
             db.rollback()
             logger.exception("Failed to create %s object %s", self.model.__name__, data)
+            raise
+        else:
+            return data
+        finally:
+            logger.info("Exiting...")
+
+    def bulk_create(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        data: Sequence[ModelType],
+    ) -> Sequence[ModelType]:
+        """Creates multiple records in a single transaction.
+
+        Args:
+            db (Session): The database session.
+            data (Sequence[ModelType]): The records to be created.
+
+        Returns:
+            Sequence[ModelType]: The created records, with their generated fields populated.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        logger.info("Entering...")
+        logger.debug("Creating %s %s objects", len(data), self.model.__name__)
+        try:
+            db.add_all(data)
+            db.commit()
+            for record in data:
+                db.refresh(record)
+            logger.debug("Created %s %s objects", len(data), self.model.__name__)
+        except OperationalError:
+            db.rollback()
+            logger.exception("Failed to create %s objects in bulk", self.model.__name__)
+            raise
+        else:
+            return data
+        finally:
+            logger.info("Exiting...")
+
+    def bulk_update(
+        self: "CRUDBase[ModelType]",
+        db: Session,
+        data: Sequence[ModelType],
+    ) -> Sequence[ModelType]:
+        """Updates multiple existing records in a single transaction.
+
+        Each record is merged by its primary key, so instances must already
+        exist in the database.
+
+        Args:
+            db (Session): The database session.
+            data (Sequence[ModelType]): The records to be updated.
+
+        Returns:
+            Sequence[ModelType]: The updated records.
+
+        Raises:
+            OperationalError: If an error occurs during the operation.
+        """
+        logger.info("Entering...")
+        logger.debug("Updating %s %s objects", len(data), self.model.__name__)
+        try:
+            for record in data:
+                db.merge(record)
+            db.commit()
+            for record in data:
+                db.refresh(record)
+            logger.debug("Updated %s %s objects", len(data), self.model.__name__)
+        except OperationalError:
+            db.rollback()
+            logger.exception("Failed to update %s objects in bulk", self.model.__name__)
             raise
         else:
             return data
