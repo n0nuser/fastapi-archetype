@@ -69,6 +69,11 @@ class Settings(BaseSettings):
     OTEL_ENABLED: bool = False
     OTEL_EXPORTER_OTLP_ENDPOINT: str = "http://localhost:4317"
 
+    # REDIS CACHE SETTINGS
+    CACHE_ENABLED: bool = False
+    CACHE_EXPIRE_SECONDS: int = 60
+    REDIS_URL: str = "redis://localhost:6379/0"
+
     @field_validator("SQLALCHEMY_DATABASE_URI", mode="before")
     @classmethod
     def assemble_db_connection(
@@ -91,6 +96,7 @@ class Settings(BaseSettings):
             username=info.data["POSTGRES_USER"],
             password=info.data["POSTGRES_PASSWORD"],
             host=info.data["POSTGRES_SERVER"],
+            port=info.data["POSTGRES_PORT"],
             path=info.data["POSTGRES_DB"] or "",
         )
 
