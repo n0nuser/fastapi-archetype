@@ -39,3 +39,36 @@ alembic upgrade head
 ```
 
 This command will apply all of the migration scripts that have not yet been applied to your database.
+
+## Usage in this project
+
+Alembic is already wired up: the repository lives in `migrations/`, configured by `alembic.ini` at the project root. All commands run through `uv run alembic ...`.
+
+The target database URL is taken from `SQLALCHEMY_DATABASE_URI` (built from your `src/.env`). Override it for a single command with the `ALEMBIC_DATABASE_URL` environment variable, which is handy when generating a migration against a scratch database.
+
+### Create a new migration
+
+After changing a model under `src/repository/models/`, generate a script and review it before applying:
+
+```txt
+uv run alembic revision --autogenerate -m "add discount to customer"
+```
+
+Model modules must be importable for autogenerate to see them; `migrations/env.py` already imports them explicitly.
+
+### Apply or revert migrations
+
+```txt
+uv run alembic upgrade head
+uv run alembic downgrade -1
+```
+
+To confirm the models match the applied migrations (useful in CI later):
+
+```txt
+uv run alembic check
+```
+
+### Relationship with `init_db`
+
+The application still creates missing tables on startup (`init_db`) so a fresh development stack works without a manual step. Alembic is the tool to use once a database holds data you cannot recreate: it evolves the schema instead of assuming an empty one.
