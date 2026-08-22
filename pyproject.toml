@@ -1,36 +1,48 @@
-[tool.poetry]
-authors = ["Pablo Jesús González Rubio <gonzrubio.pablo@gmail.com>"]
-description = "FastAPI Production Archetype"
-name = "src"
+[project]
+name = "fastapi-archetype"
 version = "0.1.0"
+description = "FastAPI Production Archetype"
+authors = [{ name = "Pablo Jesús González Rubio", email = "gonzrubio.pablo@gmail.com" }]
 readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
 
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0"
-fastapi = "^0.109"
-httpx = "^0.25"
-psycopg2-binary = "^2.9"
-pydantic-settings = "^2.1"
-python-multipart = "^0.0"
-sqlalchemy = "^2.0"
-sqlalchemy-utils = "^0.41"
-uvicorn = "^0.24"
-asgi-correlation-id = "^4.3"
+dependencies = [
+    "asgi-correlation-id>=4.3",
+    "fastapi>=0.141",
+    "httpx>=0.28",
+    "psycopg2-binary>=2.9",
+    "pydantic-settings>=2.6",
+    "python-multipart>=0.0.18",
+    "sqlalchemy>=2.0",
+    "sqlalchemy-utils>=0.41",
+    "uvicorn>=0.32",
+]
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.3.4"
-pylance = "^0.10.5"
-flake8 = "^7.0.0"
-pylint = "^3.1.0"
-pytest = "^8.1.1"
-pre-commit = "^3.6.2"
-poetry-plugin-export = "^1.7.1"
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0",
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "ruff>=0.14",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+markers = [
+    "integration: tests that require a real database (docker compose -f docker/docker-compose.test.yml up -d)",
+]
 
 [tool.ruff]
 lint.select = ["ALL"]
 lint.ignore = [
+    "ANN204",
     "BLE001",
     "COM812",
+    "CPY001",
     "ISC001",
     "D100",
     "D104",
@@ -41,20 +53,15 @@ lint.ignore = [
     "D212",
     "E203",
     "E266",
-    "ANN101",
-    "ANN102",
-    "ANN204",
+    "PLR0917",
     "S602",
     "ERA001",
     "PLR0913",
     "N803",
     "N815",
 ]
-target-version = "py310"
+target-version = "py312"
 line-length = 100
-
-[tool.flake8]
-max-line-length = 100
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -62,11 +69,5 @@ convention = "google"
 [tool.ruff.lint.per-file-ignores]
 "src/controller/api/endpoints/customer.py" = ["N803", "B008"]
 "src/repository/models/__init__.py" = ["N818", "F401"]
-
-
-[tool.black]
-line-length = 100
-
-[build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+# pytest relies on bare asserts; docstrings and literal comparisons are noise in tests
+"tests/**" = ["INP001", "S101", "D103", "PLR2004"]

@@ -4,7 +4,7 @@ https://docs.sqlalchemy.org/en/20/orm/declarative_styles.html#example-two-datacl
 Dataclass style for powerful autocompletion support.
 """
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from uuid import uuid4
 
 from sqlalchemy import DateTime
@@ -107,5 +107,5 @@ class BaseDeletedOn(Base):
         Returns:
             self: The updated record.
         """
-        self.deleted_on = datetime.now(timezone.utc)
+        self.deleted_on = datetime.now(UTC)
         return self
