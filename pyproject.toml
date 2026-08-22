@@ -8,6 +8,7 @@ license = "MIT"
 requires-python = ">=3.12"
 
 dependencies = [
+    "alembic>=1.19.1",
     "asgi-correlation-id>=4.3",
     "fastapi>=0.141",
     "httpx>=0.28",
@@ -37,6 +38,8 @@ markers = [
 ]
 
 [tool.ruff]
+# Alembic generates migrations in its own house style; do not lint them.
+extend-exclude = ["migrations"]
 lint.select = ["ALL"]
 lint.ignore = [
     "ANN204",
