@@ -2,7 +2,7 @@
 
 import logging
 from collections.abc import Sequence
-from typing import TYPE_CHECKING, Any, Generic, Literal, TypeVar
+from typing import TYPE_CHECKING, Any, Literal
 from uuid import UUID
 
 from pydantic import UUID4, BaseModel, Field
@@ -19,8 +19,6 @@ logger = logging.getLogger(__name__)
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-ModelType = TypeVar("ModelType", bound=Base)  # pylint: disable=invalid-name
-
 
 class Filter(BaseModel):
     """Filter to be applied to a query."""
@@ -33,7 +31,7 @@ class Filter(BaseModel):
     value: str | int | float | bool | UUID = Field(..., examples=["John Doe"])
 
 
-class CRUDBase(Generic[ModelType]):
+class CRUDBase[ModelType: Base]:
     """CRUD object with default methods to Create, Read, Update, Delete (CRUD)."""
 
     def __init__(self: "CRUDBase[ModelType]", model: type[ModelType]) -> None:
@@ -278,7 +276,7 @@ class CRUDBase(Generic[ModelType]):
         """
         logger.info("Entering...")
         logger.debug("Counting %s", self.model.__name__)
-        count_query = select(func.count()).select_from(self.model)  # pylint: disable=not-callable
+        count_query = select(func.count()).select_from(self.model)
         if filters:
             filter_clauses = self._get_filters(filters)
             count_query = count_query.where(*filter_clauses)
