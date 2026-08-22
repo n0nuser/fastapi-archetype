@@ -24,6 +24,21 @@ This should be used along the environment variables file `.env` which contains t
 
 Take in account an `.dockerignore` file could exist to avoid copying unnecessary files to the image.
 
+### Reverse proxies
+
+Two optional overlay files sit in front of the base stack:
+
+| File | What it provides |
+| --- | --- |
+| [`docker-compose.traefik.yml`](../docker/docker-compose.traefik.yml) | Traefik v3 with automatic HTTPS via Let's Encrypt (TLS-ALPN challenge) and HTTP→HTTPS redirection. Requires `APP_HOST` and `ACME_EMAIL` environment variables. |
+| [`docker-compose.nginx.yml`](../docker/docker-compose.nginx.yml) | Nginx reverse proxy on port 8080 (`nginx.conf` next to it). TLS termination is prepared but commented; for automatic certificate issuance use the Traefik overlay instead. |
+
+Apply an overlay on top of the base compose file:
+
+```txt
+docker compose -f docker-compose.yml -f docker-compose.traefik.yml up -d
+```
+
 ### Save Images and Upload to a server
 
 If you want to deploy the microservices on a server without uploading the project, you will need to save the images and upload them to the server.

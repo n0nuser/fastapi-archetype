@@ -1,0 +1,45 @@
+# Traefik reverse proxy with automatic HTTPS (Let's Encrypt).
+#
+# Overlay for the base stack:
+#   docker compose -f docker-compose.yml -f docker-compose.traefik.yml up -d
+#
+# Required environment variables:
+#   APP_HOST    public hostname that routes to the app, e.g. api.example.com
+#   ACME_EMAIL  contact address for Let's Encrypt expiry notices
+services:
+  traefik:
+    image: traefik:v3.5
+    container_name: app-traefik
+    restart: unless-stopped
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      # Redirect all plain HTTP traffic to HTTPS.
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entrypoints.web.http.redirections.entrypoint.scheme=https
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+      - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-letsencrypt:/letsencrypt
+    networks:
+      - app-network
+
+  app:
+    networks:
+      - app-network
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.app.rule=Host(`${APP_HOST}`)
+      - traefik.http.routers.app.entrypoints=websecure
+      - traefik.http.routers.app.tls.certresolver=le
+      - traefik.http.services.app.loadbalancer.server.port=8000
+
+volumes:
+  traefik-letsencrypt:
