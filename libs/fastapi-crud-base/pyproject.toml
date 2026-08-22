@@ -1,0 +1,58 @@
+[project]
+name = "fastapi-crud-base"
+version = "0.1.0"
+description = "Reusable CRUD base for SQLAlchemy 2.0 models: filtering, pagination, bulk operations and soft deletes."
+authors = [{ name = "Pablo Jesús González Rubio", email = "gonzrubio.pablo@gmail.com" }]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+
+dependencies = [
+    "pydantic>=2.6",
+    "sqlalchemy>=2.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fastapi_crud_base"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN204",
+    "BLE001",
+    "C901",
+    "COM812",
+    "CPY001",
+    "D105",
+    "D107",
+    "D205",
+    "D211",
+    "D212",
+    "E203",
+    "ISC001",
+    "PLR0913",
+    "PLR0917",
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+# pytest relies on bare asserts and fixture-injected args without annotations
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN001", "ANN201", "D101", "D102", "D103", "INP001", "PLR2004", "S101"]

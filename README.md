@@ -10,6 +10,7 @@ This is a FastAPI project archetype for production-ready applications. It provid
   - [Description](#description)
   - [Table of Contents](#table-of-contents)
   - [Contributing](#contributing)
+  - [Generate a New Project](#generate-a-new-project)
   - [Getting Started](#getting-started)
     - [Built With](#built-with)
     - [Prerequisites](#prerequisites)
@@ -23,6 +24,16 @@ This is a FastAPI project archetype for production-ready applications. It provid
 ## Contributing
 
 Check the [contributing documentation](.github/CONTRIBUTING.md) for more information.
+
+## Generate a New Project
+
+This repository doubles as a [Cookiecutter](https://cookiecutter.readthedocs.io/) template: it generates a standalone project with this exact structure, best practices and tooling preconfigured, depending on the published [`fastapi-crud-base`](https://pypi.org/project/fastapi-crud-base/) library for the generic CRUD layer.
+
+```bash
+uvx cookiecutter gh:n0nuser/fastapi-archetype --directory cookiecutter
+```
+
+You will be prompted for a project name, description, author and versions; everything else (structure, CI, Docker, Spectral ruleset, migrations) comes ready out of the box.
 
 ## Getting Started
 

@@ -45,4 +45,28 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: uv sync --all-groups
       - run: cp src/.env.example src/.env
-      - run: uv run pytest --cov=src --cov-report=term-missing
+      # Application suite (needs Postgres) plus the CRUD library unit suite.
+      - run: >-
+          uv run pytest tests libs/fastapi-crud-base/tests
+          --cov=src --cov=libs/fastapi-crud-base/src --cov-report=term-missing
+
+  openapi:
+    # Exports the OpenAPI schema from the codebase, lints it with Spectral,
+    # and publishes it as a build artifact for review.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: uv sync --all-groups
+      - run: cp src/.env.example src/.env
+      - run: uv run python scripts/export_openapi.py
+      - run: npx --yes @stoplight/spectral-cli@6.16.3 lint --fail-severity=warn openapi.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: openapi
+          path: openapi.json

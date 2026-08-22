@@ -1,0 +1,7 @@
+# Spectral ruleset for the exported OpenAPI schema.
+# See https://meta.stoplight.io/docs/spectral/docs/getting-started/rulesets.md
+extends: ["spectral:oas"]
+rules:
+  # Server URLs depend on the deployment (dev/staging/prod behind reverse
+  # proxies), so the generated contract intentionally ships without servers.
+  oas3-api-servers: off

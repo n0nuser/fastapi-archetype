@@ -1,6 +1,6 @@
 [project]
 name = "fastapi-archetype"
-version = "0.1.0"
+version = "0.3.0"
 description = "FastAPI Production Archetype"
 authors = [{ name = "Pablo Jesús González Rubio", email = "gonzrubio.pablo@gmail.com" }]
 readme = "README.md"
@@ -12,6 +12,7 @@ dependencies = [
     "asgi-correlation-id>=4.3",
     "fastapi>=0.141",
     "fastapi-cache2[redis]>=0.2.2",
+    "fastapi-crud-base>=0.1.0",
     "httpx>=0.28",
     "jinja2>=3.1.6",
     "opentelemetry-exporter-otlp-proto-grpc>=1.44.0",
@@ -35,18 +36,35 @@ dev = [
     "ruff>=0.14",
 ]
 
-[tool.uv]
-package = false
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# The importable package is `src.*` throughout the codebase and Docker image
+# (`uvicorn src.app:app`), so ship that directory as-is.
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.uv.workspace]
+members = ["libs/*"]
+
+# Resolve the library from this monorepo while it is not yet on PyPI.
+[tool.uv.sources]
+fastapi-crud-base = { workspace = true }
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
+# Keep collection scoped: the cookiecutter template mirrors this layout and
+# would collide with the real suites (same test module basenames).
+testpaths = ["tests", "libs/fastapi-crud-base/tests"]
 markers = [
     "integration: tests that require a real database (docker compose -f docker/docker-compose.test.yml up -d)",
 ]
 
 [tool.ruff]
 # Alembic generates migrations in its own house style; do not lint them.
-extend-exclude = ["migrations"]
+# Cookiecutter templates contain raw Jinja and ship their own (rendered-time) config.
+extend-exclude = ["migrations", "cookiecutter"]
 lint.select = ["ALL"]
 lint.ignore = [
     "ANN204",
@@ -81,3 +99,5 @@ convention = "google"
 "src/repository/models/__init__.py" = ["N818", "F401"]
 # pytest relies on bare asserts; docstrings and literal comparisons are noise in tests
 "tests/**" = ["INP001", "S101", "D103", "PLR2004"]
+# CLI scripts: not a package, and stdout is the user-facing output channel
+"scripts/**" = ["INP001", "T201"]

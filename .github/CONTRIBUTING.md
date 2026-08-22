@@ -17,7 +17,17 @@ The branches are used as follows:
 
 It's important to follow this flow to keep the project organized and to avoid conflicts.
 
-Every time a feature is merged into the `main` branch, a new release should be created with the version number following the [Semantic Versioning](https://semver.org/) guidelines.
+Every time a feature is merged into the `main` branch, a new release can be created with the version number following the [Semantic Versioning](https://semver.org/) guidelines.
+
+## Releases
+
+Releases are tag-driven and automated by the `Release` workflow:
+
+1. Update `version` in `pyproject.toml` to the new SemVer (e.g. `0.4.0`) and commit (`git commit -am "Bump version to 0.4.0"`).
+2. Tag and push it: `git tag v0.4.0 && git push origin v0.4.0`.
+3. The workflow verifies that the tag matches `pyproject.toml`, exports and lints the OpenAPI schema, then publishes a GitHub Release with auto-generated notes and the `openapi.json` contract attached.
+
+If the tag and `pyproject.toml` disagree, the release fails: update the version, delete and re-push the tag (`git tag -d v0.4.0 && git push origin :refs/tags/v0.4.0`).
 
 Also, the project uses pre-commit hooks to ensure the code quality. You should install them with `pre-commit install`.
 
