@@ -21,7 +21,7 @@ repos:
         args: [--pytest-test-first]
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.16.4
+    rev: v0.16.5
     hooks:
       # Run the linter (config lives in pyproject.toml).
       - id: ruff
