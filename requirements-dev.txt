@@ -26,7 +26,7 @@ distlib==0.4.3
     # via virtualenv
 fastapi==0.141.1
     # via fastapi-archetype
-filelock==3.32.3
+filelock==4.2.1
     # via
     #   python-discovery
     #   virtualenv
